@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Contact{% endblock %}
+{% block body_class %}contact-page{% endblock %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/pages/contact.css' %}">
+{% endblock %}
+
+{% block content %}
+  <section class="contact-hero" aria-label="Contact hero">
+    <img src="{% static 'img/contact/contact-hero-recovered.png' %}" alt="">
+  </section>
+
+  <section class="contact-content" aria-label="Contact information">
+    <div class="contact-info">
+      <section>
+        <h2>Address</h2>
+        <span></span>
+        <p>PO Box 16122 Collins&nbsp;&nbsp;Victoria<br>Street 3000 Australia</p>
+      </section>
+      <section>
+        <h2>Phone</h2>
+        <span></span>
+        <p>Sale (+84) 876-5445-234<br>Support(+84) 876-7595-245</p>
+      </section>
+      <section>
+        <h2>Email</h2>
+        <span></span>
+        <p>Support@yourdomain.com<br>Sale@yourdomain.com</p>
+      </section>
+      <section>
+        <h2>Social</h2>
+        <span></span>
+      </section>
+    </div>
+
+    <form class="contact-form" method="post" novalidate>
+      {% csrf_token %}
+      <div class="contact-form__intro">
+        <h2>Drop us a line</h2>
+        <span></span>
+        <p>is simply dummy text of the printing and typesetting industry.<br>Lorem Ipsum has been the</p>
+      </div>
+      <div class="contact-form__row">
+        <label for="{{ form.name.id_for_label }}">YOUR NAME</label>
+        {{ form.name }}
+      </div>
+      <div class="contact-form__row contact-form__row--email">
+        <label for="{{ form.email.id_for_label }}">YOUR EMAIL</label>
+        {{ form.email }}
+      </div>
+      <div class="contact-form__row contact-form__row--message">
+        <label for="{{ form.message.id_for_label }}">MESSAGE</label>
+        {{ form.message }}
+      </div>
+      {% if form.errors %}
+        <div class="contact-form__errors" role="alert">Please check the highlighted fields.</div>
+      {% endif %}
+      <button type="submit">Submit</button>
+    </form>
+  </section>
+{% endblock %}

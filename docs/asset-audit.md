@@ -16,6 +16,7 @@ Exact/strong match, Likely match, Partial/crop match, Missing.
 |---|---|---:|---:|---|
 | Global | Main B-Group / Al Bahaa logo | `static/img/branding/AlBahaa logo.svg` | SVG | Exact/strong match |
 | Global | Footer/quote logo | `static/img/branding/AlBahaa logo.svg` | SVG | Exact/strong match |
+| Home | Header logo, current approved brand | `static/img/branding/AlBahaa logo.svg` | SVG | Intentional brand override |
 | Global | Social media icon glyphs | Unresolved | - | Missing |
 | Home | Hero seated figure in window, native PDF extraction | `static/img/home/hero-seated-window.jpeg` | 1920x1046 | Exact/strong match |
 | Home | Hero seated figure in window, supplied PNG export | `static/img/home/Rectangle 3.png` | 1800x980 | Exact/strong match |
@@ -45,16 +46,23 @@ Exact/strong match, Likely match, Partial/crop match, Missing.
 | About | Team collage bridge/structure crop | `static/img/team/Rectangle 24 copy.png` | 390x369 | Exact/strong match |
 | About | Team collage central office tower | `static/img/team/Rectangle 24 copy 2 .png` | 390x369 | Exact/strong match |
 | About | Team collage dark blue building | `static/img/team/Rectangle 24 copy 3  .png` | 390x369 | Exact/strong match |
-| Projects | First construction band with workers and pipe foreground | `static/img/projects/Rectangle 24 copy 2     .png` | 611x889 | Partial/crop match |
-| Projects | Second crane skyline band | Unresolved | - | Missing |
-| Projects | Third light-trails/city band | Unresolved | - | Missing |
-| Projects | Fourth tower construction band | `static/img/projects/Rectangle 9 copy.png` | 2167x1461 | Exact/strong match |
-| Project Details | Main tower construction hero | `static/img/projects/Rectangle 9 copy.png` | 2167x1461 | Exact/strong match |
-| News | First article image, beams with suspended worker | Unresolved | - | Missing |
-| News | Second article image, building with crane/moon | `static/img/news/Rectangle 24 copy 5.png` | 611x434 | Likely match |
-| News | Third article image, scaffold/facade pattern | Unresolved | - | Missing |
-| News | Fourth article image, upward crane/building crop | `static/img/news/Rectangle 24 copy 2  .png` | 611x889 | Likely match |
+| Projects | First construction band with workers and pipe foreground | `static/img/projects/projects-band-1-recovered.png` | 1800x890 | Recovered from PDF render; strong match |
+| Projects | First construction band supplied standalone crop | `static/img/projects/Rectangle 24 copy 2     .png` | 611x889 | Partial/crop match |
+| Projects | Second crane skyline band | `static/img/projects/projects-band-2-recovered.png` | 1800x890 | Recovered from PDF render; strong match |
+| Projects | Third light-trails/city band | `static/img/projects/projects-band-3-recovered.png` | 1800x890 | Recovered from PDF render; strong match |
+| Projects | Fourth tower construction band displayed crop | `static/img/projects/projects-band-4-recovered.png` | 1800x890 | Recovered from PDF render; strong match |
+| Projects | Fourth tower construction supplied standalone | `static/img/projects/Rectangle 9 copy.png` | 2167x1461 | Exact/strong match |
+| Project Details | Main tower construction displayed hero crop | `static/img/projects/project-detail-tower-recovered.png` | 2165x1464 | Recovered from PDF render; strong match |
+| Project Details | Main tower construction supplied standalone | `static/img/projects/Rectangle 9 copy.png` | 2167x1461 | Exact/strong match |
+| News | First article image, beams with suspended worker | `static/img/news/news-article1-recovered.png` | 585x540 | Recovered from PDF render; strong match |
+| News | Second article image, building with crane/moon | `static/img/news/news-article2-recovered.png` | 585x540 | Recovered from PDF render; strong match |
+| News | Second article supplied standalone related crop | `static/img/news/Rectangle 24 copy 5.png` | 611x434 | Likely match |
+| News | Third article image, scaffold/facade pattern | `static/img/news/news-article3-recovered.png` | 585x540 | Recovered from PDF render; strong match |
+| News | Fourth article image, upward crane/building crop | `static/img/news/news-article4-recovered.png` | 585x540 | Recovered from PDF render; strong match |
+| News | Fourth article supplied standalone related crop | `static/img/news/Rectangle 24 copy 2  .png` | 611x889 | Likely match |
 | Contact | Hero crane/building image | `static/img/contact/Clip.png` | 2494x979 | Exact/strong match |
+| Contact | Hero crane/building displayed crop | `static/img/contact/contact-hero-recovered.png` | 2494x979 | Recovered from PDF render; strong match |
+| Contact | Header PDF logo | `static/img/branding/contact-pdf-logo.png` | 208x63 | Recovered from PDF render; strong match |
 
 ## Supplied But Not Yet Mapped To A PDF Element With Confidence
 

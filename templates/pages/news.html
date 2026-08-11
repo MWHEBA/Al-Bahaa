@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}News{% endblock %}
+{% block body_class %}news-page{% endblock %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/pages/news.css' %}">
+{% endblock %}
+
+{% block content %}
+  <section class="news-listing" aria-label="News">
+    <header class="news-listing__intro">
+      <h1>UPDATED NEWS<br>ABOUT ARCHITECTURE.</h1>
+      <span></span>
+    </header>
+
+    <div class="news-listing__articles">
+      {% for article in articles %}
+        <article class="news-row {% if article.reverse %}news-row--reverse{% endif %}">
+          <img class="news-row__image" src="{% static article.image %}" alt="">
+          <div class="news-row__content">
+            <h2>{{ article.title }}</h2>
+            <p>{{ article.excerpt }}</p>
+            <a href="#" class="news-row__button">View More</a>
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+
+    <nav class="news-pagination" aria-label="News pagination">
+      {% for item in pagination_items %}
+        <a href="#" class="{% if forloop.first %}is-active{% endif %}">{{ item }}</a>
+      {% endfor %}
+    </nav>
+  </section>
+{% endblock %}

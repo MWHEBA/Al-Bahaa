@@ -147,8 +147,3 @@
   background: var(--color-primary);
   color: var(--color-white);
 }
-
-.foundation-preview p {
-  max-width: var(--container-narrow);
-  margin-bottom: var(--space-4);
-}

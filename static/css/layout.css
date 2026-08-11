@@ -43,6 +43,10 @@
   text-transform: uppercase;
 }
 
+.site-header__menu-toggle {
+  display: none;
+}
+
 .site-footer {
   padding-block: var(--space-6);
 }

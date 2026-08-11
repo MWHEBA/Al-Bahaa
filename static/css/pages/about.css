@@ -1,0 +1,970 @@
+.about-page {
+  min-width: 1920px;
+  background: var(--color-background);
+}
+
+.about-page .site-header {
+  height: 100px;
+}
+
+.about-page .site-header__inner {
+  width: 1800px;
+  height: 100px;
+  min-height: 100px;
+}
+
+.about-page .site-header__logo {
+  width: 123px;
+  filter: none;
+}
+
+.about-page .site-header__nav {
+  gap: 28px;
+  font-size: 12px;
+  line-height: 1;
+}
+
+.about-page main {
+  width: 1920px;
+  margin-inline: auto;
+}
+
+.about-hero {
+  position: relative;
+  height: 536px;
+}
+
+.about-hero__copy {
+  position: absolute;
+  left: 394px;
+  top: 85px;
+}
+
+.about-hero h1 {
+  display: inline-block;
+  font-size: 56px;
+  line-height: 1.27;
+  font-weight: 400;
+  transform: scaleX(1.26);
+  transform-origin: left top;
+}
+
+.about-hero__copy span,
+.about-who span {
+  display: block;
+  width: 135px;
+  height: 5px;
+  background: var(--color-primary);
+}
+
+.about-hero__copy span {
+  margin-top: 42px;
+}
+
+.about-hero p {
+  margin-top: 64px;
+  font-size: 16px;
+  line-height: 1.875;
+}
+
+.about-overview {
+  position: relative;
+  height: 1561px;
+}
+
+.about-overview__image {
+  position: absolute;
+  left: 60px;
+  top: 0;
+  width: 1800px;
+  height: 755px;
+  object-fit: cover;
+}
+
+.about-who {
+  position: absolute;
+  left: 978px;
+  top: 444px;
+  width: 566px;
+  height: 692px;
+  padding: 63px 0 0 66px;
+  background: #ffffff;
+}
+
+.about-who h2,
+.about-what h2,
+.about-section-title h2 {
+  font-size: 57px;
+  line-height: 1.11;
+  font-weight: 400;
+}
+
+.about-who h2,
+.about-what h2 {
+  display: inline-block;
+  transform: scaleX(1.16);
+  transform-origin: left top;
+}
+
+.about-who span {
+  margin-top: 42px;
+}
+
+.about-who p {
+  margin-top: 58px;
+  color: #8a969e;
+  font-size: 16px;
+  line-height: 2;
+}
+
+.about-what {
+  position: absolute;
+  left: 377px;
+  top: 841px;
+}
+
+.about-what h2 {
+  line-height: 1.25;
+}
+
+.about-what ul {
+  margin: 78px 0 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.about-what li {
+  position: relative;
+  margin-bottom: 29px;
+  color: var(--color-primary);
+  font-size: 37px;
+  line-height: 1.22;
+}
+
+.about-what li::before {
+  content: "B";
+  margin-right: 6px;
+}
+
+.about-section-title p {
+  color: var(--color-primary);
+  font-size: 22px;
+  line-height: 1;
+}
+
+.about-section-title > div {
+  display: flex;
+  align-items: flex-end;
+}
+
+.about-section-title span {
+  display: block;
+  height: 1px;
+  background: #1b252c;
+}
+
+.about-testimonials {
+  position: relative;
+  height: 850px;
+}
+
+.about-testimonials__title {
+  position: absolute;
+  left: 376px;
+  top: 50px;
+}
+
+.about-testimonials__title span {
+  width: 700px;
+  margin: 0 0 21px 16px;
+}
+
+.about-testimonials__cards {
+  position: absolute;
+  left: 60px;
+  top: 323px;
+  display: grid;
+  grid-template-columns: repeat(3, 536px);
+  gap: 92px;
+}
+
+.about-testimonial {
+  position: relative;
+  width: 536px;
+  height: 220px;
+  padding: 42px 0 0 40px;
+  background: #ffffff;
+}
+
+.about-testimonial--accent {
+  background: #c6e6f0;
+}
+
+.about-testimonial blockquote {
+  font-size: 16px;
+  line-height: 1.875;
+  font-style: italic;
+}
+
+.about-testimonial span {
+  position: absolute;
+  right: 31px;
+  bottom: -4px;
+  color: #d1d1d1;
+  font-family: Arial, sans-serif;
+  font-size: 154px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.about-testimonial--accent span {
+  color: #ffffff;
+}
+
+.about-testimonials__names {
+  position: absolute;
+  left: 60px;
+  top: 600px;
+  display: grid;
+  grid-template-columns: repeat(3, 536px);
+  gap: 92px;
+}
+
+.about-testimonials__names p {
+  font-size: 14px;
+  line-height: 1.85;
+}
+
+.about-clients {
+  position: relative;
+  height: 753px;
+}
+
+.about-clients__grid {
+  position: absolute;
+  left: 377px;
+  top: 238px;
+  width: 1160px;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  column-gap: 78px;
+  row-gap: 56px;
+  align-items: center;
+  justify-items: center;
+}
+
+.about-clients__grid img {
+  max-width: 137px;
+  max-height: 75px;
+  object-fit: contain;
+}
+
+.about-team {
+  position: relative;
+  height: 1180px;
+}
+
+.about-team__title {
+  position: absolute;
+  left: 376px;
+  top: 0;
+}
+
+.about-team__title span {
+  width: 705px;
+  margin: 0 0 21px 49px;
+}
+
+.about-team__collage {
+  position: absolute;
+  left: 376px;
+  top: 273px;
+  width: 1170px;
+  height: 780px;
+}
+
+.about-team__collage img,
+.about-team__card {
+  position: absolute;
+}
+
+.about-team__water-top {
+  left: 0;
+  top: 0;
+  width: 390px;
+  height: 369px;
+  object-fit: cover;
+}
+
+.about-team__tower {
+  left: 388px;
+  top: 51px;
+  width: 390px;
+  height: 369px;
+  object-fit: cover;
+}
+
+.about-team__dark {
+  left: 780px;
+  top: 0;
+  width: 390px;
+  height: 369px;
+  object-fit: cover;
+}
+
+.about-team__bridge {
+  left: 0;
+  top: 369px;
+  width: 390px;
+  height: 369px;
+  object-fit: cover;
+}
+
+.about-team__water-bottom {
+  left: 780px;
+  top: 369px;
+  width: 390px;
+  height: 369px;
+  object-fit: cover;
+}
+
+.about-team__card {
+  left: 393px;
+  top: 415px;
+  width: 390px;
+  height: 369px;
+  padding: 48px 0 0 42px;
+  border: 9px solid var(--color-primary);
+  background: #ffffff;
+}
+
+.about-team__card h3 {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.about-team__role {
+  margin-top: 1px;
+  font-size: 18px;
+  line-height: 1.35;
+}
+
+.about-team__card blockquote {
+  margin-top: 45px;
+  font-size: 16px;
+  line-height: 1.875;
+  font-style: italic;
+}
+
+.about-page .site-footer {
+  height: 561px;
+  padding: 0;
+}
+
+.about-page .site-footer__inner {
+  position: relative;
+  width: 728px;
+  height: 561px;
+  display: block;
+}
+
+.about-page .site-footer__contact-grid {
+  position: absolute;
+  left: 0;
+  top: 210px;
+  width: 728px;
+  display: grid;
+  grid-template-columns: 167px 171px 167px;
+  column-gap: 103px;
+}
+
+.about-page .footer-contact {
+  border-top: 1px solid var(--color-primary);
+  padding-top: 18px;
+}
+
+.about-page .footer-contact h2 {
+  margin-bottom: 38px;
+  font-size: 16px;
+  line-height: 1;
+}
+
+.about-page .footer-contact p {
+  font-size: 12px;
+  line-height: 2.5;
+}
+
+.about-page .site-footer__copyright {
+  position: absolute;
+  left: 0;
+  top: 351px;
+  width: 728px;
+  border-top: 1px solid #bcc8cf;
+  padding-top: 33px;
+  font-size: 12px;
+}
+
+@media (max-width: 1919px) {
+  .about-page {
+    min-width: 0;
+  }
+
+  .about-page .site-header {
+    height: 88px;
+    min-height: 88px;
+  }
+
+  .about-page .site-header__inner {
+    width: min(100% - 64px, 1320px);
+    height: 88px;
+    min-height: 88px;
+  }
+
+  .about-page .site-header__logo {
+    width: 123px;
+  }
+
+  .about-page .site-header__nav {
+    gap: 22px;
+    font-size: 11px;
+  }
+
+  .about-page main {
+    width: 100%;
+  }
+
+  .about-hero,
+  .about-overview,
+  .about-testimonials,
+  .about-clients,
+  .about-team {
+    height: auto;
+  }
+
+  .about-hero {
+    width: min(100% - 64px, 1160px);
+    margin: 92px auto 0;
+  }
+
+  .about-hero__copy,
+  .about-testimonials__title,
+  .about-team__title {
+    position: relative;
+    left: auto;
+    top: auto;
+  }
+
+  .about-hero h1 {
+    font-size: clamp(44px, 4.1vw, 56px);
+  }
+
+  .about-hero p {
+    margin-top: 54px;
+  }
+
+  .about-overview {
+    width: min(100% - 64px, 1320px);
+    margin: 96px auto 0;
+  }
+
+  .about-overview__image {
+    position: relative;
+    left: auto;
+    top: auto;
+    width: 100%;
+    height: min(39vw, 620px);
+    min-height: 460px;
+    object-position: center center;
+  }
+
+  .about-who,
+  .about-what {
+    position: relative;
+    left: auto;
+    top: auto;
+  }
+
+  .about-who {
+    width: min(566px, 58%);
+    height: auto;
+    min-height: 610px;
+    margin: -240px 10% 0 auto;
+    padding: 58px 50px 58px 58px;
+  }
+
+  .about-who h2,
+  .about-what h2,
+  .about-section-title h2 {
+    font-size: clamp(44px, 4.3vw, 57px);
+  }
+
+  .about-who p {
+    margin-top: 50px;
+  }
+
+  .about-what {
+    width: min(100%, 620px);
+    margin: 108px 0 0 18%;
+  }
+
+  .about-what ul {
+    margin-top: 64px;
+  }
+
+  .about-testimonials {
+    width: min(100% - 64px, 1320px);
+    margin: 130px auto 0;
+  }
+
+  .about-section-title > div {
+    width: 100%;
+  }
+
+  .about-testimonials__title span,
+  .about-team__title span {
+    flex: 1;
+    width: auto;
+  }
+
+  .about-testimonials__cards,
+  .about-testimonials__names {
+    position: relative;
+    left: auto;
+    top: auto;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+  }
+
+  .about-testimonials__cards {
+    margin-top: 76px;
+  }
+
+  .about-testimonials__names {
+    margin-top: 28px;
+  }
+
+  .about-testimonial {
+    width: auto;
+    height: auto;
+    min-height: 220px;
+    padding: 42px 48px 42px 40px;
+  }
+
+  .about-clients {
+    width: min(100% - 64px, 1020px);
+    margin: 124px auto 0;
+  }
+
+  .about-clients__grid {
+    position: relative;
+    left: auto;
+    top: auto;
+    width: 100%;
+    grid-template-columns: repeat(6, minmax(80px, 1fr));
+    column-gap: 46px;
+  }
+
+  .about-team {
+    width: min(100% - 64px, 1170px);
+    margin: 132px auto 0;
+    padding-bottom: 110px;
+  }
+
+  .about-team__collage {
+    position: relative;
+    left: auto;
+    top: auto;
+    width: 100%;
+    height: auto;
+    margin-top: 74px;
+    display: grid;
+    grid-template-areas:
+      "water tower dark"
+      "bridge card bottom";
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: start;
+  }
+
+  .about-team__collage img,
+  .about-team__card {
+    position: relative;
+    left: auto;
+    top: auto;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 390 / 369;
+  }
+
+  .about-team__water-top {
+    grid-area: water;
+  }
+
+  .about-team__tower {
+    grid-area: tower;
+    transform: translateY(51px);
+  }
+
+  .about-team__dark {
+    grid-area: dark;
+  }
+
+  .about-team__bridge {
+    grid-area: bridge;
+  }
+
+  .about-team__water-bottom {
+    grid-area: bottom;
+  }
+
+  .about-team__card {
+    grid-area: card;
+    min-height: 369px;
+    padding: 46px 34px 34px 40px;
+  }
+
+  .about-page .site-footer {
+    height: auto;
+    padding: 42px 0 72px;
+  }
+
+  .about-page .site-footer__inner {
+    position: relative;
+    width: min(100% - 64px, 728px);
+    height: auto;
+  }
+
+  .about-page .site-footer__contact-grid,
+  .about-page .site-footer__copyright {
+    position: relative;
+    left: auto;
+    top: auto;
+  }
+
+  .about-page .site-footer__contact-grid {
+    width: 100%;
+  }
+
+  .about-page .site-footer__copyright {
+    width: 100%;
+    margin-top: 62px;
+  }
+}
+
+@media (max-width: 1100px) {
+  .about-page .site-header__inner {
+    width: calc(100% - 40px);
+  }
+
+  .about-page .site-header__logo {
+    width: 118px;
+  }
+
+  .about-page .site-header__menu-toggle {
+    width: 48px;
+    height: 48px;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    border: 1px solid rgb(255 255 255 / 50%);
+    background: transparent;
+    color: #ffffff;
+  }
+
+  .about-page .site-header__menu-toggle span:not(.site-header__menu-label) {
+    width: 22px;
+    height: 2px;
+    background: currentColor;
+  }
+
+  .about-page .site-header__menu-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .about-page .site-header__nav {
+    position: absolute;
+    left: 20px;
+    right: 20px;
+    top: 88px;
+    z-index: 10;
+    display: none;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 18px 0;
+    background: var(--color-primary);
+    box-shadow: 0 18px 30px rgb(0 0 0 / 18%);
+    font-size: 13px;
+  }
+
+  .about-page .site-header.is-menu-open .site-header__nav {
+    display: flex;
+  }
+
+  .about-page .site-header__nav a {
+    min-height: 46px;
+    display: flex;
+    align-items: center;
+    padding-inline: 24px;
+  }
+
+  .about-hero,
+  .about-overview,
+  .about-testimonials,
+  .about-clients,
+  .about-team {
+    width: min(100% - 48px, 760px);
+  }
+
+  .about-hero h1 {
+    font-size: clamp(40px, 6vw, 52px);
+  }
+
+  .about-overview__image {
+    height: 400px;
+    min-height: 0;
+    object-position: center center;
+  }
+
+  .about-who {
+    width: min(100% - 48px, 560px);
+    min-height: 0;
+    margin: -118px 0 0 auto;
+    padding: 48px 44px;
+  }
+
+  .about-who p {
+    margin-top: 42px;
+  }
+
+  .about-what {
+    margin: 82px 0 0;
+  }
+
+  .about-testimonials__cards,
+  .about-testimonials__names {
+    grid-template-columns: 1fr;
+  }
+
+  .about-clients__grid {
+    grid-template-columns: repeat(4, minmax(90px, 1fr));
+  }
+
+  .about-team__collage {
+    grid-template-areas:
+      "water tower"
+      "dark bridge"
+      "card bottom";
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0;
+  }
+
+  .about-team__tower {
+    transform: translateY(34px);
+  }
+
+  .about-team__card {
+    min-height: 330px;
+  }
+}
+
+@media (max-width: 620px) {
+  .about-page .site-header {
+    height: 76px;
+    min-height: 76px;
+  }
+
+  .about-page .site-header__inner {
+    width: calc(100% - 32px);
+    height: 76px;
+    min-height: 76px;
+  }
+
+  .about-page .site-header__logo {
+    width: 112px;
+  }
+
+  .about-page .site-header__nav {
+    top: 76px;
+    left: 16px;
+    right: 16px;
+  }
+
+  .about-hero,
+  .about-overview,
+  .about-testimonials,
+  .about-clients,
+  .about-team {
+    width: calc(100% - 32px);
+  }
+
+  .about-hero {
+    margin-top: 66px;
+  }
+
+  .about-hero h1 {
+    font-size: 36px;
+    line-height: 1.18;
+    transform: none;
+  }
+
+  .about-hero__copy span {
+    margin-top: 32px;
+  }
+
+  .about-hero p {
+    margin-top: 42px;
+    font-size: 16px;
+    line-height: 1.85;
+  }
+
+  .about-overview {
+    margin-top: 70px;
+  }
+
+  .about-overview__image {
+    height: 265px;
+    object-position: center center;
+  }
+
+  .about-who {
+    width: calc(100% - 20px);
+    margin: -54px 0 0 auto;
+    padding: 38px 28px;
+  }
+
+  .about-who h2,
+  .about-what h2,
+  .about-section-title h2 {
+    font-size: 38px;
+    transform: none;
+  }
+
+  .about-who span {
+    margin-top: 32px;
+  }
+
+  .about-who p {
+    margin-top: 36px;
+    font-size: 15px;
+    line-height: 1.85;
+  }
+
+  .about-what {
+    margin-top: 64px;
+  }
+
+  .about-what ul {
+    margin-top: 46px;
+  }
+
+  .about-what li {
+    margin-bottom: 20px;
+    font-size: 28px;
+  }
+
+  .about-testimonials {
+    margin-top: 82px;
+  }
+
+  .about-section-title > div {
+    display: block;
+  }
+
+  .about-section-title p {
+    font-size: 16px;
+  }
+
+  .about-section-title h2 {
+    margin-top: 10px;
+    line-height: 1.18;
+  }
+
+  .about-section-title span {
+    width: 100%;
+    margin: 22px 0 0;
+  }
+
+  .about-testimonials__cards {
+    margin-top: 46px;
+  }
+
+  .about-testimonial {
+    min-height: 0;
+    padding: 34px 44px 34px 28px;
+  }
+
+  .about-testimonial blockquote {
+    font-size: 15px;
+    line-height: 1.85;
+  }
+
+  .about-testimonial span {
+    right: 22px;
+    bottom: -2px;
+    font-size: 112px;
+  }
+
+  .about-clients {
+    margin-top: 84px;
+  }
+
+  .about-clients__grid {
+    grid-template-columns: repeat(2, minmax(110px, 1fr));
+    column-gap: 28px;
+  }
+
+  .about-team {
+    margin-top: 88px;
+    padding-bottom: 70px;
+  }
+
+  .about-team__collage {
+    margin-top: 46px;
+    grid-template-areas:
+      "water tower"
+      "dark bridge"
+      "card card"
+      "bottom bottom";
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .about-team__tower {
+    transform: translateY(22px);
+  }
+
+  .about-team__water-bottom {
+    aspect-ratio: 390 / 220;
+  }
+
+  .about-team__card {
+    width: calc(100% - 24px);
+    min-height: 0;
+    margin: -10px auto 0;
+    aspect-ratio: auto;
+    padding: 34px 26px;
+    border-width: 7px;
+  }
+
+  .about-team__card blockquote {
+    margin-top: 32px;
+    font-size: 15px;
+    line-height: 1.85;
+  }
+
+  .about-page .site-footer__inner {
+    width: calc(100% - 32px);
+  }
+
+  .about-page .site-footer__contact-grid {
+    grid-template-columns: 1fr;
+    row-gap: 34px;
+  }
+}

@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ project.title|linebreaksbr|striptags }}{% endblock %}
+{% block body_class %}project-detail-page{% endblock %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/pages/project-detail.css' %}">
+{% endblock %}
+
+{% block content %}
+  <article class="project-detail" aria-label="Project detail">
+    <section class="project-detail__panel">
+      <h1>{{ project.title|linebreaksbr }}</h1>
+      <div class="project-detail__description">
+        {% for paragraph in project.description %}
+          <p>{{ paragraph }}</p>
+        {% endfor %}
+      </div>
+      <div class="project-detail__info">
+        <h2>Info</h2>
+        <p>Date: {{ project.info.date }}</p>
+        <p class="project-detail__info-line">Client: {{ project.info.client }}Status: {{ project.info.status }}Location: {{ project.info.location }}</p>
+        <div class="project-detail__info-grid">
+          <p>Client: {{ project.info.client }}</p>
+          <p>Status: {{ project.info.status }}</p>
+          <p>Location: {{ project.info.location }}</p>
+        </div>
+      </div>
+      <button class="project-detail__button" type="button">Description <span aria-hidden="true"></span></button>
+    </section>
+    <section class="project-detail__image-wrap" aria-label="Project image">
+      <img src="{% static project.image %}" alt="">
+      <button class="project-detail__image-control" type="button" aria-label="Open image"></button>
+    </section>
+  </article>
+{% endblock %}

@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}About Us{% endblock %}
+{% block body_class %}about-page{% endblock %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/pages/about.css' %}">
+{% endblock %}
+
+{% block content %}
+  <section class="about-hero" aria-label="About introduction">
+    <div class="about-hero__copy">
+      <h1>WE LIKE TO BUILD<br>THINGS PEOPLE USE.</h1>
+      <span></span>
+      <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem<br>accusantium doloremque laudantium</p>
+    </div>
+  </section>
+
+  <section class="about-overview" aria-label="Who we are and what we do">
+    <img class="about-overview__image" src="{% static 'img/about/Rectangle 21.png' %}" alt="">
+    <div class="about-who">
+      <h2>WHO<br>WE<br>ARE</h2>
+      <span></span>
+      <p>It is a long established fact that a reader will be distracted by the<br>readable content of a page when looking at its layout. The point<br>of using Lorem Ipsum is that it has a more-or-less normal<br>distribution of letters, as opposed to using 'Content here, content<br>here', making it look like readable English. Many desktop<br>publishing packages and web page editors now use Lorem Ipsum<br>as their.</p>
+    </div>
+    <div class="about-what">
+      <h2>WHAT WE DO</h2>
+      <ul>
+        <li>Infrastructure</li>
+        <li>Sustainable</li>
+        <li>Construction</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="about-testimonials" aria-label="Our Client">
+    <div class="about-section-title about-testimonials__title">
+      <p>OUR CLIENT.</p>
+      <div>
+        <h2>What others say<br>about our work.</h2>
+        <span></span>
+      </div>
+    </div>
+    <div class="about-testimonials__cards">
+      <article class="about-testimonial">
+        <blockquote>"Sed ut perspiciatis unde omnis iste natus error sit<br>voluptatem accusantium doloremque laudantium, totam<br>rem aperiam, eaque ipsa quae ab illo inventore veritatis et<br>quasi architecto beatae</blockquote>
+        <span>”</span>
+      </article>
+      <article class="about-testimonial">
+        <blockquote>"Sed ut perspiciatis unde omnis iste natus error sit<br>voluptatem accusantium doloremque laudantium, totam<br>rem aperiam, eaque ipsa quae ab illo inventore veritatis et<br>quasi architecto beatae</blockquote>
+        <span>”</span>
+      </article>
+      <article class="about-testimonial about-testimonial--accent">
+        <blockquote>"Sed ut perspiciatis unde omnis iste natus error sit<br>voluptatem accusantium doloremque laudantium, totam<br>rem aperiam, eaque ipsa quae ab illo inventore veritatis et<br>quasi architecto beatae</blockquote>
+        <span>”</span>
+      </article>
+    </div>
+    <div class="about-testimonials__names">
+      <p><strong>Phillip Cummings</strong><br>CEO - Jooant JC</p>
+      <p><strong>Ryan Moore</strong><br>CEO - Digital BB</p>
+      <p><strong>Chester Gibson</strong><br>Maketing Manager</p>
+    </div>
+  </section>
+
+  <section class="about-clients" aria-label="Client Logos">
+    <div class="about-clients__grid">
+      <img src="{% static 'img/clients/Layer 1.png' %}" alt="Miller">
+      <img src="{% static 'img/clients/Layer 2.png' %}" alt="The Don">
+      <img src="{% static 'img/clients/Layer 3.png' %}" alt="The Spades">
+      <img src="{% static 'img/clients/Layer 4.png' %}" alt="Creative">
+      <img src="{% static 'img/clients/Layer 5.png' %}" alt="Jackerson">
+      <img src="{% static 'img/clients/Layer 6.png' %}" alt="The White">
+      <img src="{% static 'img/clients/l3.png' %}" alt="Bicycle Company">
+      <img src="{% static 'img/clients/logo_partner-3.png' %}" alt="Handmade">
+      <img src="{% static 'img/clients/11.png' %}" alt="Round logo">
+      <img src="{% static 'img/clients/logo_partner-8.png' %}" alt="Steve Harold">
+      <img src="{% static 'img/clients/l4.png' %}" alt="Tasty Treats">
+      <img src="{% static 'img/clients/Layer 1 copy.png' %}" alt="Miller">
+    </div>
+  </section>
+
+  <section class="about-team" aria-label="Our Team">
+    <div class="about-section-title about-team__title">
+      <p>OUR TEAM.</p>
+      <div>
+        <h2>We bring<br>the best value.</h2>
+        <span></span>
+      </div>
+    </div>
+    <div class="about-team__collage">
+      <img class="about-team__water-top" src="{% static 'img/team/Rectangle 24.png' %}" alt="">
+      <img class="about-team__tower" src="{% static 'img/team/Rectangle 24 copy 2 .png' %}" alt="">
+      <img class="about-team__dark" src="{% static 'img/team/Rectangle 24 copy 3  .png' %}" alt="">
+      <img class="about-team__bridge" src="{% static 'img/team/Rectangle 24 copy.png' %}" alt="">
+      <img class="about-team__water-bottom" src="{% static 'img/team/Rectangle 24 copy 3 .png' %}" alt="">
+      <article class="about-team__card">
+        <h3>Chester Gibson</h3>
+        <p class="about-team__role">Maketing Manager</p>
+        <blockquote>"Sed ut perspiciatis unde omnis iste<br>natus error sit voluptatem accusantium<br>doloremque laudantium, totam rem<br>aperiam, eaque ipsa quae ab illo”</blockquote>
+      </article>
+    </div>
+  </section>
+{% endblock %}
