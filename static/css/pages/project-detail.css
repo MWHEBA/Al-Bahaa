@@ -78,10 +78,11 @@
 }
 
 .project-detail__image-control {
+  --icon-button-translate-y: -50%;
   position: absolute;
   right: 42px;
   top: 50%;
-  transform: translateY(-50%);
+  transform: translateY(var(--icon-button-translate-y));
 }
 
 .project-detail__info-grid {

@@ -51,6 +51,40 @@
   font-size: 1rem;
 }
 
+.site-header__nav a {
+  position: relative;
+  padding: 8px 0;
+  transition: color 180ms ease, transform 180ms ease;
+}
+
+.site-header__nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: currentColor;
+  opacity: 0.72;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 180ms ease, opacity 180ms ease;
+}
+
+.site-header__nav a:hover {
+  color: rgb(255 255 255 / 86%);
+  transform: translateY(-1px);
+}
+
+.site-header__nav a:hover::after {
+  transform: scaleX(1);
+}
+
+.site-header__nav a:focus-visible, .site-header__menu-toggle:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 5px;
+}
+
 .site-header__menu-toggle {
   display: none;
 }
@@ -221,11 +255,27 @@
     border: 1px solid rgb(255 255 255 / 50%);
     background: transparent;
     color: #ffffff;
+    transition: background-color 180ms ease, border-color 180ms ease, transform 180ms ease;
+  }
+  .site-header__menu-toggle:hover {
+    border-color: #ffffff;
+    background: rgb(255 255 255 / 10%);
+    transform: translateY(-1px);
   }
   .site-header__menu-toggle span:not(.site-header__menu-label) {
     width: 22px;
     height: 2px;
     background: currentColor;
+    transition: transform 180ms ease, opacity 180ms ease;
+  }
+  .site-header.is-menu-open .site-header__menu-toggle span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+  .site-header.is-menu-open .site-header__menu-toggle span:nth-child(2) {
+    opacity: 0;
+  }
+  .site-header.is-menu-open .site-header__menu-toggle span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
   }
   .site-header__menu-label {
     position: absolute;
@@ -258,6 +308,14 @@
     display: flex;
     align-items: center;
     padding-inline: 24px;
+  }
+  .site-header__nav a::after {
+    left: 24px;
+    right: 24px;
+  }
+  .site-header__nav a:hover {
+    background: rgb(255 255 255 / 7%);
+    transform: none;
   }
   .site-footer {
     padding-top: 70px;
