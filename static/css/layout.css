@@ -71,10 +71,10 @@
   position: absolute;
   left: 204px;
   top: 248px;
-  width: 466px;
-  height: 227px;
+  width: 508px;
+  height: 248px;
   min-height: 0;
-  padding: 52px 83px 0 35px;
+  padding: 76px 42px 0 36px;
   background: var(--color-primary);
   color: var(--color-white);
   box-shadow: none;
@@ -83,40 +83,44 @@
 .quote-box::before {
   content: "";
   position: absolute;
-  left: -150px;
-  top: 32px;
-  width: 150px;
-  height: 127px;
-  border: 9px solid var(--color-primary);
+  left: -166px;
+  top: 36px;
+  width: 166px;
+  height: 148px;
+  border: 10px solid var(--color-primary);
   border-right: 0;
   background: #ffffff;
+  box-shadow: 0 18px 24px rgb(12 46 73 / 14%);
 }
 
 .quote-box__logo {
   position: absolute;
-  left: -108px;
-  top: 65px;
-  width: 78px;
+  left: -134px;
+  top: 72px;
+  width: 122px;
+  height: 96px;
   margin: 0;
   filter: none;
+  object-fit: contain;
   z-index: 1;
 }
 
 .quote-box p {
-  width: 338px;
+  width: 430px;
   max-width: none;
-  font-size: 16px;
+  font-size: 13px;
   font-style: italic;
-  line-height: 2;
+  font-weight: 600;
+  line-height: 2.05;
 }
 
 .quote-box__mark {
   position: absolute;
   right: 28px;
-  bottom: -6px;
+  bottom: -13px;
   color: #ffffff;
   font-family: Arial, sans-serif;
-  font-size: 132px;
+  font-size: 140px;
   font-weight: 700;
   line-height: 1;
 }
@@ -194,8 +198,8 @@
     width: min(100% - 64px, 1320px);
     height: auto;
     display: grid;
-    grid-template-columns: minmax(360px, 466px) minmax(560px, 728px);
-    column-gap: clamp(72px, 8vw, 140px);
+    grid-template-columns: 674px minmax(460px, 1fr);
+    column-gap: clamp(48px, 6vw, 72px);
     align-items: start;
   }
 
@@ -209,10 +213,11 @@
   }
 
   .quote-box {
-    width: 466px;
-    height: 227px;
+    width: 508px;
+    height: 248px;
+    margin-left: 166px;
     min-height: 0;
-    padding: 52px 83px 0 35px;
+    padding: 76px 42px 0 36px;
   }
 
   .site-footer__contact-grid {
@@ -299,7 +304,7 @@
   }
 
   .quote-box {
-    margin-left: 150px;
+    margin-left: 166px;
   }
 
   .site-footer__contact-grid {
