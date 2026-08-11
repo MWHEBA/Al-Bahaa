@@ -64,17 +64,7 @@
 }
 
 .news-row__button {
-  display: inline-flex;
-  width: 171px;
-  height: 61px;
   margin-top: 42px;
-  align-items: center;
-  justify-content: center;
-  background: var(--color-primary);
-  color: #ffffff;
-  font-size: 1.538rem;
-  line-height: 1;
-  min-height: 61px;
 }
 
 .news-pagination {
@@ -174,11 +164,7 @@
     line-height: 1.75;
   }
   .news-row__button {
-    width: 154px;
-    height: 56px;
-    min-height: 56px;
     margin-top: 32px;
-    font-size: 1.385rem;
   }
   .news-pagination {
     gap: 10px;

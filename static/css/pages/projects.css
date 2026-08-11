@@ -55,19 +55,8 @@
 
 .project-band__link {
   position: absolute;
-  display: inline-flex;
-  align-items: center;
-  gap: 14px;
-  font-size: 1.538rem;
-  line-height: 1;
   left: 46px;
   bottom: 42px;
-}
-
-.project-band__link span {
-  width: 9px;
-  height: 9px;
-  border: 1px solid currentColor;
 }
 
 .project-band__controls {
@@ -84,14 +73,7 @@
 }
 
 .project-band__controls button {
-  width: 95px;
-  height: 35px;
   margin-left: 18px;
-  border: 2px solid #ffffff;
-  background: transparent;
-  color: inherit;
-  font-size: 1rem;
-  line-height: 1;
 }
 
 .project-band__controls span {
@@ -168,8 +150,6 @@
   .project-band__link {
     left: 28px;
     bottom: 36px;
-    min-height: 44px;
-    font-size: 1.385rem;
   }
   .project-band__controls {
     width: 100%;
@@ -179,8 +159,6 @@
     padding: 0 18px;
   }
   .project-band__controls button {
-    width: 98px;
-    height: 38px;
     margin-left: 0;
   }
   .project-band__controls span {

@@ -17,7 +17,7 @@
         <img class="project-band__image" src="{% static band.image %}" alt="">
         {% if band.filter %}
           <div class="project-band__controls" aria-label="Project filters">
-            <button type="button">Filter</button>
+            <button class="button button--compact button--inverse" type="button">Filter</button>
             <span>{{ band.count }}</span>
           </div>
         {% endif %}
@@ -28,7 +28,7 @@
             <p>Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page</p>
             <p>editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will</p>
           </div>
-          <a class="project-band__link" href="#">View Project <span aria-hidden="true"></span></a>
+          <a class="button button--text button--arrow project-band__link" href="#">View Project</a>
         </div>
       </article>
     {% endfor %}

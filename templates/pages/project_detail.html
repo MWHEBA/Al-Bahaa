@@ -29,11 +29,11 @@
           <p>Location: {{ project.info.location }}</p>
         </div>
       </div>
-      <button class="project-detail__button" type="button">Description <span aria-hidden="true"></span></button>
+      <button class="button button--wide button--chevron project-detail__button" type="button">Description <span class="button__mark" aria-hidden="true"></span></button>
     </section>
     <section class="project-detail__image-wrap" aria-label="Project image">
       <img src="{% static project.image %}" alt="">
-      <button class="project-detail__image-control" type="button" aria-label="Open image"></button>
+      <button class="icon-button icon-button--lg icon-button--chevron project-detail__image-control" type="button" aria-label="Open image"></button>
     </section>
   </article>
 {% endblock %}
