@@ -9,9 +9,7 @@
 {% endblock %}
 
 {% block content %}
-  <section class="contact-hero" aria-label="Contact hero">
-    <img src="{% static 'img/contact/contact-hero-recovered.png' %}" alt="">
-  </section>
+  {% include "includes/page_intro.html" with eyebrow="Contact" title_html="Let us talk<br>about the next build." description="Reach the team for project enquiries, support, and partnership conversations." image="img/contact/contact-hero-recovered.png" %}
 
   <section class="contact-content" aria-label="Contact information">
     <div class="contact-info">

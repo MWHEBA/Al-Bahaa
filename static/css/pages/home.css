@@ -23,7 +23,6 @@
 .home-hero__copy h1 {
   line-height: 1.105;
   font-weight: 400;
-  text-transform: uppercase;
   font-size: clamp(2.462rem, 3.2vw, 3.077rem);
 }
 
@@ -79,7 +78,6 @@
 .home-specialization h2 {
   font-size: 2.154rem;
   line-height: 1.25;
-  text-transform: uppercase;
 }
 
 .home-specialization h3 {

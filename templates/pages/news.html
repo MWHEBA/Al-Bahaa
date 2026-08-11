@@ -9,12 +9,9 @@
 {% endblock %}
 
 {% block content %}
-  <section class="news-listing" aria-label="News">
-    <header class="news-listing__intro">
-      <h1>UPDATED NEWS<br>ABOUT ARCHITECTURE.</h1>
-      <span></span>
-    </header>
+  {% include "includes/page_intro.html" with eyebrow="News" title_html="Updated news<br>about architecture." description="Notes, stories, and updates from the work shaping our built environment." image="img/news/Rectangle 24 copy 5.png" %}
 
+  <section class="news-listing" aria-label="News">
     <div class="news-listing__articles">
       {% for article in articles %}
         <article class="news-row {% if article.reverse %}news-row--reverse{% endif %}">

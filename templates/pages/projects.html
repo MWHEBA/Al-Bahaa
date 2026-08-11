@@ -9,6 +9,8 @@
 {% endblock %}
 
 {% block content %}
+  {% include "includes/page_intro.html" with eyebrow="Selected Projects" title_html="Built work<br>with lasting value." description="A focused collection of infrastructure and construction work across practical, durable environments." image="img/projects/Rectangle 9 copy.png" %}
+
   <section class="projects-list" aria-label="Projects">
     {% for band in project_bands %}
       <article class="project-band {{ band.modifier|default:'' }}">

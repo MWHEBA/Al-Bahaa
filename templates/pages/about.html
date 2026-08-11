@@ -9,13 +9,7 @@
 {% endblock %}
 
 {% block content %}
-  <section class="about-hero" aria-label="About introduction">
-    <div class="about-hero__copy">
-      <h1>WE LIKE TO BUILD<br>THINGS PEOPLE USE.</h1>
-      <span></span>
-      <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem<br>accusantium doloremque laudantium</p>
-    </div>
-  </section>
+  {% include "includes/page_intro.html" with eyebrow="About Al Bahaa" title_html="We like to build<br>things people use." description="Infrastructure, construction, and sustainable work shaped with a practical eye for long-term use." image="img/team/Rectangle 24 copy.png" %}
 
   <section class="about-overview" aria-label="Who we are and what we do">
     <img class="about-overview__image" src="{% static 'img/about/Rectangle 21.png' %}" alt="">

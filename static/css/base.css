@@ -40,7 +40,7 @@
   --container: 1200px;
   --container-narrow: 760px;
   --container-tablet: min(100% - 48px, var(--container-narrow));
-  --container-mobile: var(--container-mobile);
+  --container-mobile: calc(100% - 32px);
 
   --space-1: 0.5rem;
   --space-2: 1rem;
@@ -122,4 +122,9 @@ h4 {
   font-weight: 400;
   letter-spacing: 0;
   line-height: 1.13;
+}
+
+h1,
+h2 {
+  text-transform: uppercase;
 }

@@ -9,6 +9,8 @@
 {% endblock %}
 
 {% block content %}
+  {% include "includes/page_intro.html" with eyebrow="Project Detail" title=project.title description="A closer look at the intent, delivery, and context behind this project." image="img/projects/projects-band-4-recovered.png" %}
+
   <article class="project-detail" aria-label="Project detail">
     <section class="project-detail__panel">
       <h1>{{ project.title|linebreaksbr }}</h1>

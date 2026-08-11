@@ -48,7 +48,7 @@
   line-height: 1;
   text-transform: uppercase;
   gap: 22px;
-  font-size: 0.846rem;
+  font-size: 1rem;
 }
 
 .site-header__menu-toggle {
@@ -56,7 +56,10 @@
 }
 
 .site-footer {
-  padding: 70px 0 20px;
+  margin-top: 0;
+  padding: 92px 0 28px;
+  background: var(--color-primary);
+  color: var(--color-white);
 }
 
 .site-footer__inner {
@@ -71,9 +74,9 @@
 
 .quote-box {
   position: relative;
-  background: var(--color-primary);
-  color: var(--color-white);
-  box-shadow: none;
+  background: var(--color-background);
+  color: var(--color-primary);
+  box-shadow: 0 24px 50px rgb(0 0 0 / 18%);
   width: 430px;
   height: 248px;
   margin-left: 166px;
@@ -88,9 +91,9 @@
   top: 36px;
   width: 176px;
   height: 168px;
-  background: #ffffff;
+  background: rgb(255 255 255 / 18%);
   border: 0;
-  box-shadow: 0 18px 24px rgb(12 46 73 / 14%);
+  box-shadow: none;
   z-index: 0;
 }
 
@@ -101,7 +104,7 @@
   top: 36px;
   width: 108px;
   height: 168px;
-  border: 10px solid var(--color-primary);
+  border: 10px solid var(--color-white);
   border-right: 0;
   pointer-events: none;
   z-index: 0;
@@ -114,7 +117,7 @@
   width: 122px;
   height: 96px;
   margin: 0;
-  filter: none;
+  filter: brightness(0) invert(1);
   object-fit: contain;
   z-index: 1;
 }
@@ -134,7 +137,7 @@
   position: absolute;
   right: 20px;
   bottom: -4px;
-  color: rgb(255 255 255 / 88%);
+  color: rgb(12 46 73 / 20%);
   font-size: 9.077rem;
   font-weight: 700;
   line-height: 1;
@@ -149,8 +152,8 @@
 }
 
 .footer-contact {
-  border-top: var(--line-thin) solid var(--color-primary);
-  padding-top: 18px;
+  border-top: var(--line-thin) solid rgb(255 255 255 / 42%);
+  padding-top: 22px;
 }
 
 .footer-contact h2 {
@@ -158,6 +161,8 @@
   font-size: 1.231rem;
   font-weight: 700;
   line-height: 1;
+  text-transform: uppercase;
+  color: var(--color-white);
 }
 
 .footer-contact p, .site-footer__copyright {
@@ -168,6 +173,7 @@
 .footer-contact p {
   line-height: 2.15;
   text-transform: none;
+  color: rgb(255 255 255 / 72%);
 }
 
 .footer-contact__email {
@@ -182,17 +188,19 @@
 .footer-contact a:hover {
   text-decoration: underline;
   text-underline-offset: 4px;
+  color: var(--color-white);
 }
 
 .site-footer__copyright {
   margin: 64px auto 0;
   grid-column: 1 / -1;
   justify-self: center;
-  border-top: var(--line-thin) solid var(--color-border);
+  border-top: var(--line-thin) solid rgb(255 255 255 / 24%);
   padding-top: 33px;
   text-align: center;
   width: min(100%, 860px);
   margin-top: 58px;
+  color: rgb(255 255 255 / 62%);
 }
 
 @media (max-width: 1100px) {

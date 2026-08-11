@@ -1,0 +1,26 @@
+{% load static %}
+
+<section class="page-intro" aria-label="{{ eyebrow }}">
+  <p class="page-intro__eyebrow">{{ eyebrow }}</p>
+  <div class="page-intro__row">
+    <h1>
+      {% if title_html %}
+        {{ title_html|safe }}
+      {% else %}
+        {{ title|linebreaksbr }}
+      {% endif %}
+    </h1>
+    <div class="page-intro__meta">
+      <div class="page-intro__rule" aria-hidden="true"></div>
+      {% if description %}
+        <p>{{ description }}</p>
+      {% endif %}
+    </div>
+  </div>
+  {% if image %}
+    <div class="page-intro__media">
+      <img src="{% static image %}" alt="">
+      <span class="page-intro__scroll-cue" aria-hidden="true"></span>
+    </div>
+  {% endif %}
+</section>

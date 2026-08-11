@@ -1,40 +1,8 @@
-.about-hero {
-  position: relative;
-  height: 536px;
-  width: min(100% - 64px, 1160px);
-  margin: 92px auto 0;
-}
-
-.about-hero__copy {
-  position: absolute;
-  left: 394px;
-  top: 85px;
-}
-
-.about-hero h1 {
-  display: inline-block;
-  line-height: 1.27;
-  font-weight: 400;
-  transform: scaleX(1.26);
-  transform-origin: left top;
-  font-size: clamp(3.385rem, 4.1vw, 4.308rem);
-}
-
-.about-hero__copy span, .about-who span {
+.about-who span {
   display: block;
   width: 135px;
   height: 5px;
   background: var(--color-primary);
-}
-
-.about-hero__copy span {
-  margin-top: 42px;
-}
-
-.about-hero p {
-  font-size: 1.231rem;
-  line-height: 1.875;
-  margin-top: 54px;
 }
 
 .about-overview {
@@ -205,11 +173,6 @@
   grid-area: water;
 }
 
-.about-team__tower {
-  object-fit: cover;
-  grid-area: tower;
-  transform: translateY(51px);
-}
 
 .about-team__dark {
   object-fit: cover;
@@ -253,11 +216,11 @@
   font-style: italic;
 }
 
-.about-hero, .about-overview, .about-testimonials, .about-clients, .about-team {
+.about-overview, .about-testimonials, .about-clients, .about-team {
   height: auto;
 }
 
-.about-hero__copy, .about-testimonials__title, .about-team__title {
+.about-testimonials__title, .about-team__title {
   position: relative;
   left: auto;
   top: auto;
@@ -275,11 +238,8 @@
 }
 
 @media (max-width: 1100px) {
-  .about-hero, .about-overview, .about-testimonials, .about-clients, .about-team {
+  .about-overview, .about-testimonials, .about-clients, .about-team {
     width: var(--container-tablet);
-  }
-  .about-hero h1 {
-    font-size: clamp(3.077rem, 6vw, 4rem);
   }
   .about-overview__image {
     height: 400px;
@@ -305,33 +265,14 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 0;
   }
-  .about-team__tower {
-    transform: translateY(34px);
-  }
   .about-team__card {
     min-height: 330px;
   }
 }
 
 @media (max-width: 620px) {
-  .about-hero, .about-overview, .about-testimonials, .about-clients, .about-team {
+  .about-overview, .about-testimonials, .about-clients, .about-team {
     width: var(--container-mobile);
-  }
-  .about-hero {
-    margin-top: 66px;
-  }
-  .about-hero h1 {
-    font-size: 2.769rem;
-    line-height: 1.18;
-    transform: none;
-  }
-  .about-hero__copy span {
-    margin-top: 32px;
-  }
-  .about-hero p {
-    margin-top: 42px;
-    font-size: 1.231rem;
-    line-height: 1.85;
   }
   .about-overview {
     margin-top: 70px;
@@ -407,9 +348,6 @@
         "card card"
         "bottom bottom";
     grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-  .about-team__tower {
-    transform: translateY(22px);
   }
   .about-team__water-bottom {
     aspect-ratio: 390 / 220;
