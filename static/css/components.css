@@ -119,6 +119,26 @@
   object-position: center center;
 }
 
+.page-content {
+  position: relative;
+  width: min(100% - 96px, 1120px);
+  height: auto;
+  margin: 100px auto;
+}
+
+.page-content--wide {
+  width: min(100% - 64px, var(--container-wide));
+}
+
+.page-section {
+  width: min(100% - 64px, var(--container));
+  margin-inline: auto;
+}
+
+.page-section--wide {
+  width: min(100% - 64px, var(--container-wide));
+}
+
 .page-intro__scroll-cue {
   position: absolute;
   left: 50%;
@@ -339,6 +359,19 @@
     margin-top: clamp(42px, 6dvh, 62px);
   }
 
+  .page-content {
+    width: var(--container-tablet);
+  }
+
+  .page-content--wide {
+    width: var(--container-tablet);
+  }
+
+  .page-section,
+  .page-section--wide {
+    width: var(--container-tablet);
+  }
+
   .home-testimonials__cards,
   .home-testimonials__names,
   .about-testimonials__cards,
@@ -385,6 +418,19 @@
     flex-basis: clamp(240px, 42dvh, 360px);
     min-height: clamp(220px, 34dvh, 300px);
     margin-top: clamp(34px, 5dvh, 48px);
+  }
+
+  .page-content {
+    width: var(--container-mobile);
+  }
+
+  .page-content--wide {
+    width: var(--container-mobile);
+  }
+
+  .page-section,
+  .page-section--wide {
+    width: var(--container-mobile);
   }
 
   .home-section-title > div,

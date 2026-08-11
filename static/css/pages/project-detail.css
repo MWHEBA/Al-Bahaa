@@ -1,12 +1,7 @@
 .project-detail {
-  position: relative;
   display: grid;
   grid-template-columns: minmax(480px, 36%) minmax(0, 1fr);
   align-items: stretch;
-  width: 100%;
-  height: auto;
-  max-width: var(--container-wide);
-  margin: 96px auto 0;
 }
 
 .project-detail__panel {
@@ -130,10 +125,8 @@
 
 @media (max-width: 1100px) {
   .project-detail {
-    width: var(--container-tablet);
     display: flex;
     flex-direction: column-reverse;
-    margin: 72px auto 0;
   }
   .project-detail__image-wrap, .project-detail__image-wrap img {
     min-height: 0;
@@ -172,10 +165,6 @@
 }
 
 @media (max-width: 620px) {
-  .project-detail {
-    width: var(--container-mobile);
-    margin-top: 54px;
-  }
   .project-detail__image-wrap {
     aspect-ratio: 1 / 1.05;
   }

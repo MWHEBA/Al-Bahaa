@@ -2,13 +2,13 @@
   display: block;
   width: 135px;
   height: 5px;
+  margin-top: 42px;
   background: var(--color-primary);
 }
 
 .about-overview {
   position: relative;
   height: 1561px;
-  width: min(100% - 64px, var(--container-wide));
   margin: 96px auto 0;
 }
 
@@ -44,10 +44,6 @@
   display: inline-block;
   transform: scaleX(1.16);
   transform-origin: left top;
-}
-
-.about-who span {
-  margin-top: 42px;
 }
 
 .about-who p {
@@ -92,7 +88,6 @@
 .about-testimonials {
   position: relative;
   height: 850px;
-  width: min(100% - 64px, var(--container-wide));
   margin: 130px auto 0;
 }
 
@@ -122,14 +117,12 @@
 .about-clients {
   position: relative;
   height: 753px;
-  width: min(100% - 64px, var(--container));
   margin: 124px auto 0;
 }
 
 .about-team {
   position: relative;
   height: 1180px;
-  width: min(100% - 64px, var(--container));
   margin: 132px auto 0;
   padding-bottom: 110px;
 }
@@ -238,9 +231,6 @@
 }
 
 @media (max-width: 1100px) {
-  .about-overview, .about-testimonials, .about-clients, .about-team {
-    width: var(--container-tablet);
-  }
   .about-overview__image {
     height: 400px;
     min-height: 0;
@@ -271,9 +261,6 @@
 }
 
 @media (max-width: 620px) {
-  .about-overview, .about-testimonials, .about-clients, .about-team {
-    width: var(--container-mobile);
-  }
   .about-overview {
     margin-top: 70px;
   }
