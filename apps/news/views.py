@@ -6,12 +6,6 @@ class NewsListView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["show_footer_quote"] = True
-        context["footer_copyright"] = "© MOONLIGT 2017. ALL RIGHTS RESERVED"
-        context["footer_quote_text"] = (
-            "It is a long established fact that a reader will be distracted by the "
-            "readable content of a page when looking at its layout."
-        )
         excerpt = (
             "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots "
             "in a piece of classical Latin literature from 45 BC, making it over 2000 years "

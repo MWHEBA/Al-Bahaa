@@ -3,27 +3,6 @@
   background: var(--color-background);
 }
 
-.about-page .site-header {
-  height: 100px;
-}
-
-.about-page .site-header__inner {
-  width: 1800px;
-  height: 100px;
-  min-height: 100px;
-}
-
-.about-page .site-header__logo {
-  width: 123px;
-  filter: none;
-}
-
-.about-page .site-header__nav {
-  gap: 28px;
-  font-size: 12px;
-  line-height: 1;
-}
-
 .about-page main {
   width: 1920px;
   margin-inline: auto;
@@ -357,77 +336,9 @@
   font-style: italic;
 }
 
-.about-page .site-footer {
-  height: 561px;
-  padding: 0;
-}
-
-.about-page .site-footer__inner {
-  position: relative;
-  width: 728px;
-  height: 561px;
-  display: block;
-}
-
-.about-page .site-footer__contact-grid {
-  position: absolute;
-  left: 0;
-  top: 210px;
-  width: 728px;
-  display: grid;
-  grid-template-columns: 167px 171px 167px;
-  column-gap: 103px;
-}
-
-.about-page .footer-contact {
-  border-top: 1px solid var(--color-primary);
-  padding-top: 18px;
-}
-
-.about-page .footer-contact h2 {
-  margin-bottom: 38px;
-  font-size: 16px;
-  line-height: 1;
-}
-
-.about-page .footer-contact p {
-  font-size: 12px;
-  line-height: 2.5;
-}
-
-.about-page .site-footer__copyright {
-  position: absolute;
-  left: 0;
-  top: 351px;
-  width: 728px;
-  border-top: 1px solid #bcc8cf;
-  padding-top: 33px;
-  font-size: 12px;
-}
-
 @media (max-width: 1919px) {
   .about-page {
     min-width: 0;
-  }
-
-  .about-page .site-header {
-    height: 88px;
-    min-height: 88px;
-  }
-
-  .about-page .site-header__inner {
-    width: min(100% - 64px, 1320px);
-    height: 88px;
-    min-height: 88px;
-  }
-
-  .about-page .site-header__logo {
-    width: 123px;
-  }
-
-  .about-page .site-header__nav {
-    gap: 22px;
-    font-size: 11px;
   }
 
   .about-page main {
@@ -622,98 +533,9 @@
     min-height: 369px;
     padding: 46px 34px 34px 40px;
   }
-
-  .about-page .site-footer {
-    height: auto;
-    padding: 42px 0 72px;
-  }
-
-  .about-page .site-footer__inner {
-    position: relative;
-    width: min(100% - 64px, 728px);
-    height: auto;
-  }
-
-  .about-page .site-footer__contact-grid,
-  .about-page .site-footer__copyright {
-    position: relative;
-    left: auto;
-    top: auto;
-  }
-
-  .about-page .site-footer__contact-grid {
-    width: 100%;
-  }
-
-  .about-page .site-footer__copyright {
-    width: 100%;
-    margin-top: 62px;
-  }
 }
 
 @media (max-width: 1100px) {
-  .about-page .site-header__inner {
-    width: calc(100% - 40px);
-  }
-
-  .about-page .site-header__logo {
-    width: 118px;
-  }
-
-  .about-page .site-header__menu-toggle {
-    width: 48px;
-    height: 48px;
-    display: inline-flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
-    border: 1px solid rgb(255 255 255 / 50%);
-    background: transparent;
-    color: #ffffff;
-  }
-
-  .about-page .site-header__menu-toggle span:not(.site-header__menu-label) {
-    width: 22px;
-    height: 2px;
-    background: currentColor;
-  }
-
-  .about-page .site-header__menu-label {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip: rect(0 0 0 0);
-    white-space: nowrap;
-  }
-
-  .about-page .site-header__nav {
-    position: absolute;
-    left: 20px;
-    right: 20px;
-    top: 88px;
-    z-index: 10;
-    display: none;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0;
-    padding: 18px 0;
-    background: var(--color-primary);
-    box-shadow: 0 18px 30px rgb(0 0 0 / 18%);
-    font-size: 13px;
-  }
-
-  .about-page .site-header.is-menu-open .site-header__nav {
-    display: flex;
-  }
-
-  .about-page .site-header__nav a {
-    min-height: 46px;
-    display: flex;
-    align-items: center;
-    padding-inline: 24px;
-  }
 
   .about-hero,
   .about-overview,
@@ -776,26 +598,6 @@
 }
 
 @media (max-width: 620px) {
-  .about-page .site-header {
-    height: 76px;
-    min-height: 76px;
-  }
-
-  .about-page .site-header__inner {
-    width: calc(100% - 32px);
-    height: 76px;
-    min-height: 76px;
-  }
-
-  .about-page .site-header__logo {
-    width: 112px;
-  }
-
-  .about-page .site-header__nav {
-    top: 76px;
-    left: 16px;
-    right: 16px;
-  }
 
   .about-hero,
   .about-overview,
@@ -957,14 +759,5 @@
     margin-top: 32px;
     font-size: 15px;
     line-height: 1.85;
-  }
-
-  .about-page .site-footer__inner {
-    width: calc(100% - 32px);
-  }
-
-  .about-page .site-footer__contact-grid {
-    grid-template-columns: 1fr;
-    row-gap: 34px;
   }
 }

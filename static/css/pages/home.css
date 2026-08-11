@@ -3,26 +3,6 @@
   background: var(--color-background);
 }
 
-.home-page .site-header {
-  height: 100px;
-}
-
-.home-page .site-header__inner {
-  width: 1800px;
-  height: 100px;
-  min-height: 100px;
-}
-
-.home-page .site-header__logo {
-  width: 125px;
-}
-
-.home-page .site-header__nav {
-  gap: 28px;
-  font-size: 12px;
-  line-height: 1;
-}
-
 .home-page main {
   width: 1920px;
   margin-inline: auto;
@@ -507,77 +487,9 @@
   font-size: 20px;
 }
 
-.home-page .site-footer {
-  height: 390px;
-  padding: 0;
-}
-
-.home-page .site-footer__inner {
-  position: relative;
-  width: 728px;
-  height: 390px;
-  display: block;
-}
-
-.home-page .site-footer__contact-grid {
-  position: absolute;
-  left: 0;
-  top: 34px;
-  width: 728px;
-  display: grid;
-  grid-template-columns: 167px 171px 167px;
-  column-gap: 103px;
-}
-
-.home-page .footer-contact {
-  border-top: 1px solid var(--color-primary);
-  padding-top: 18px;
-}
-
-.home-page .footer-contact h2 {
-  margin-bottom: 38px;
-  font-size: 16px;
-  line-height: 1;
-}
-
-.home-page .footer-contact p {
-  font-size: 12px;
-  line-height: 2.5;
-}
-
-.home-page .site-footer__copyright {
-  position: absolute;
-  left: 0;
-  top: 227px;
-  width: 728px;
-  border-top: 1px solid #bcc8cf;
-  padding-top: 33px;
-  font-size: 12px;
-}
-
 @media (max-width: 1919px) {
   .home-page {
     min-width: 0;
-  }
-
-  .home-page .site-header {
-    height: 88px;
-    min-height: 88px;
-  }
-
-  .home-page .site-header__inner {
-    width: min(100% - 64px, 1320px);
-    height: 88px;
-    min-height: 88px;
-  }
-
-  .home-page .site-header__logo {
-    width: 118px;
-  }
-
-  .home-page .site-header__nav {
-    gap: 22px;
-    font-size: 11px;
   }
 
   .home-page main {
@@ -819,94 +731,9 @@
     left: 52%;
     top: 430px;
   }
-
-  .home-page .site-footer {
-    height: auto;
-    padding: 42px 0 72px;
-  }
-
-  .home-page .site-footer__inner {
-    position: relative;
-    width: min(100% - 64px, 728px);
-    height: auto;
-  }
-
-  .home-page .site-footer__contact-grid,
-  .home-page .site-footer__copyright {
-    position: relative;
-    left: auto;
-    top: auto;
-  }
-
-  .home-page .site-footer__contact-grid {
-    width: 100%;
-  }
-
-  .home-page .site-footer__copyright {
-    width: 100%;
-    margin-top: 62px;
-  }
 }
 
 @media (max-width: 1100px) {
-  .home-page .site-header__inner {
-    width: calc(100% - 40px);
-  }
-
-  .home-page .site-header__menu-toggle {
-    width: 48px;
-    height: 48px;
-    display: inline-flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
-    border: 1px solid rgb(255 255 255 / 50%);
-    background: transparent;
-    color: #ffffff;
-  }
-
-  .home-page .site-header__menu-toggle span:not(.site-header__menu-label) {
-    width: 22px;
-    height: 2px;
-    background: currentColor;
-  }
-
-  .home-page .site-header__menu-label {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip: rect(0 0 0 0);
-    white-space: nowrap;
-  }
-
-  .home-page .site-header__nav {
-    position: absolute;
-    left: 20px;
-    right: 20px;
-    top: 88px;
-    z-index: 10;
-    display: none;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0;
-    padding: 18px 0;
-    background: var(--color-primary);
-    box-shadow: 0 18px 30px rgb(0 0 0 / 18%);
-    font-size: 13px;
-  }
-
-  .home-page .site-header.is-menu-open .site-header__nav {
-    display: flex;
-  }
-
-  .home-page .site-header__nav a {
-    min-height: 46px;
-    display: flex;
-    align-items: center;
-    padding-inline: 24px;
-  }
 
   .home-hero {
     height: auto;
@@ -999,26 +826,6 @@
 }
 
 @media (max-width: 620px) {
-  .home-page .site-header {
-    height: 76px;
-    min-height: 76px;
-  }
-
-  .home-page .site-header__inner {
-    height: 76px;
-    min-height: 76px;
-    width: calc(100% - 32px);
-  }
-
-  .home-page .site-header__logo {
-    width: 108px;
-  }
-
-  .home-page .site-header__nav {
-    top: 76px;
-    left: 16px;
-    right: 16px;
-  }
 
   .home-hero {
     margin-inline: 16px;
@@ -1134,14 +941,5 @@
 
   .home-news__feature a {
     margin-left: 0;
-  }
-
-  .home-page .site-footer__inner {
-    width: calc(100% - 32px);
-  }
-
-  .home-page .site-footer__contact-grid {
-    grid-template-columns: 1fr;
-    row-gap: 34px;
   }
 }

@@ -7,8 +7,6 @@ class ProjectListView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["show_footer_quote"] = True
-        context["footer_copyright"] = "© MOONLIGT 2017. ALL RIGHTS RESERVED"
         context["project_bands"] = [
             {
                 "image": "img/projects/projects-band-1-recovered.png",
@@ -44,12 +42,6 @@ class ProjectDetailView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["show_footer_quote"] = True
-        context["footer_copyright"] = "© MOONLIGT 2017. ALL RIGHTS RESERVED"
-        context["footer_quote_text"] = (
-            "It is a long established fact that a reader will be distracted by the "
-            "readable content of a page when looking at its layout."
-        )
         context["project"] = {
             "slug": self.reference_slug,
             "title": "SED UT\nPERSPICIATIS",

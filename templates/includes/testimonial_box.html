@@ -1,10 +1,6 @@
 {% load static %}
 <aside class="quote-box">
-  <span class="quote-box__mark" aria-hidden="true">“</span>
-  {% if request.resolver_match.namespace == "projects" %}
-    <img class="quote-box__logo" src="{% static 'img/branding/about-pdf-logo.png' %}" alt="">
-  {% else %}
-    <img class="quote-box__logo" src="{% static 'img/branding/AlBahaa logo.svg' %}" alt="">
-  {% endif %}
-  <p>{{ footer_quote_text|default:"It is a long established fact that a reader will be distracted by readable content." }}</p>
+  <span class="quote-box__mark" aria-hidden="true">&ldquo;</span>
+  <img class="quote-box__logo" src="{% static 'img/branding/AlBahaa logo.svg' %}" alt="">
+  <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
 </aside>
