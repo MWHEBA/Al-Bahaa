@@ -1,0 +1,24 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}B-Group{% endblock %}</title>
+    <link rel="icon" href="{% static 'img/branding/AlBahaa logo.svg' %}" type="image/svg+xml">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/layout.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components.css' %}">
+    {% block extra_css %}{% endblock %}
+  </head>
+  <body class="{% block body_class %}{% endblock %}">
+    {% include "includes/header.html" %}
+    <main id="main-content">
+      {% block content %}{% endblock %}
+    </main>
+    {% include "includes/footer.html" %}
+    <script src="{% static 'js/alpine-components.js' %}" defer></script>
+    <script src="{% static 'js/main.js' %}" defer></script>
+    {% block extra_js %}{% endblock %}
+  </body>
+</html>

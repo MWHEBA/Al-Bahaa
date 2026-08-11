@@ -1,0 +1,8 @@
+<article class="project-card">
+  {% if image_url %}<img src="{{ image_url }}" alt="{{ title }}">{% endif %}
+  <div class="project-card__body">
+    <h2>{{ title }}</h2>
+    <p>{{ excerpt }}</p>
+    {% include "includes/button.html" with href=href label="View Project" variant="text" %}
+  </div>
+</article>

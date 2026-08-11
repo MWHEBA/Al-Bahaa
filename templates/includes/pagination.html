@@ -1,0 +1,7 @@
+{% if page_obj and page_obj.paginator.num_pages > 1 %}
+  <nav class="pagination" aria-label="Pagination">
+    {% for page_number in page_obj.paginator.page_range %}
+      <a class="pagination__item{% if page_obj.number == page_number %} is-active{% endif %}" href="?page={{ page_number }}">{{ page_number }}</a>
+    {% endfor %}
+  </nav>
+{% endif %}

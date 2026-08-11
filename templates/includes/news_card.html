@@ -1,0 +1,8 @@
+<article class="news-card">
+  {% if image_url %}<img src="{{ image_url }}" alt="{{ title }}">{% endif %}
+  <div class="news-card__body">
+    <h2>{{ title }}</h2>
+    <p>{{ excerpt }}</p>
+    {% include "includes/button.html" with href=href label="View More" %}
+  </div>
+</article>

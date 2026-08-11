@@ -1,0 +1,1 @@
+window.bgroup = window.bgroup || {};

@@ -1,0 +1,8 @@
+.env
+db.sqlite3
+staticfiles/
+validation/
+media/*
+!media/.gitkeep
+__pycache__/
+*.py[cod]
