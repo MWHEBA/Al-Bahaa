@@ -1,34 +1,25 @@
-.projects-page {
-  min-width: 1920px;
-  background: var(--color-background);
-}
-
-.projects-page main {
-  width: 1920px;
-  height: 3620px;
-  margin-inline: auto;
-}
-
 .projects-list {
   position: relative;
-  width: 1920px;
-  height: 3620px;
+  width: 100%;
+  height: auto;
+  padding: 32px 0 0;
 }
 
 .project-band {
   position: relative;
-  width: 1800px;
-  height: 890px;
-  margin-left: 60px;
-  margin-bottom: 20px;
-  overflow: hidden;
+  width: min(100% - 64px, var(--container-wide));
+  height: auto;
+  min-height: 650px;
+  margin: 0 auto 28px;
+  overflow: visible;
 }
 
 .project-band__image {
-  width: 1800px;
-  height: 890px;
-  object-fit: cover;
   object-position: center center;
+  width: 100%;
+  height: min(49vw, 650px);
+  min-height: 560px;
+  object-fit: cover;
 }
 
 .project-band--tower .project-band__image {
@@ -37,44 +28,47 @@
 
 .project-band__panel {
   position: absolute;
-  left: 1252px;
-  top: 137px;
-  width: 488px;
-  height: 595px;
-  padding: 50px 48px 0 51px;
   background: var(--color-primary);
   color: #ffffff;
+  left: auto;
+  right: 46px;
+  top: 50%;
+  width: min(42%, 488px);
+  height: auto;
+  min-height: 510px;
+  padding: 46px 42px 92px 46px;
+  transform: translateY(-50%);
 }
 
 .project-band__panel h1 {
   display: inline-block;
-  font-size: 40px;
   line-height: 1.24;
   font-weight: 400;
   transform: scaleX(1.08);
   transform-origin: left top;
+  font-size: clamp(2.615rem, 3vw, 3.077rem);
 }
 
 .project-band__copy {
-  margin-top: 57px;
-  width: 394px;
+  width: auto;
+  margin-top: 46px;
 }
 
 .project-band__copy p {
-  margin-bottom: 31px;
-  font-size: 14px;
+  font-size: 1.077rem;
   line-height: 1.785;
+  margin-bottom: 24px;
 }
 
 .project-band__link {
   position: absolute;
-  left: 51px;
-  bottom: 50px;
   display: inline-flex;
   align-items: center;
   gap: 14px;
-  font-size: 20px;
+  font-size: 1.538rem;
   line-height: 1;
+  left: 46px;
+  bottom: 42px;
 }
 
 .project-band__link span {
@@ -85,14 +79,15 @@
 
 .project-band__controls {
   position: absolute;
-  left: 27px;
-  top: 663px;
   width: 289px;
   height: 68px;
   display: flex;
   align-items: center;
   background: var(--color-primary);
   color: #ffffff;
+  left: 24px;
+  top: auto;
+  bottom: 42px;
 }
 
 .project-band__controls button {
@@ -102,106 +97,35 @@
   border: 2px solid #ffffff;
   background: transparent;
   color: inherit;
-  font-size: 13px;
+  font-size: 1rem;
   line-height: 1;
 }
 
 .project-band__controls span {
   margin-left: 82px;
-  font-size: 14px;
+  font-size: 1.077rem;
   line-height: 1;
 }
 
-@media (max-width: 1919px) {
-  .projects-page {
-    min-width: 0;
-  }
-
-  .projects-page main,
-  .projects-list {
-    width: 100%;
-    height: auto;
-  }
-
-  .projects-list {
-    padding: 32px 0 0;
-  }
-
-  .project-band {
-    width: min(100% - 64px, 1320px);
-    height: auto;
-    min-height: 650px;
-    margin: 0 auto 28px;
-    overflow: visible;
-  }
-
-  .project-band__image {
-    width: 100%;
-    height: min(49vw, 650px);
-    min-height: 560px;
-    object-fit: cover;
-  }
-
-  .project-band__panel {
-    left: auto;
-    right: 46px;
-    top: 50%;
-    width: min(42%, 488px);
-    height: auto;
-    min-height: 510px;
-    padding: 46px 42px 92px 46px;
-    transform: translateY(-50%);
-  }
-
-  .project-band__panel h1 {
-    font-size: clamp(34px, 3vw, 40px);
-  }
-
-  .project-band__copy {
-    width: auto;
-    margin-top: 46px;
-  }
-
-  .project-band__copy p {
-    margin-bottom: 24px;
-  }
-
-  .project-band__link {
-    left: 46px;
-    bottom: 42px;
-  }
-
-  .project-band__controls {
-    left: 24px;
-    top: auto;
-    bottom: 42px;
-  }
-}
-
 @media (max-width: 1100px) {
-
   .project-band {
-    width: min(100% - 48px, 760px);
+    width: var(--container-tablet);
     min-height: 0;
     display: grid;
     margin-bottom: 54px;
   }
-
   .project-band__image {
     height: auto;
     min-height: 0;
     aspect-ratio: 4 / 3;
     object-position: left center;
   }
-
   .project-band:nth-child(4) .project-band__image {
     aspect-ratio: 1 / 1;
   }
-
   .project-band--tower .project-band__image {
     object-position: left center;
   }
-
   .project-band__panel {
     position: relative;
     right: auto;
@@ -212,7 +136,6 @@
     padding: 46px 42px 98px;
     transform: none;
   }
-
   .project-band__controls {
     position: relative;
     left: auto;
@@ -225,50 +148,41 @@
 }
 
 @media (max-width: 620px) {
-
   .projects-list {
     padding-top: 18px;
   }
-
   .project-band {
-    width: calc(100% - 32px);
+    width: var(--container-mobile);
     margin-bottom: 48px;
   }
-
   .project-band__image {
     aspect-ratio: 4 / 3;
     object-position: left center;
   }
-
   .project-band__panel {
     width: calc(100% - 24px);
     margin-top: -34px;
     padding: 34px 28px 88px;
   }
-
   .project-band__panel h1 {
-    font-size: 32px;
+    font-size: 2.462rem;
     line-height: 1.2;
     transform: none;
   }
-
   .project-band__copy {
     margin-top: 34px;
   }
-
   .project-band__copy p {
     margin-bottom: 20px;
-    font-size: 14px;
+    font-size: 1.077rem;
     line-height: 1.75;
   }
-
   .project-band__link {
     left: 28px;
     bottom: 36px;
     min-height: 44px;
-    font-size: 18px;
+    font-size: 1.385rem;
   }
-
   .project-band__controls {
     width: 100%;
     height: 62px;
@@ -276,13 +190,11 @@
     justify-content: space-between;
     padding: 0 18px;
   }
-
   .project-band__controls button {
     width: 98px;
     height: 38px;
     margin-left: 0;
   }
-
   .project-band__controls span {
     margin-left: 0;
   }

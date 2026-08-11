@@ -1,16 +1,8 @@
-.about-page {
-  min-width: 1920px;
-  background: var(--color-background);
-}
-
-.about-page main {
-  width: 1920px;
-  margin-inline: auto;
-}
-
 .about-hero {
   position: relative;
   height: 536px;
+  width: min(100% - 64px, 1160px);
+  margin: 92px auto 0;
 }
 
 .about-hero__copy {
@@ -21,15 +13,14 @@
 
 .about-hero h1 {
   display: inline-block;
-  font-size: 56px;
   line-height: 1.27;
   font-weight: 400;
   transform: scaleX(1.26);
   transform-origin: left top;
+  font-size: clamp(3.385rem, 4.1vw, 4.308rem);
 }
 
-.about-hero__copy span,
-.about-who span {
+.about-hero__copy span, .about-who span {
   display: block;
   width: 135px;
   height: 5px;
@@ -41,45 +32,47 @@
 }
 
 .about-hero p {
-  margin-top: 64px;
-  font-size: 16px;
+  font-size: 1.231rem;
   line-height: 1.875;
+  margin-top: 54px;
 }
 
 .about-overview {
   position: relative;
   height: 1561px;
+  width: min(100% - 64px, var(--container-wide));
+  margin: 96px auto 0;
 }
 
 .about-overview__image {
-  position: absolute;
-  left: 60px;
-  top: 0;
-  width: 1800px;
-  height: 755px;
   object-fit: cover;
+  position: relative;
+  left: auto;
+  top: auto;
+  width: 100%;
+  height: min(39vw, 620px);
+  min-height: 460px;
+  object-position: center center;
 }
 
 .about-who {
   position: absolute;
   left: 978px;
   top: 444px;
-  width: 566px;
-  height: 692px;
-  padding: 63px 0 0 66px;
   background: #ffffff;
+  width: min(566px, 58%);
+  height: auto;
+  min-height: 610px;
+  margin: -240px 10% 0 auto;
+  padding: 58px 50px 58px 58px;
 }
 
-.about-who h2,
-.about-what h2,
-.about-section-title h2 {
-  font-size: 57px;
+.about-who h2, .about-what h2, .about-section-title h2 {
   line-height: 1.11;
-  font-weight: 400;
+  font-size: clamp(3.385rem, 4.3vw, 4.385rem);
 }
 
-.about-who h2,
-.about-what h2 {
+.about-who h2, .about-what h2 {
   display: inline-block;
   transform: scaleX(1.16);
   transform-origin: left top;
@@ -90,16 +83,18 @@
 }
 
 .about-who p {
-  margin-top: 58px;
   color: #8a969e;
-  font-size: 16px;
+  font-size: 1.231rem;
   line-height: 2;
+  margin-top: 50px;
 }
 
 .about-what {
   position: absolute;
   left: 377px;
   top: 841px;
+  width: min(100%, 620px);
+  margin: 108px 0 0 18%;
 }
 
 .about-what h2 {
@@ -110,13 +105,14 @@
   margin: 78px 0 0 0;
   padding: 0;
   list-style: none;
+  margin-top: 64px;
 }
 
 .about-what li {
   position: relative;
   margin-bottom: 29px;
   color: var(--color-primary);
-  font-size: 37px;
+  font-size: 2.846rem;
   line-height: 1.22;
 }
 
@@ -125,26 +121,11 @@
   margin-right: 6px;
 }
 
-.about-section-title p {
-  color: var(--color-primary);
-  font-size: 22px;
-  line-height: 1;
-}
-
-.about-section-title > div {
-  display: flex;
-  align-items: flex-end;
-}
-
-.about-section-title span {
-  display: block;
-  height: 1px;
-  background: #1b252c;
-}
-
 .about-testimonials {
   position: relative;
   height: 850px;
+  width: min(100% - 64px, var(--container-wide));
+  margin: 130px auto 0;
 }
 
 .about-testimonials__title {
@@ -159,88 +140,30 @@
 }
 
 .about-testimonials__cards {
-  position: absolute;
-  left: 60px;
-  top: 323px;
-  display: grid;
-  grid-template-columns: repeat(3, 536px);
-  gap: 92px;
+  margin-top: 76px;
 }
 
 .about-testimonial {
-  position: relative;
-  width: 536px;
-  height: 220px;
-  padding: 42px 0 0 40px;
-  background: #ffffff;
-}
-
-.about-testimonial--accent {
-  background: #c6e6f0;
-}
-
-.about-testimonial blockquote {
-  font-size: 16px;
-  line-height: 1.875;
-  font-style: italic;
+  padding: 42px 48px 42px 40px;
 }
 
 .about-testimonial span {
-  position: absolute;
   right: 31px;
-  bottom: -4px;
-  color: #d1d1d1;
-  font-family: Arial, sans-serif;
-  font-size: 154px;
-  font-weight: 700;
-  line-height: 1;
-}
-
-.about-testimonial--accent span {
-  color: #ffffff;
-}
-
-.about-testimonials__names {
-  position: absolute;
-  left: 60px;
-  top: 600px;
-  display: grid;
-  grid-template-columns: repeat(3, 536px);
-  gap: 92px;
-}
-
-.about-testimonials__names p {
-  font-size: 14px;
-  line-height: 1.85;
 }
 
 .about-clients {
   position: relative;
   height: 753px;
-}
-
-.about-clients__grid {
-  position: absolute;
-  left: 377px;
-  top: 238px;
-  width: 1160px;
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  column-gap: 78px;
-  row-gap: 56px;
-  align-items: center;
-  justify-items: center;
-}
-
-.about-clients__grid img {
-  max-width: 137px;
-  max-height: 75px;
-  object-fit: contain;
+  width: min(100% - 64px, var(--container));
+  margin: 124px auto 0;
 }
 
 .about-team {
   position: relative;
   height: 1180px;
+  width: min(100% - 64px, var(--container));
+  margin: 132px auto 0;
+  padding-bottom: 110px;
 }
 
 .about-team__title {
@@ -255,497 +178,242 @@
 }
 
 .about-team__collage {
-  position: absolute;
-  left: 376px;
-  top: 273px;
-  width: 1170px;
-  height: 780px;
+  position: relative;
+  left: auto;
+  top: auto;
+  width: 100%;
+  height: auto;
+  margin-top: 74px;
+  display: grid;
+  grid-template-areas: "water tower dark"
+    "bridge card bottom";
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: start;
 }
 
-.about-team__collage img,
-.about-team__card {
-  position: absolute;
+.about-team__collage img, .about-team__card {
+  position: relative;
+  left: auto;
+  top: auto;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 390 / 369;
 }
 
 .about-team__water-top {
-  left: 0;
-  top: 0;
-  width: 390px;
-  height: 369px;
   object-fit: cover;
+  grid-area: water;
 }
 
 .about-team__tower {
-  left: 388px;
-  top: 51px;
-  width: 390px;
-  height: 369px;
   object-fit: cover;
+  grid-area: tower;
+  transform: translateY(51px);
 }
 
 .about-team__dark {
-  left: 780px;
-  top: 0;
-  width: 390px;
-  height: 369px;
   object-fit: cover;
+  grid-area: dark;
 }
 
 .about-team__bridge {
-  left: 0;
-  top: 369px;
-  width: 390px;
-  height: 369px;
   object-fit: cover;
+  grid-area: bridge;
 }
 
 .about-team__water-bottom {
-  left: 780px;
-  top: 369px;
-  width: 390px;
-  height: 369px;
   object-fit: cover;
+  grid-area: bottom;
 }
 
 .about-team__card {
-  left: 393px;
-  top: 415px;
-  width: 390px;
-  height: 369px;
-  padding: 48px 0 0 42px;
   border: 9px solid var(--color-primary);
   background: #ffffff;
+  grid-area: card;
+  min-height: 369px;
+  padding: 46px 34px 34px 40px;
 }
 
 .about-team__card h3 {
-  font-size: 18px;
+  font-size: 1.385rem;
   font-weight: 700;
   line-height: 1.35;
 }
 
 .about-team__role {
   margin-top: 1px;
-  font-size: 18px;
+  font-size: 1.385rem;
   line-height: 1.35;
 }
 
 .about-team__card blockquote {
   margin-top: 45px;
-  font-size: 16px;
+  font-size: 1.231rem;
   line-height: 1.875;
   font-style: italic;
 }
 
-@media (max-width: 1919px) {
-  .about-page {
-    min-width: 0;
-  }
+.about-hero, .about-overview, .about-testimonials, .about-clients, .about-team {
+  height: auto;
+}
 
-  .about-page main {
-    width: 100%;
-  }
+.about-hero__copy, .about-testimonials__title, .about-team__title {
+  position: relative;
+  left: auto;
+  top: auto;
+}
 
-  .about-hero,
-  .about-overview,
-  .about-testimonials,
-  .about-clients,
-  .about-team {
-    height: auto;
-  }
+.about-who, .about-what {
+  position: relative;
+  left: auto;
+  top: auto;
+}
 
-  .about-hero {
-    width: min(100% - 64px, 1160px);
-    margin: 92px auto 0;
-  }
-
-  .about-hero__copy,
-  .about-testimonials__title,
-  .about-team__title {
-    position: relative;
-    left: auto;
-    top: auto;
-  }
-
-  .about-hero h1 {
-    font-size: clamp(44px, 4.1vw, 56px);
-  }
-
-  .about-hero p {
-    margin-top: 54px;
-  }
-
-  .about-overview {
-    width: min(100% - 64px, 1320px);
-    margin: 96px auto 0;
-  }
-
-  .about-overview__image {
-    position: relative;
-    left: auto;
-    top: auto;
-    width: 100%;
-    height: min(39vw, 620px);
-    min-height: 460px;
-    object-position: center center;
-  }
-
-  .about-who,
-  .about-what {
-    position: relative;
-    left: auto;
-    top: auto;
-  }
-
-  .about-who {
-    width: min(566px, 58%);
-    height: auto;
-    min-height: 610px;
-    margin: -240px 10% 0 auto;
-    padding: 58px 50px 58px 58px;
-  }
-
-  .about-who h2,
-  .about-what h2,
-  .about-section-title h2 {
-    font-size: clamp(44px, 4.3vw, 57px);
-  }
-
-  .about-who p {
-    margin-top: 50px;
-  }
-
-  .about-what {
-    width: min(100%, 620px);
-    margin: 108px 0 0 18%;
-  }
-
-  .about-what ul {
-    margin-top: 64px;
-  }
-
-  .about-testimonials {
-    width: min(100% - 64px, 1320px);
-    margin: 130px auto 0;
-  }
-
-  .about-section-title > div {
-    width: 100%;
-  }
-
-  .about-testimonials__title span,
-  .about-team__title span {
-    flex: 1;
-    width: auto;
-  }
-
-  .about-testimonials__cards,
-  .about-testimonials__names {
-    position: relative;
-    left: auto;
-    top: auto;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 24px;
-  }
-
-  .about-testimonials__cards {
-    margin-top: 76px;
-  }
-
-  .about-testimonials__names {
-    margin-top: 28px;
-  }
-
-  .about-testimonial {
-    width: auto;
-    height: auto;
-    min-height: 220px;
-    padding: 42px 48px 42px 40px;
-  }
-
-  .about-clients {
-    width: min(100% - 64px, 1020px);
-    margin: 124px auto 0;
-  }
-
-  .about-clients__grid {
-    position: relative;
-    left: auto;
-    top: auto;
-    width: 100%;
-    grid-template-columns: repeat(6, minmax(80px, 1fr));
-    column-gap: 46px;
-  }
-
-  .about-team {
-    width: min(100% - 64px, 1170px);
-    margin: 132px auto 0;
-    padding-bottom: 110px;
-  }
-
-  .about-team__collage {
-    position: relative;
-    left: auto;
-    top: auto;
-    width: 100%;
-    height: auto;
-    margin-top: 74px;
-    display: grid;
-    grid-template-areas:
-      "water tower dark"
-      "bridge card bottom";
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    align-items: start;
-  }
-
-  .about-team__collage img,
-  .about-team__card {
-    position: relative;
-    left: auto;
-    top: auto;
-    width: 100%;
-    height: auto;
-    aspect-ratio: 390 / 369;
-  }
-
-  .about-team__water-top {
-    grid-area: water;
-  }
-
-  .about-team__tower {
-    grid-area: tower;
-    transform: translateY(51px);
-  }
-
-  .about-team__dark {
-    grid-area: dark;
-  }
-
-  .about-team__bridge {
-    grid-area: bridge;
-  }
-
-  .about-team__water-bottom {
-    grid-area: bottom;
-  }
-
-  .about-team__card {
-    grid-area: card;
-    min-height: 369px;
-    padding: 46px 34px 34px 40px;
-  }
+.about-testimonials__title span, .about-team__title span {
+  flex: 1;
+  width: auto;
 }
 
 @media (max-width: 1100px) {
-
-  .about-hero,
-  .about-overview,
-  .about-testimonials,
-  .about-clients,
-  .about-team {
-    width: min(100% - 48px, 760px);
+  .about-hero, .about-overview, .about-testimonials, .about-clients, .about-team {
+    width: var(--container-tablet);
   }
-
   .about-hero h1 {
-    font-size: clamp(40px, 6vw, 52px);
+    font-size: clamp(3.077rem, 6vw, 4rem);
   }
-
   .about-overview__image {
     height: 400px;
     min-height: 0;
     object-position: center center;
   }
-
   .about-who {
     width: min(100% - 48px, 560px);
     min-height: 0;
     margin: -118px 0 0 auto;
     padding: 48px 44px;
   }
-
   .about-who p {
     margin-top: 42px;
   }
-
   .about-what {
     margin: 82px 0 0;
   }
-
-  .about-testimonials__cards,
-  .about-testimonials__names {
-    grid-template-columns: 1fr;
-  }
-
-  .about-clients__grid {
-    grid-template-columns: repeat(4, minmax(90px, 1fr));
-  }
-
   .about-team__collage {
-    grid-template-areas:
-      "water tower"
-      "dark bridge"
-      "card bottom";
+    grid-template-areas: "water tower"
+        "dark bridge"
+        "card bottom";
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 0;
   }
-
   .about-team__tower {
     transform: translateY(34px);
   }
-
   .about-team__card {
     min-height: 330px;
   }
 }
 
 @media (max-width: 620px) {
-
-  .about-hero,
-  .about-overview,
-  .about-testimonials,
-  .about-clients,
-  .about-team {
-    width: calc(100% - 32px);
+  .about-hero, .about-overview, .about-testimonials, .about-clients, .about-team {
+    width: var(--container-mobile);
   }
-
   .about-hero {
     margin-top: 66px;
   }
-
   .about-hero h1 {
-    font-size: 36px;
+    font-size: 2.769rem;
     line-height: 1.18;
     transform: none;
   }
-
   .about-hero__copy span {
     margin-top: 32px;
   }
-
   .about-hero p {
     margin-top: 42px;
-    font-size: 16px;
+    font-size: 1.231rem;
     line-height: 1.85;
   }
-
   .about-overview {
     margin-top: 70px;
   }
-
   .about-overview__image {
     height: 265px;
     object-position: center center;
   }
-
   .about-who {
     width: calc(100% - 20px);
     margin: -54px 0 0 auto;
     padding: 38px 28px;
   }
-
-  .about-who h2,
-  .about-what h2,
-  .about-section-title h2 {
-    font-size: 38px;
+  .about-who h2, .about-what h2, .about-section-title h2 {
+    font-size: 2.923rem;
     transform: none;
   }
-
   .about-who span {
     margin-top: 32px;
   }
-
   .about-who p {
     margin-top: 36px;
-    font-size: 15px;
+    font-size: 1.154rem;
     line-height: 1.85;
   }
-
   .about-what {
     margin-top: 64px;
   }
-
   .about-what ul {
     margin-top: 46px;
   }
-
   .about-what li {
     margin-bottom: 20px;
-    font-size: 28px;
+    font-size: 2.154rem;
   }
-
   .about-testimonials {
     margin-top: 82px;
   }
-
-  .about-section-title > div {
-    display: block;
-  }
-
   .about-section-title p {
-    font-size: 16px;
+    font-size: 1.231rem;
   }
-
   .about-section-title h2 {
     margin-top: 10px;
     line-height: 1.18;
   }
-
-  .about-section-title span {
-    width: 100%;
-    margin: 22px 0 0;
-  }
-
   .about-testimonials__cards {
     margin-top: 46px;
   }
-
   .about-testimonial {
     min-height: 0;
     padding: 34px 44px 34px 28px;
   }
-
   .about-testimonial blockquote {
-    font-size: 15px;
+    font-size: 1.154rem;
     line-height: 1.85;
   }
-
   .about-testimonial span {
     right: 22px;
     bottom: -2px;
-    font-size: 112px;
+    font-size: 8.615rem;
   }
-
   .about-clients {
     margin-top: 84px;
   }
-
-  .about-clients__grid {
-    grid-template-columns: repeat(2, minmax(110px, 1fr));
-    column-gap: 28px;
-  }
-
   .about-team {
     margin-top: 88px;
     padding-bottom: 70px;
   }
-
   .about-team__collage {
     margin-top: 46px;
-    grid-template-areas:
-      "water tower"
-      "dark bridge"
-      "card card"
-      "bottom bottom";
+    grid-template-areas: "water tower"
+        "dark bridge"
+        "card card"
+        "bottom bottom";
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-
   .about-team__tower {
     transform: translateY(22px);
   }
-
   .about-team__water-bottom {
     aspect-ratio: 390 / 220;
   }
-
   .about-team__card {
     width: calc(100% - 24px);
     min-height: 0;
@@ -754,10 +422,9 @@
     padding: 34px 26px;
     border-width: 7px;
   }
-
   .about-team__card blockquote {
     margin-top: 32px;
-    font-size: 15px;
+    font-size: 1.154rem;
     line-height: 1.85;
   }
 }

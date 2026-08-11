@@ -1,3 +1,27 @@
+@font-face {
+  font-family: "Ridley Grotesk";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../fonts/ridley-grotesk-demo-regular.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("../fonts/inter-latin.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Inter";
+  font-style: italic;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("../fonts/inter-latin-italic.woff2") format("woff2");
+}
+
 :root {
   --color-primary: #0c2e49;
   --color-primary-deep: #0b2d48;
@@ -8,12 +32,15 @@
   --color-muted: #5f6f7c;
   --color-border: #aebbc4;
 
-  --font-sans: "Segoe UI", "Noto Sans", Arial, sans-serif;
-  --font-heading: "Segoe UI", "Noto Sans", Arial, sans-serif;
+  --font-body: "Inter", sans-serif;
+  --font-heading: "Ridley Grotesk", sans-serif;
+  --font-size-root: 13px;
 
-  --container-wide: 1800px;
+  --container-wide: 1400px;
   --container: 1200px;
   --container-narrow: 760px;
+  --container-tablet: min(100% - 48px, var(--container-narrow));
+  --container-mobile: var(--container-mobile);
 
   --space-1: 0.5rem;
   --space-2: 1rem;
@@ -23,7 +50,7 @@
   --space-6: 4.5rem;
   --space-7: 7rem;
 
-  --header-height: 96px;
+  --header-height: 88px;
   --line-thin: 1px;
 }
 
@@ -35,6 +62,7 @@
 
 html {
   min-height: 100%;
+  font-size: var(--font-size-root);
   text-size-adjust: 100%;
 }
 
@@ -43,9 +71,20 @@ body {
   margin: 0;
   background: var(--color-background);
   color: var(--color-text);
-  font-family: var(--font-sans);
-  font-size: 16px;
+  font-family: var(--font-body);
+  font-size: 1rem;
   line-height: 1.65;
+}
+
+body[class$="-page"] {
+  min-width: 0;
+  background: var(--color-background);
+}
+
+body[class$="-page"] main {
+  width: 100%;
+  height: auto;
+  margin-inline: auto;
 }
 
 img,
