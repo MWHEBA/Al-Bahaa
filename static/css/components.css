@@ -2,17 +2,17 @@
   display: inline-flex;
   width: fit-content;
   min-width: 166px;
-  min-height: 64px;
+  min-height: 54px;
   padding: 0 28px;
   align-items: center;
   justify-content: center;
-  gap: 14px;
+  gap: 10px;
   border: 3px solid var(--color-primary);
   background: transparent;
   color: var(--color-primary);
   cursor: pointer;
   font-family: var(--font-heading);
-  font-size: 1.538rem;
+  font-size: 1.2rem;
   font-weight: 400;
   line-height: 1;
   text-align: center;
@@ -573,38 +573,100 @@
   font-size: 1.077rem;
 }
 
-.client-logo-grid {
-  display: grid;
-  grid-template-columns: repeat(6, minmax(80px, 1fr));
-  gap: var(--space-4);
-  align-items: center;
-}
-
-.client-logo-grid img {
-  max-height: 76px;
-  margin-inline: auto;
-  object-fit: contain;
-}
-
-.home-clients__grid,
-.about-clients__grid {
-  display: grid;
-  position: relative;
-  left: auto;
-  top: auto;
+/* ==========================================================================
+   Unified Client Logos Infinite Showcase Component
+   ========================================================================== */
+.client-showcase,
+.about-clients {
   width: 100%;
-  grid-template-columns: repeat(6, minmax(80px, 1fr));
-  column-gap: 46px;
-  row-gap: 56px;
-  align-items: center;
-  justify-items: center;
+  margin-top: var(--space-section);
 }
 
-.home-clients__grid img,
-.about-clients__grid img {
-  max-width: 137px;
-  max-height: 75px;
+.client-showcase__header,
+.about-clients__header {
+  margin-bottom: var(--space-3);
+}
+
+.client-showcase__label,
+.about-clients__label {
+  font-family: var(--font-heading);
+  font-size: 1.077rem;
+  letter-spacing: 0.08em;
+  color: var(--color-muted);
+  text-transform: uppercase;
+}
+
+.client-showcase__marquee,
+.about-clients__marquee {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  padding: clamp(24px, 3.5vw, 42px) 0;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+}
+
+.client-showcase__track,
+.about-clients__track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation: client-marquee 32s linear infinite;
+}
+
+.client-showcase__marquee:hover .client-showcase__track,
+.about-clients__marquee:hover .about-clients__track {
+  animation-play-state: paused;
+}
+
+.client-showcase__group,
+.about-clients__group {
+  display: flex;
+  align-items: center;
+  gap: clamp(48px, 6vw, 84px);
+  padding-right: clamp(48px, 6vw, 84px);
+  flex-shrink: 0;
+}
+
+.client-showcase__item,
+.about-clients__item,
+.client-logo-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.client-showcase__item img,
+.about-clients__item img,
+.client-logo-grid img,
+.client-logo-item img {
+  max-width: 130px;
+  max-height: 60px;
+  width: auto;
+  height: auto;
   object-fit: contain;
+  filter: grayscale(100%);
+  opacity: 0.65;
+  transition: opacity 200ms ease, filter 200ms ease, transform 200ms ease;
+}
+
+.client-showcase__item img:hover,
+.about-clients__item img:hover,
+.client-logo-grid img:hover,
+.client-logo-item img:hover {
+  filter: grayscale(0%);
+  opacity: 1;
+  transform: translateY(-2px);
+}
+
+@keyframes client-marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
 }
 
 @media (max-width: 1100px) {

@@ -3,6 +3,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.views import View
 from django.views.generic import TemplateView
 
+from apps.projects.models import Project
 from .forms import ContactForm, JobApplicationForm
 from .models import (
     ClientLogo,
@@ -22,10 +23,13 @@ class HomeView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        featured_projects = list(Project.objects.select_related("category").all()[:6])
         context["settings"] = SiteSettings.load()
-        context["testimonials"] = Testimonial.objects.filter(is_featured=True)[:6]
+        context["featured_projects"] = featured_projects
+        context["featured_project"] = featured_projects[0] if featured_projects else None
+        context["testimonials"] = Testimonial.objects.filter(is_featured=True)[:3]
         context["clients"] = ClientLogo.objects.all()[:12]
-        context["services"] = ServiceItem.objects.all()[:6]
+        context["services"] = ServiceItem.objects.all()[:4]
         return context
 
 

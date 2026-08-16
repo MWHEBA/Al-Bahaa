@@ -1,5 +1,54 @@
-<div class="client-logo-grid">
-  {% for logo in logos %}
-    <img src="{{ logo.url }}" alt="{{ logo.alt }}">
-  {% endfor %}
+{% load static %}
+<div class="client-showcase" aria-label="Trusted Partners and Clients">
+  <div class="client-showcase__header">
+    <p class="client-showcase__label">{{ label|default:"TRUSTED BY INDUSTRY LEADERS &amp; INSTITUTIONAL PARTNERS" }}</p>
+  </div>
+  <div class="client-showcase__marquee">
+    <div class="client-showcase__track">
+      <div class="client-showcase__group">
+        {% if clients %}
+          {% for client in clients %}
+            <div class="client-showcase__item">
+              <img src="{{ client.logo_image.url }}" alt="{{ client.name }}">
+            </div>
+          {% endfor %}
+        {% else %}
+          <div class="client-showcase__item"><img src="{% static 'img/clients/Layer 1.png' %}" alt="Institutional Engineering Partner"></div>
+          <div class="client-showcase__item"><img src="{% static 'img/clients/Layer 2.png' %}" alt="Commercial Development Partner"></div>
+          <div class="client-showcase__item"><img src="{% static 'img/clients/Layer 3.png' %}" alt="Infrastructure Sector Client"></div>
+          <div class="client-showcase__item"><img src="{% static 'img/clients/Layer 4.png' %}" alt="Corporate Enterprise Client"></div>
+          <div class="client-showcase__item"><img src="{% static 'img/clients/Layer 5.png' %}" alt="Industrial Construction Partner"></div>
+          <div class="client-showcase__item"><img src="{% static 'img/clients/Layer 6.png' %}" alt="Municipal Contracting Client"></div>
+          <div class="client-showcase__item"><img src="{% static 'img/clients/l3.png' %}" alt="Engineering Development Authority"></div>
+          <div class="client-showcase__item"><img src="{% static 'img/clients/logo_partner-3.png' %}" alt="Urban Infrastructure Partner"></div>
+          <div class="client-showcase__item"><img src="{% static 'img/clients/11.png' %}" alt="Contracting Federation Associate"></div>
+          <div class="client-showcase__item"><img src="{% static 'img/clients/logo_partner-8.png' %}" alt="Corporate Architectural Client"></div>
+          <div class="client-showcase__item"><img src="{% static 'img/clients/l4.png' %}" alt="Specialized Finishing Partner"></div>
+          <div class="client-showcase__item"><img src="{% static 'img/clients/Layer 1 copy.png' %}" alt="Infrastructure Network Client"></div>
+        {% endif %}
+      </div>
+      <div class="client-showcase__group" aria-hidden="true">
+        {% if clients %}
+          {% for client in clients %}
+            <div class="client-showcase__item">
+              <img src="{{ client.logo_image.url }}" alt="{{ client.name }}">
+            </div>
+          {% endfor %}
+        {% else %}
+          <div class="client-showcase__item"><img src="{% static 'img/clients/Layer 1.png' %}" alt="Institutional Engineering Partner"></div>
+          <div class="client-showcase__item"><img src="{% static 'img/clients/Layer 2.png' %}" alt="Commercial Development Partner"></div>
+          <div class="client-showcase__item"><img src="{% static 'img/clients/Layer 3.png' %}" alt="Infrastructure Sector Client"></div>
+          <div class="client-showcase__item"><img src="{% static 'img/clients/Layer 4.png' %}" alt="Corporate Enterprise Client"></div>
+          <div class="client-showcase__item"><img src="{% static 'img/clients/Layer 5.png' %}" alt="Industrial Construction Partner"></div>
+          <div class="client-showcase__item"><img src="{% static 'img/clients/Layer 6.png' %}" alt="Municipal Contracting Client"></div>
+          <div class="client-showcase__item"><img src="{% static 'img/clients/l3.png' %}" alt="Engineering Development Authority"></div>
+          <div class="client-showcase__item"><img src="{% static 'img/clients/logo_partner-3.png' %}" alt="Urban Infrastructure Partner"></div>
+          <div class="client-showcase__item"><img src="{% static 'img/clients/11.png' %}" alt="Contracting Federation Associate"></div>
+          <div class="client-showcase__item"><img src="{% static 'img/clients/logo_partner-8.png' %}" alt="Corporate Architectural Client"></div>
+          <div class="client-showcase__item"><img src="{% static 'img/clients/l4.png' %}" alt="Specialized Finishing Partner"></div>
+          <div class="client-showcase__item"><img src="{% static 'img/clients/Layer 1 copy.png' %}" alt="Infrastructure Network Client"></div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
 </div>

@@ -222,57 +222,7 @@
 
   <!-- Client Logos Infinite Carousel Section -->
   <section class="page-section page-section--wide about-clients" aria-label="Trusted Partners and Clients">
-    <div class="about-clients__header">
-      <p class="about-clients__label">TRUSTED BY INDUSTRY LEADERS &amp; INSTITUTIONAL PARTNERS</p>
-    </div>
-    <div class="about-clients__marquee">
-      <div class="about-clients__track">
-        <div class="about-clients__group">
-          {% if clients %}
-            {% for client in clients %}
-              <div class="about-clients__item">
-                <img src="{{ client.logo_image.url }}" alt="{{ client.name }}">
-              </div>
-            {% endfor %}
-          {% else %}
-            <div class="about-clients__item"><img src="{% static 'img/clients/Layer 1.png' %}" alt="Partner Logo"></div>
-            <div class="about-clients__item"><img src="{% static 'img/clients/Layer 2.png' %}" alt="Partner Logo"></div>
-            <div class="about-clients__item"><img src="{% static 'img/clients/Layer 3.png' %}" alt="Partner Logo"></div>
-            <div class="about-clients__item"><img src="{% static 'img/clients/Layer 4.png' %}" alt="Partner Logo"></div>
-            <div class="about-clients__item"><img src="{% static 'img/clients/Layer 5.png' %}" alt="Partner Logo"></div>
-            <div class="about-clients__item"><img src="{% static 'img/clients/Layer 6.png' %}" alt="Partner Logo"></div>
-            <div class="about-clients__item"><img src="{% static 'img/clients/l3.png' %}" alt="Partner Logo"></div>
-            <div class="about-clients__item"><img src="{% static 'img/clients/logo_partner-3.png' %}" alt="Partner Logo"></div>
-            <div class="about-clients__item"><img src="{% static 'img/clients/11.png' %}" alt="Partner Logo"></div>
-            <div class="about-clients__item"><img src="{% static 'img/clients/logo_partner-8.png' %}" alt="Partner Logo"></div>
-            <div class="about-clients__item"><img src="{% static 'img/clients/l4.png' %}" alt="Partner Logo"></div>
-            <div class="about-clients__item"><img src="{% static 'img/clients/Layer 1 copy.png' %}" alt="Partner Logo"></div>
-          {% endif %}
-        </div>
-        <div class="about-clients__group" aria-hidden="true">
-          {% if clients %}
-            {% for client in clients %}
-              <div class="about-clients__item">
-                <img src="{{ client.logo_image.url }}" alt="{{ client.name }}">
-              </div>
-            {% endfor %}
-          {% else %}
-            <div class="about-clients__item"><img src="{% static 'img/clients/Layer 1.png' %}" alt="Partner Logo"></div>
-            <div class="about-clients__item"><img src="{% static 'img/clients/Layer 2.png' %}" alt="Partner Logo"></div>
-            <div class="about-clients__item"><img src="{% static 'img/clients/Layer 3.png' %}" alt="Partner Logo"></div>
-            <div class="about-clients__item"><img src="{% static 'img/clients/Layer 4.png' %}" alt="Partner Logo"></div>
-            <div class="about-clients__item"><img src="{% static 'img/clients/Layer 5.png' %}" alt="Partner Logo"></div>
-            <div class="about-clients__item"><img src="{% static 'img/clients/Layer 6.png' %}" alt="Partner Logo"></div>
-            <div class="about-clients__item"><img src="{% static 'img/clients/l3.png' %}" alt="Partner Logo"></div>
-            <div class="about-clients__item"><img src="{% static 'img/clients/logo_partner-3.png' %}" alt="Partner Logo"></div>
-            <div class="about-clients__item"><img src="{% static 'img/clients/11.png' %}" alt="Partner Logo"></div>
-            <div class="about-clients__item"><img src="{% static 'img/clients/logo_partner-8.png' %}" alt="Partner Logo"></div>
-            <div class="about-clients__item"><img src="{% static 'img/clients/l4.png' %}" alt="Partner Logo"></div>
-            <div class="about-clients__item"><img src="{% static 'img/clients/Layer 1 copy.png' %}" alt="Partner Logo"></div>
-          {% endif %}
-        </div>
-      </div>
-    </div>
+    {% include "includes/client_logos.html" %}
   </section>
 
   <!-- Bottom Call-To-Action -->

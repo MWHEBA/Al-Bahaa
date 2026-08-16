@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}Moonlight Architecture Studio{% endblock %}
+{% block title %}Al Bahaa Contracting (S.A.E) | Architecture, Infrastructure &amp; Engineering Landmarks{% endblock %}
 {% block body_class %}home-page{% endblock %}
 
 {% block extra_css %}
@@ -9,119 +9,131 @@
 {% endblock %}
 
 {% block content %}
-  <section class="home-hero" aria-label="Moonlight Architecture Studio">
-    <img class="home-hero__image" src="{% static 'img/home/Rectangle 3.png' %}" alt="">
-    <div class="home-hero__copy">
-      <h1>MOONLIGHT<br>ARCHITECTURE STUDIO</h1>
-      <p>There are many variations of passages of Lorem<br>Ipsum available, but the majority have suffered<br>alteration in some form, by injected humour</p>
-      <a class="button button--outline home-hero__button" href="#">View More</a>
+  <!-- Hero Section: Architectural Monograph Editorial Banner -->
+  <section class="home-hero page-section page-section--wide" aria-label="Al Bahaa Contracting">
+    <div class="home-hero__media">
+      <img class="home-hero__image" src="{% static 'img/home/Rectangle 3.png' %}" alt="Al Bahaa Architectural Engineering Landmark">
+    </div>
+    <div class="home-hero__card">
+      <span class="home-hero__eyebrow">AL BAHAA CONTRACTING (S.A.E)</span>
+      <h1 class="home-hero__title">ENGINEERING EXCELLENCE &amp;<br>CIVIL INFRASTRUCTURE</h1>
+      <p class="home-hero__desc">Established in 1986, Al Bahaa delivers Grade A water networks, turnkey civil construction, and enduring architectural landmarks across Egypt with disciplined execution.</p>
+      <div class="home-hero__actions">
+        <a class="button button--solid" href="{% url 'projects:list' %}">Explore Projects</a>
+        <a class="button" href="{% url 'core:about' %}">About Al Bahaa</a>
+      </div>
     </div>
   </section>
 
-  <section class="home-intro" aria-label="Our Specialization">
+  <!-- Specialization & Capabilities Section -->
+  <section class="page-section page-section--wide home-intro" aria-label="Our Specialization and Engineering Craftsmanship">
     <div class="home-specialization">
       <h2>OUR<br>SPECIALIZATION.</h2>
-      <h3>ARCHITECTURE</h3>
-      <p>It is a long established fact that a<br>reader will be distracted by the<br>readable content of a page when<br>looking at its layout. The point of<br>using Lorem Ipsum is that it has a<br>more</p>
+      <h3 class="home-specialization__discipline">GRADE A INFRASTRUCTURE</h3>
+      <p class="home-specialization__desc">Specialized in municipal water transmission pipelines, sewage collector networks, pumping stations, and stormwater drainage systems engineered to exacting standards.</p>
       <div class="home-specialization__nav">
-        <button type="button" class="button button--solid button--split-previous home-specialization__previous">Previous</button>
-        <button type="button" class="button button--split-next home-specialization__next">Next</button>
+        <button type="button" class="button button--solid button--split-previous home-specialization__previous" aria-label="Previous Specialization">Previous</button>
+        <button type="button" class="button button--split-next home-specialization__next" aria-label="Next Specialization">Next</button>
       </div>
     </div>
-    <img class="home-intro__image" src="{% static 'img/home/Rectangle 8.png' %}" alt="">
+    <div class="home-intro__media">
+      <img class="home-intro__image" src="{% static 'img/home/Rectangle 8.png' %}" alt="Engineering Execution Rigor">
+    </div>
     <div class="home-works">
-      <h2>WE TURN IDEAS INTO<br>WORKS OF ART.</h2>
-      <p>It is a long established fact that a reader will be<br>distracted by the readable content of a page when<br>looking at its layout. The point of using Lorem Ipsum is<br>that it has a more-or-less normal distribution of letters,<br>as opposed to using 'Content here, content here',<br>making it look like readable English. Many desktop<br>publishing packages and web page editors now use<br>Lorem Ipsum as their.</p>
-      <a class="button button--outline home-works__button" href="#">View More</a>
+      <h2>WE TURN BLUEPRINTS INTO<br>ENDURING REALITY.</h2>
+      <p>With more than three decades of engineering leadership and active membership in the Egyptian Federation for Construction, Al Bahaa delivers turnkey civil, residential, and infrastructure landmarks on schedule, within budget, and to the highest QA/QC standards.</p>
+      <a class="button home-works__button" href="{% url 'core:about' %}">View More</a>
     </div>
   </section>
 
-  <section class="home-projects" aria-label="Our Projects">
-    <div class="home-section-title home-projects__title">
-      <p>OUR PROJECTS.</p>
-      <div>
-        <h2>We like to build<br>Things people use.</h2>
-        <span></span>
-      </div>
-    </div>
+  <!-- Featured Projects Mosaic Section -->
+  <section class="page-section page-section--wide home-projects" aria-label="Our Featured Projects">
+    {% include "includes/section_heading.html" with eyebrow="OUR PROJECTS." title="We like to build<br>things people use." %}
+
     <div class="home-projects__mosaic">
-      <img class="home-projects__drawing" src="{% static 'img/home/Rectangle 9.png' %}" alt="">
-      <img class="home-projects__tower-white" src="{% static 'img/home/Rectangle 9 copy.png' %}" alt="">
+      <img class="home-projects__drawing" src="{% static 'img/home/Rectangle 9.png' %}" alt="Architectural Blueprint and Master Plan">
+      <img class="home-projects__tower-white" src="{% static 'img/home/Rectangle 9 copy.png' %}" alt="Prime Administrative Tower Development">
+      
       <article class="home-projects__card">
-        <h3>SED UT PERSPICIATIS</h3>
-        <p>There are many variations of passages<br>of Lorem Ipsum available, but the<br>majority have suffered alteration in<br>some form, by injected humour, or<br>randomised</p>
-        <a class="button button--text button--arrow" href="#">View Project</a>
+        {% if featured_project %}
+          <h3>{{ featured_project.title|upper }}</h3>
+          <p>{{ featured_project.short_description|default:featured_project.full_description|truncatewords:18 }}</p>
+          <a class="button button--text button--arrow" href="{% url 'projects:detail' slug=featured_project.slug %}">View Project</a>
+        {% else %}
+          <h3>CENTRAL BUSINESS HUB</h3>
+          <p>Turnkey commercial and administrative complex engineered with high-durability reinforced concrete and advanced MEP coordination.</p>
+          <a class="button button--text button--arrow" href="{% url 'projects:list' %}">View Project</a>
+        {% endif %}
       </article>
-      <img class="home-projects__pipes" src="{% static 'img/home/Rectangle 9 copy 11.png' %}" alt="">
-      <img class="home-projects__column" src="{% static 'img/home/Rectangle 9 copy 2.png' %}" alt="">
-      <img class="home-projects__glass" src="{% static 'img/home/Rectangle 9 copy 3.png' %}" alt="">
-      <img class="home-projects__water" src="{% static 'img/home/Rectangle 9 copy 4.png' %}" alt="">
+
+      <img class="home-projects__pipes" src="{% static 'img/home/Rectangle 9 copy 11.png' %}" alt="Municipal Water and Sewage Infrastructure Networks">
+      <img class="home-projects__column" src="{% static 'img/home/Rectangle 9 copy 2.png' %}" alt="Reinforced Concrete and Heavy Civil Works">
+      <img class="home-projects__glass" src="{% static 'img/home/Rectangle 9 copy 3.png' %}" alt="Modern Architectural Glass Facade Construction">
+      <img class="home-projects__water" src="{% static 'img/home/Rectangle 9 copy 4.png' %}" alt="Water Treatment and Pumping Station Engineering">
+    </div>
+
+    <div class="home-projects__footer">
+      <a class="button button--solid" href="{% url 'projects:list' %}">View All Projects</a>
     </div>
   </section>
 
-  <section class="home-testimonials" aria-label="Our Client">
-    <div class="home-testimonials__rule"></div>
-    <div class="home-section-title home-testimonials__title">
-      <p>OUR CLIENT.</p>
-      <div>
-        <h2>What others say<br>about our work.</h2>
-        <span></span>
-      </div>
-    </div>
+  <!-- Testimonials & Client Trust Section -->
+  <section class="page-section page-section--wide home-testimonials" aria-label="Client Trust and Endorsements">
+    {% include "includes/section_heading.html" with eyebrow="OUR CLIENT." title="What others say<br>about our work." %}
+
     <div class="home-testimonials__cards">
       <article class="home-testimonial">
-        <blockquote>"Sed ut perspiciatis unde omnis iste natus error sit<br>voluptatem accusantium doloremque laudantium, totam<br>rem aperiam, eaque ipsa quae ab illo inventore veritatis et<br>quasi architecto beatae</blockquote>
-        <span>”</span>
+        <blockquote>"Al Bahaa's execution on major municipal infrastructure works demonstrated impeccable technical rigor, Grade A compliance, and flawless coordination."</blockquote>
+        <span class="home-testimonial__mark" aria-hidden="true">”</span>
+        <footer class="home-testimonial__footer">
+          <strong>Consulting Engineers Group (CEG)</strong>
+          <span class="home-testimonial__role">Project Supervision</span>
+        </footer>
       </article>
+
       <article class="home-testimonial">
-        <blockquote>"Sed ut perspiciatis unde omnis iste natus error sit<br>voluptatem accusantium doloremque laudantium, totam<br>rem aperiam, eaque ipsa quae ab illo inventore veritatis et<br>quasi architecto beatae</blockquote>
-        <span>”</span>
+        <blockquote>"Their adherence to structural milestones, safety protocols, and quality control sets a benchmark for joint-stock contractors in Egypt."</blockquote>
+        <span class="home-testimonial__mark" aria-hidden="true">”</span>
+        <footer class="home-testimonial__footer">
+          <strong>Urban Communities Authority</strong>
+          <span class="home-testimonial__role">Infrastructure Division</span>
+        </footer>
       </article>
+
       <article class="home-testimonial home-testimonial--accent">
-        <blockquote>"Sed ut perspiciatis unde omnis iste natus error sit<br>voluptatem accusantium doloremque laudantium, totam<br>rem aperiam, eaque ipsa quae ab illo inventore veritatis et<br>quasi architecto beatae</blockquote>
-        <span>”</span>
+        <blockquote>"Turnkey project delivery executed with superior craftsmanship, delivered on schedule with outstanding attention to engineering QA/QC."</blockquote>
+        <span class="home-testimonial__mark" aria-hidden="true">”</span>
+        <footer class="home-testimonial__footer">
+          <strong>Prime Developments</strong>
+          <span class="home-testimonial__role">Executive Management</span>
+        </footer>
       </article>
     </div>
-    <div class="home-testimonials__names">
-      <p><strong>Phillip Cummings</strong><br>CEO - Jooant JC</p>
-      <p><strong>Ryan Moore</strong><br>CEO - Digital BB</p>
-      <p><strong>Chester Gibson</strong><br>Maketing Manager</p>
-    </div>
   </section>
 
-  <section class="home-clients" aria-label="Client Logos">
-    <div class="home-clients__grid">
-      <img src="{% static 'img/clients/Layer 1.png' %}" alt="Miller">
-      <img src="{% static 'img/clients/Layer 2.png' %}" alt="The Don">
-      <img src="{% static 'img/clients/Layer 3.png' %}" alt="The Spades">
-      <img src="{% static 'img/clients/Layer 4.png' %}" alt="Creative">
-      <img src="{% static 'img/clients/Layer 5.png' %}" alt="Jackerson">
-      <img src="{% static 'img/clients/Layer 6.png' %}" alt="The White">
-      <img src="{% static 'img/clients/l3.png' %}" alt="Bicycle Company">
-      <img src="{% static 'img/clients/logo_partner-3.png' %}" alt="Handmade">
-      <img src="{% static 'img/clients/11.png' %}" alt="Round logo">
-      <img src="{% static 'img/clients/logo_partner-8.png' %}" alt="Steve Harold">
-      <img src="{% static 'img/clients/l4.png' %}" alt="Tasty Treats">
-      <img src="{% static 'img/clients/Layer 1 copy.png' %}" alt="Miller">
-    </div>
+  <!-- Client Logos Section -->
+  <section class="page-section page-section--wide home-clients" aria-label="Institutional Partners and Client Logos">
+    {% include "includes/client_logos.html" %}
   </section>
 
-  <section class="home-news" aria-label="Latest News">
-    <div class="home-section-title home-news__title">
-      <p>LATEST NEWS.</p>
-      <div>
-        <h2>Updated news<br>about architecture.</h2>
-        <span></span>
+  <!-- News & Engineering Insights Section -->
+  <section class="page-section page-section--wide home-news" aria-label="Latest News and Corporate Updates">
+    {% include "includes/section_heading.html" with eyebrow="LATEST NEWS." title="Updated news<br>about architecture &amp; civil works." %}
+
+    <div class="home-news__feature">
+      <img src="{% static 'img/home/Rectangle 15.png' %}" alt="Advancing Municipal Infrastructure in Egypt">
+      <article class="home-news__article">
+        <h3>Advancing Egypt's Water &amp; Infrastructure Networks</h3>
+        <p>Al Bahaa continues to expand its Grade A infrastructure division, implementing modern trenchless piping and automated pumping station technologies for major national development initiatives across Egypt.</p>
+        <a class="button button--text button--arrow" href="{% url 'news:list' %}">Read Full Report</a>
+      </article>
+      <div class="home-news__action">
+        <a class="button button--dark home-news__next" href="{% url 'news:list' %}">ALL NEWS</a>
       </div>
     </div>
-    <div class="home-news__feature">
-      <img src="{% static 'img/home/Rectangle 15.png' %}" alt="">
-      <article>
-        <h3>Study 800 Numbers Still<br>Popular With</h3>
-        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium<br>doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore<br>veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam<br>voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur<br>magni</p>
-        <a class="button button--text button--arrow" href="#">View Project</a>
-      </article>
-      <button class="button button--dark home-news__next" type="button">NEXT</button>
-    </div>
   </section>
+{% endblock %}
+
+{% block extra_js %}
+  <script src="{% static 'js/home.js' %}"></script>
 {% endblock %}
