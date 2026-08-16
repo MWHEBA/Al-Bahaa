@@ -34,6 +34,8 @@ class AboutView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["team_members"] = TeamMember.objects.all()
+        context["testimonials"] = Testimonial.objects.filter(is_featured=True)[:3]
+        context["clients"] = ClientLogo.objects.all()[:12]
         context["settings"] = SiteSettings.load()
         return context
 

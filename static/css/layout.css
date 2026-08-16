@@ -254,11 +254,11 @@
     gap: 5px;
     border: 1px solid rgb(255 255 255 / 50%);
     background: transparent;
-    color: #ffffff;
+    color: var(--color-white);
     transition: background-color 180ms ease, border-color 180ms ease, transform 180ms ease;
   }
   .site-header__menu-toggle:hover {
-    border-color: #ffffff;
+    border-color: var(--color-white);
     background: rgb(255 255 255 / 10%);
     transform: translateY(-1px);
   }

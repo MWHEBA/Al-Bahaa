@@ -124,12 +124,11 @@
   z-index: 1;
 }
 
+.project-band__title,
 .project-band__panel h1 {
   display: inline-block;
   line-height: 1.24;
   font-weight: 400;
-  transform: scaleX(1.08);
-  transform-origin: left top;
   font-size: clamp(1.8rem, 2.2vw, 2.5rem);
 }
 
@@ -183,13 +182,6 @@
   box-shadow: none;
   font-size: 1.25rem;
   transition: color 150ms ease, transform 150ms ease;
-}
-
-.project-band__link::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 2;
 }
 
 .project-band:hover .project-band__link {

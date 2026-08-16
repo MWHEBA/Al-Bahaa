@@ -1,355 +1,581 @@
-.about-who span {
-  display: block;
-  width: 135px;
-  height: 5px;
-  margin-top: 42px;
-  background: var(--color-primary);
+/* ==========================================================================
+   About Us Page Styles — Architectural Editorial Monograph
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Overview Section: Architectural Media & Floating Editorial Card
+   -------------------------------------------------------------------------- */
+.about-overview {
+  margin-top: clamp(60px, 8vw, 100px);
 }
 
-.about-overview {
+.about-overview__media {
+  width: 100%;
+  height: min(44vw, 560px);
+  min-height: 380px;
+  overflow: hidden;
   position: relative;
-  height: 1561px;
-  margin: 96px auto 0;
 }
 
 .about-overview__image {
-  object-fit: cover;
-  position: relative;
-  left: auto;
-  top: auto;
   width: 100%;
-  height: min(39vw, 620px);
-  min-height: 460px;
+  height: 100%;
+  object-fit: cover;
   object-position: center center;
 }
 
 .about-who {
-  position: absolute;
-  left: 978px;
-  top: 444px;
-  background: #ffffff;
-  width: min(566px, 58%);
-  height: auto;
-  min-height: 610px;
-  margin: -240px 10% 0 auto;
-  padding: 58px 50px 58px 58px;
+  background: var(--color-white);
+  width: min(580px, 86%);
+  margin: -180px 4% 0 auto;
+  position: relative;
+  z-index: 2;
+  padding: clamp(36px, 4.5vw, 64px);
 }
 
-.about-who h2, .about-what h2, .about-section-title h2 {
-  line-height: 1.11;
-  font-size: clamp(3.385rem, 4.3vw, 4.385rem);
+.about-who h2 {
+  font-size: clamp(2.8rem, 3.8vw, 4.2rem);
+  line-height: 1.05;
+  color: var(--color-primary);
 }
 
-.about-who h2, .about-what h2 {
-  display: inline-block;
-  transform: scaleX(1.16);
-  transform-origin: left top;
+.about-who__divider {
+  display: block;
+  width: 96px;
+  height: 4px;
+  margin-top: 28px;
+  background: var(--color-primary);
 }
 
 .about-who p {
-  color: #8a969e;
-  font-size: 1.231rem;
-  line-height: 2;
-  margin-top: 50px;
+  color: var(--color-muted);
+  font-size: 1.154rem;
+  line-height: 1.9;
+  margin-top: 32px;
 }
 
+/* --------------------------------------------------------------------------
+   3. What We Do Capabilities Grid
+   -------------------------------------------------------------------------- */
 .about-what {
-  position: absolute;
-  left: 377px;
-  top: 841px;
-  width: min(100%, 620px);
-  margin: 108px 0 0 18%;
+  margin-top: clamp(60px, 7vw, 92px);
+  padding: 0 4%;
 }
 
 .about-what h2 {
-  line-height: 1.25;
-}
-
-.about-what ul {
-  margin: 78px 0 0 0;
-  padding: 0;
-  list-style: none;
-  margin-top: 64px;
-}
-
-.about-what li {
-  position: relative;
-  margin-bottom: 29px;
+  font-size: clamp(2.2rem, 3vw, 3.2rem);
   color: var(--color-primary);
-  font-size: 2.846rem;
-  line-height: 1.22;
+  margin-bottom: var(--space-4);
 }
 
-.about-what li::before {
-  content: "B";
-  margin-right: 6px;
+.about-what__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(24px, 3.5vw, 42px);
 }
 
-.about-testimonials {
+.about-what__list li {
   position: relative;
-  height: 850px;
-  margin: 130px auto 0;
+  padding-left: 24px;
 }
 
-.about-testimonials__title {
+.about-what__list li::before {
+  content: "";
   position: absolute;
-  left: 376px;
-  top: 50px;
+  left: 0;
+  top: 8px;
+  width: 10px;
+  height: 3px;
+  background: var(--color-primary);
 }
 
-.about-testimonials__title span {
-  width: 700px;
-  margin: 0 0 21px 16px;
+.about-what__list strong {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: 1.385rem;
+  font-weight: 500;
+  color: var(--color-primary);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+
+.about-what__list span {
+  display: block;
+  color: var(--color-muted);
+  font-size: 1.077rem;
+  line-height: 1.75;
+}
+
+/* --------------------------------------------------------------------------
+   4. Engineering Pillars Grid
+   -------------------------------------------------------------------------- */
+.about-pillars {
+  margin-top: clamp(90px, 10vw, 140px);
+}
+
+.about-pillars__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px;
+  margin-top: var(--space-5);
+}
+
+.about-pillar {
+  background: var(--color-white);
+  padding: clamp(36px, 4vw, 48px);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.about-pillar__num {
+  font-family: var(--font-heading);
+  font-size: 2.2rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  line-height: 1;
+  margin-bottom: 24px;
+  display: block;
+}
+
+.about-pillar h3 {
+  font-size: 1.462rem;
+  font-weight: 500;
+  color: var(--color-primary);
+  line-height: 1.25;
+  margin-bottom: 16px;
+}
+
+.about-pillar p {
+  color: var(--color-muted);
+  font-size: 1.077rem;
+  line-height: 1.8;
+}
+
+/* --------------------------------------------------------------------------
+   5. Testimonials Section
+   -------------------------------------------------------------------------- */
+.about-testimonials {
+  margin-top: clamp(90px, 10vw, 140px);
 }
 
 .about-testimonials__cards {
-  margin-top: 76px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px;
+  margin-top: var(--space-5);
 }
 
 .about-testimonial {
-  padding: 42px 48px 42px 40px;
-}
-
-.about-testimonial span {
-  right: 31px;
-}
-
-.about-clients {
+  background: var(--color-white);
+  padding: clamp(34px, 3.8vw, 46px);
   position: relative;
-  height: 753px;
-  margin: 124px auto 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 320px;
 }
 
-.about-team {
+.about-testimonial--accent {
+  background: var(--color-background-soft);
+}
+
+.about-testimonial blockquote {
+  font-size: 1.154rem;
+  font-style: italic;
+  line-height: 1.85;
+  color: var(--color-text);
   position: relative;
-  height: 1180px;
-  margin: 132px auto 0;
-  padding-bottom: 110px;
+  z-index: 1;
 }
 
-.about-team__title {
+.about-testimonial__quote-mark {
   position: absolute;
-  left: 376px;
-  top: 0;
+  right: 28px;
+  bottom: 20px;
+  color: var(--color-border);
+  opacity: 0.35;
+  font-size: 8rem;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
 }
 
-.about-team__title span {
-  width: 705px;
-  margin: 0 0 21px 49px;
+.about-testimonial--accent .about-testimonial__quote-mark {
+  color: var(--color-white);
+  opacity: 0.6;
 }
 
-.about-team__collage {
+.about-testimonial__author {
+  margin-top: 36px;
   position: relative;
-  left: auto;
-  top: auto;
-  width: 100%;
-  height: auto;
-  margin-top: 74px;
+  z-index: 1;
+}
+
+.about-testimonial__author cite {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: 1.231rem;
+  font-weight: 600;
+  font-style: normal;
+  color: var(--color-primary);
+  text-transform: uppercase;
+}
+
+.about-testimonial__author p {
+  color: var(--color-muted);
+  font-size: 1rem;
+  margin-top: 3px;
+  line-height: 1.5;
+}
+
+/* --------------------------------------------------------------------------
+   6. Institutional Client Logos
+   -------------------------------------------------------------------------- */
+.about-clients {
+  margin-top: clamp(80px, 9vw, 120px);
+}
+
+.about-clients__header {
+  text-align: center;
+  margin-bottom: var(--space-4);
+}
+
+.about-clients__label {
+  font-family: var(--font-heading);
+  font-size: 1.077rem;
+  letter-spacing: 0.08em;
+  color: var(--color-muted);
+  text-transform: uppercase;
+}
+
+.about-clients__grid {
   display: grid;
-  grid-template-areas: "water tower dark"
+  grid-template-columns: repeat(6, minmax(80px, 1fr));
+  column-gap: 42px;
+  row-gap: 48px;
+  align-items: center;
+  justify-items: center;
+  padding: var(--space-4) 0;
+}
+
+.about-clients__grid img {
+  max-width: 130px;
+  max-height: 68px;
+  object-fit: contain;
+  filter: grayscale(100%);
+  opacity: 0.72;
+  transition: opacity 180ms ease, filter 180ms ease, transform 180ms ease;
+}
+
+.about-clients__grid img:hover {
+  filter: grayscale(0%);
+  opacity: 1;
+  transform: translateY(-2px);
+}
+
+/* --------------------------------------------------------------------------
+   7. Team / Leadership Showcase
+   -------------------------------------------------------------------------- */
+.about-team {
+  margin-top: clamp(90px, 10vw, 140px);
+}
+
+/* Dynamic Team Grid */
+.about-team__dynamic-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px;
+  margin-top: var(--space-5);
+}
+
+.about-team__member-card {
+  background: var(--color-white);
+  display: flex;
+  flex-direction: column;
+}
+
+.about-team__member-card--featured {
+  border: 9px solid var(--color-primary);
+}
+
+.about-team__member-photo {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+}
+
+.about-team__member-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.about-team__member-info {
+  padding: 32px 28px;
+}
+
+.about-team__member-info h3 {
+  font-size: 1.385rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  text-transform: uppercase;
+}
+
+.about-team__member-role {
+  color: var(--color-muted);
+  font-size: 1.077rem;
+  margin-top: 4px;
+}
+
+.about-team__member-info blockquote {
+  margin-top: 20px;
+  font-size: 1.077rem;
+  font-style: italic;
+  line-height: 1.75;
+  color: var(--color-text);
+}
+
+/* Architectural Photo Collage Fallback */
+.about-team__collage {
+  display: grid;
+  grid-template-areas:
+    "water tower dark"
     "bridge card bottom";
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  align-items: start;
+  align-items: stretch;
+  margin-top: var(--space-5);
 }
 
-.about-team__collage img, .about-team__card {
-  position: relative;
-  left: auto;
-  top: auto;
+.about-team__collage img,
+.about-team__card {
   width: 100%;
-  height: auto;
   aspect-ratio: 390 / 369;
+  object-fit: cover;
 }
 
 .about-team__water-top {
-  object-fit: cover;
   grid-area: water;
 }
 
+.about-team__tower {
+  grid-area: tower;
+}
 
 .about-team__dark {
-  object-fit: cover;
   grid-area: dark;
 }
 
 .about-team__bridge {
-  object-fit: cover;
   grid-area: bridge;
 }
 
 .about-team__water-bottom {
-  object-fit: cover;
   grid-area: bottom;
 }
 
 .about-team__card {
-  border: 9px solid var(--color-primary);
-  background: #ffffff;
   grid-area: card;
-  min-height: 369px;
-  padding: 46px 34px 34px 40px;
+  border: 9px solid var(--color-primary);
+  background: var(--color-white);
+  padding: clamp(32px, 3.5vw, 44px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .about-team__card h3 {
-  font-size: 1.385rem;
-  font-weight: 700;
-  line-height: 1.35;
+  font-size: 1.462rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  text-transform: uppercase;
 }
 
 .about-team__role {
-  margin-top: 1px;
-  font-size: 1.385rem;
-  line-height: 1.35;
+  font-size: 1.154rem;
+  color: var(--color-muted);
+  margin-top: 4px;
 }
 
 .about-team__card blockquote {
-  margin-top: 45px;
-  font-size: 1.231rem;
-  line-height: 1.875;
+  margin-top: 28px;
+  font-size: 1.154rem;
+  line-height: 1.85;
   font-style: italic;
+  color: var(--color-text);
 }
 
-.about-overview, .about-testimonials, .about-clients, .about-team {
-  height: auto;
+/* --------------------------------------------------------------------------
+   8. Bottom Call-To-Action Block
+   -------------------------------------------------------------------------- */
+.about-cta {
+  margin-top: clamp(90px, 11vw, 150px);
+  margin-bottom: clamp(70px, 8vw, 110px);
 }
 
-.about-testimonials__title, .about-team__title {
-  position: relative;
-  left: auto;
-  top: auto;
+.about-cta__inner {
+  background: var(--color-primary);
+  color: var(--color-white);
+  padding: clamp(48px, 6vw, 76px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-5);
 }
 
-.about-who, .about-what {
-  position: relative;
-  left: auto;
-  top: auto;
+.about-cta__eyebrow {
+  font-size: 1.077rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  opacity: 0.8;
+  text-transform: uppercase;
+  margin-bottom: 12px;
 }
 
-.about-testimonials__title span, .about-team__title span {
-  flex: 1;
-  width: auto;
+.about-cta__content h2 {
+  font-size: clamp(2.2rem, 3.2vw, 3.4rem);
+  font-weight: 400;
+  line-height: 1.15;
+  color: var(--color-white);
 }
 
+.about-cta__text {
+  color: var(--color-background);
+  font-size: 1.154rem;
+  line-height: 1.75;
+  margin-top: 14px;
+  max-width: 580px;
+}
+
+.about-cta__actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-shrink: 0;
+}
+
+/* --------------------------------------------------------------------------
+   9. Responsive Breakpoints
+   -------------------------------------------------------------------------- */
 @media (max-width: 1100px) {
-  .about-overview__image {
-    height: 400px;
+  .about-overview__media {
+    height: 380px;
     min-height: 0;
-    object-position: center center;
   }
+
   .about-who {
-    width: min(100% - 48px, 560px);
-    min-height: 0;
-    margin: -118px 0 0 auto;
-    padding: 48px 44px;
+    width: min(100% - 48px, 540px);
+    margin-top: -120px;
+    padding: 44px 38px;
   }
-  .about-who p {
-    margin-top: 42px;
-  }
+
   .about-what {
-    margin: 82px 0 0;
+    padding: 0;
+    margin-top: 64px;
   }
+
+  .about-what__list {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .about-pillars__grid,
+  .about-testimonials__cards,
+  .about-team__dynamic-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .about-clients__grid {
+    grid-template-columns: repeat(4, minmax(80px, 1fr));
+    column-gap: 32px;
+    row-gap: 36px;
+  }
+
   .about-team__collage {
-    grid-template-areas: "water tower"
-        "dark bridge"
-        "card bottom";
+    grid-template-areas:
+      "water tower"
+      "dark bridge"
+      "card bottom";
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0;
   }
-  .about-team__card {
-    min-height: 330px;
+
+  .about-cta__inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-4);
+  }
+
+  .about-cta__actions {
+    width: 100%;
+    flex-wrap: wrap;
   }
 }
 
 @media (max-width: 620px) {
   .about-overview {
-    margin-top: 70px;
+    margin-top: 48px;
   }
-  .about-overview__image {
-    height: 265px;
-    object-position: center center;
+
+  .about-overview__media {
+    height: 250px;
   }
+
   .about-who {
-    width: calc(100% - 20px);
-    margin: -54px 0 0 auto;
-    padding: 38px 28px;
+    width: 100%;
+    margin-top: -48px;
+    padding: 32px 24px;
   }
-  .about-who h2, .about-what h2, .about-section-title h2 {
-    font-size: 2.923rem;
-    transform: none;
+
+  .about-who h2 {
+    font-size: 2.6rem;
   }
-  .about-who span {
-    margin-top: 32px;
-  }
+
   .about-who p {
-    margin-top: 36px;
-    font-size: 1.154rem;
-    line-height: 1.85;
+    font-size: 1.077rem;
+    line-height: 1.75;
+    margin-top: 24px;
   }
-  .about-what {
-    margin-top: 64px;
+
+  .about-clients__grid {
+    grid-template-columns: repeat(2, minmax(80px, 1fr));
+    column-gap: 24px;
+    row-gap: 28px;
   }
-  .about-what ul {
-    margin-top: 46px;
-  }
-  .about-what li {
-    margin-bottom: 20px;
-    font-size: 2.154rem;
-  }
-  .about-testimonials {
-    margin-top: 82px;
-  }
-  .about-section-title p {
-    font-size: 1.231rem;
-  }
-  .about-section-title h2 {
-    margin-top: 10px;
-    line-height: 1.18;
-  }
-  .about-testimonials__cards {
-    margin-top: 46px;
-  }
-  .about-testimonial {
-    min-height: 0;
-    padding: 34px 44px 34px 28px;
-  }
-  .about-testimonial blockquote {
-    font-size: 1.154rem;
-    line-height: 1.85;
-  }
-  .about-testimonial span {
-    right: 22px;
-    bottom: -2px;
-    font-size: 8.615rem;
-  }
-  .about-clients {
-    margin-top: 84px;
-  }
-  .about-team {
-    margin-top: 88px;
-    padding-bottom: 70px;
-  }
+
   .about-team__collage {
-    margin-top: 46px;
-    grid-template-areas: "water tower"
-        "dark bridge"
-        "card card"
-        "bottom bottom";
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-areas:
+      "water"
+      "tower"
+      "card"
+      "dark"
+      "bridge"
+      "bottom";
+    grid-template-columns: 1fr;
   }
-  .about-team__water-bottom {
-    aspect-ratio: 390 / 220;
-  }
+
   .about-team__card {
-    width: calc(100% - 24px);
-    min-height: 0;
-    margin: -10px auto 0;
-    aspect-ratio: auto;
-    padding: 34px 26px;
-    border-width: 7px;
+    padding: 28px 20px;
+    border-width: 6px;
   }
-  .about-team__card blockquote {
-    margin-top: 32px;
-    font-size: 1.154rem;
-    line-height: 1.85;
+
+  .about-cta {
+    margin-top: 70px;
+    margin-bottom: 60px;
+  }
+
+  .about-cta__inner {
+    padding: 36px 24px;
+  }
+
+  .about-cta__actions .button {
+    width: 100%;
   }
 }
+

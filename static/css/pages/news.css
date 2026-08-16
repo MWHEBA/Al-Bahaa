@@ -57,7 +57,7 @@
 }
 
 .news-row__content p {
-  color: #5f6f7c;
+  color: var(--color-muted);
   font-size: 1.231rem;
   line-height: 1.5625;
   width: auto;
@@ -83,7 +83,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: #ffffff;
+  background: var(--color-white);
   color: var(--color-primary);
   font-size: 1.231rem;
   font-weight: 400;

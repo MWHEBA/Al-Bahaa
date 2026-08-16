@@ -68,7 +68,7 @@
   height: 527px;
   padding: 83px 0 0 20px;
   background: var(--color-primary);
-  color: #d6eaf4;
+  color: var(--color-background-soft);
   width: 300px;
 }
 
@@ -115,7 +115,7 @@
   position: absolute;
   left: 1146px;
   top: 146px;
-  color: #1d252c;
+  color: var(--color-primary);
   min-width: 0;
   padding-top: 10px;
 }
@@ -127,7 +127,7 @@
 }
 
 .home-works p {
-  color: #8a969e;
+  color: var(--color-muted);
   font-size: 1.231rem;
   line-height: 2;
   margin-top: 42px;
@@ -138,27 +138,10 @@
   margin-left: clamp(0px, 10vw, 120px);
 }
 
-.home-section-title h2 {
-  line-height: 1.25;
-  font-size: clamp(3.385rem, 4.4vw, 4.615rem);
-}
-
 .home-projects {
   position: relative;
-  height: 1210px;
   width: min(100% - 64px, var(--container-wide));
-  margin: 116px auto 0;
-}
-
-.home-projects__title {
-  position: absolute;
-  left: 376px;
-  top: 90px;
-}
-
-.home-projects__title span {
-  width: 510px;
-  margin: 0 0 21px 16px;
+  margin: var(--space-section) auto 0;
 }
 
 .home-projects__mosaic {
@@ -329,7 +312,7 @@
 .home-news__feature article {
   position: absolute;
   padding: 48px 0 0 50px;
-  background: #c6e6f0;
+  background: var(--color-background-soft);
   left: 47%;
   top: 64px;
   width: 50%;

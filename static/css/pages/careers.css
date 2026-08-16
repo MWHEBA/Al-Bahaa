@@ -1,36 +1,8 @@
 /* Careers Page Styles */
 
 .careers-intro {
-  margin-top: var(--space-6);
-  margin-bottom: var(--space-6);
-}
-
-.careers-intro__header {
-  margin-bottom: var(--space-5);
-}
-
-.careers-eyebrow {
-  font-family: var(--font-heading);
-  font-size: 0.923rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--color-muted);
-  margin-bottom: var(--space-1);
-}
-
-.careers-intro__header h2 {
-  font-size: clamp(1.8rem, 2.8vw, 2.5rem);
-  line-height: 1.25;
-  color: var(--color-primary);
-  max-width: 820px;
-}
-
-.careers-divider {
-  display: block;
-  width: 60px;
-  height: 2px;
-  background: var(--color-primary);
-  margin-top: var(--space-3);
+  margin-top: var(--space-section);
+  margin-bottom: var(--space-section);
 }
 
 .careers-pillars {

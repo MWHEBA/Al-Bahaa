@@ -42,13 +42,13 @@
 }
 
 .button--solid:hover {
-  border-color: #174a63;
-  background: #174a63;
+  border-color: var(--color-primary-deep);
+  background: var(--color-primary-deep);
 }
 
 .button--dark {
-  border-color: #000000;
-  background: #000000;
+  border-color: var(--color-text);
+  background: var(--color-text);
   color: var(--color-white);
 }
 
@@ -60,12 +60,12 @@
 .button--inverse {
   border-color: var(--color-white);
   color: var(--color-white);
+  padding: 10px;
 }
 
 .button--inverse:hover {
   background: var(--color-white);
   color: var(--color-primary);
-  box-shadow: 0 12px 24px rgb(0 0 0 / 14%);
 }
 
 .button--text {
@@ -119,17 +119,19 @@
 
 .button--arrow::after {
   content: "→";
-  font-family: var(--font-body);
-  font-size: 1.25rem;
+  font-family: Arial, "Helvetica Neue", sans-serif;
+  font-size: 1.35em;
+  font-weight: 400;
   line-height: 1;
-  margin-left: 8px;
+  margin-left: 10px;
   display: inline-block;
+  color: currentColor;
   transition: transform 180ms ease;
 }
 
 .button:hover.button--arrow::after,
 .button--arrow:hover::after {
-  transform: translateX(5px);
+  transform: translateX(6px);
   background: transparent;
 }
 
@@ -140,7 +142,7 @@
   flex: 0 0 auto;
   width: 8px;
   height: 8px;
-  background: #d6eaf4;
+  background: var(--color-background-soft);
   transition: transform 180ms ease, background-color 180ms ease;
 }
 
@@ -241,35 +243,118 @@
   }
 }
 
-.section-heading {
-  margin-bottom: var(--space-5);
-}
-
-.section-heading__eyebrow {
-  margin-bottom: var(--space-1);
-  color: var(--color-primary);
-  font-size: 1.692rem;
-  line-height: 1;
+/* ==========================================================================
+   Signature Architectural Eyebrow & Kicker System (Unified 100%)
+   ========================================================================== */
+.eyebrow,
+.section-kicker,
+.section-heading__eyebrow,
+.page-intro__eyebrow,
+.home-section-title p,
+.about-section-title p,
+.careers-eyebrow,
+.careers-spontaneous__eyebrow,
+.about-cta__eyebrow,
+.about-clients__label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-heading);
+  font-size: 0.923rem;
+  font-weight: 500;
   text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-primary);
+  margin-bottom: var(--space-2);
+  line-height: 1;
 }
 
-.section-heading__row {
-  display: flex;
-  align-items: end;
-  gap: var(--space-3);
-}
-
-.section-heading h2 {
-  max-width: 680px;
-  font-size: clamp(3.231rem, 3.4vw, 4.923rem);
-}
-
-.section-heading__rule {
-  flex: 1;
-  min-width: 180px;
-  height: var(--line-thin);
-  margin-bottom: 0.35em;
+.eyebrow::after,
+.section-kicker::after,
+.section-heading__eyebrow::after,
+.home-section-title p::after,
+.about-section-title p::after,
+.careers-eyebrow::after,
+.about-clients__label::after {
+  content: "";
+  display: inline-block;
+  width: 40px;
+  height: 2px;
   background: var(--color-primary);
+  flex-shrink: 0;
+}
+
+.about-cta__eyebrow,
+.careers-spontaneous__eyebrow {
+  color: var(--color-background);
+}
+
+.about-cta__eyebrow::after,
+.careers-spontaneous__eyebrow::after {
+  content: "";
+  display: inline-block;
+  width: 40px;
+  height: 2px;
+  background: var(--color-background);
+  flex-shrink: 0;
+}
+
+.page-intro__eyebrow {
+  margin-bottom: 0;
+}
+
+.page-intro__eyebrow a {
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: opacity 180ms ease;
+}
+
+.page-intro__eyebrow a:hover {
+  opacity: 0.72;
+}
+
+/* ==========================================================================
+   Centralized Section Heading & Resilient Divider Rule
+   ========================================================================== */
+.section-heading,
+.home-section-title,
+.about-section-title {
+  margin-bottom: var(--space-5);
+  position: relative;
+  left: auto;
+  top: auto;
+}
+
+.section-heading__row,
+.section-heading > div,
+.home-section-title > div,
+.about-section-title > div {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+}
+
+.section-heading h2,
+.home-section-title h2,
+.about-section-title h2 {
+  max-width: clamp(340px, 48vw, 680px);
+  font-size: var(--font-size-h2);
+  line-height: var(--line-height-h2);
+  color: var(--color-primary);
+  font-weight: 400;
+}
+
+.section-heading__rule,
+.home-section-title span,
+.about-section-title span,
+.careers-divider {
+  flex: 1;
+  min-width: 140px;
+  height: var(--line-thin);
+  background: var(--color-primary);
+  margin-bottom: 0.38em;
+  display: block;
 }
 
 .page-intro {
@@ -279,14 +364,6 @@
   padding: 86px 0 0;
   display: flex;
   flex-direction: column;
-}
-
-.page-intro__eyebrow {
-  color: var(--color-primary);
-  font-size: 1.077rem;
-  font-weight: 500;
-  line-height: 1;
-  text-transform: uppercase;
 }
 
 .page-intro__row {
@@ -300,8 +377,8 @@
 .page-intro h1 {
   max-width: 720px;
   color: var(--color-primary);
-  font-size: 3.5rem;
-  line-height: 0.98;
+  font-size: var(--font-size-h1);
+  line-height: var(--line-height-h1);
 }
 
 .page-intro__meta {
@@ -409,31 +486,6 @@
   }
 }
 
-.home-section-title p,
-.about-section-title p {
-  color: var(--color-primary);
-  font-size: 1.692rem;
-  line-height: 1;
-}
-
-.home-section-title > div,
-.about-section-title > div {
-  display: flex;
-  align-items: flex-end;
-}
-
-.home-section-title h2,
-.about-section-title h2 {
-  font-weight: 400;
-}
-
-.home-section-title span,
-.about-section-title span {
-  display: block;
-  height: 1px;
-  background: #1b252c;
-}
-
 .testimonial-card,
 .project-card,
 .news-card {
@@ -464,12 +516,12 @@
   width: auto;
   height: auto;
   min-height: 220px;
-  background: #ffffff;
+  background: var(--color-white);
 }
 
 .home-testimonial--accent,
 .about-testimonial--accent {
-  background: #c6e6f0;
+  background: var(--color-background-soft);
 }
 
 .home-testimonial blockquote,
@@ -483,7 +535,7 @@
 .about-testimonial span {
   position: absolute;
   bottom: -4px;
-  color: #d1d1d1;
+  color: var(--color-border);
   font-size: 11.846rem;
   font-weight: 700;
   line-height: 1;
@@ -491,7 +543,7 @@
 
 .home-testimonial--accent span,
 .about-testimonial--accent span {
-  color: #ffffff;
+  color: var(--color-white);
 }
 
 .home-testimonials__names p,

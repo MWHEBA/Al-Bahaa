@@ -53,6 +53,30 @@
 
   --header-height: 88px;
   --line-thin: 1px;
+
+  /* Typography Scale Tokens */
+  --font-size-eyebrow-hero: 1rem; /* 14px */
+  --letter-spacing-eyebrow-hero: 0.08em;
+  --font-weight-eyebrow-hero: 600;
+
+  --font-size-eyebrow-section: 1.538rem; /* 20px */
+  --font-weight-eyebrow-section: 500;
+  --line-height-eyebrow-section: 1;
+
+  --font-size-h1: clamp(2.8rem, 4vw, 3.8rem);
+  --line-height-h1: 1.05;
+
+  --font-size-h2: clamp(2.2rem, 3.2vw, 3.4rem);
+  --line-height-h2: 1.15;
+
+  --font-size-h3: 1.385rem; /* 18px */
+  --line-height-h3: 1.25;
+
+  --font-size-h4: 1.154rem; /* 15px */
+  --line-height-h4: 1.35;
+
+  /* Global Section Rhythm */
+  --space-section: clamp(80px, 9vw, 130px);
 }
 
 *,

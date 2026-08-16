@@ -48,7 +48,7 @@
           </div>
 
           <div class="project-band__panel">
-            <h1><a class="project-band__title-link" href="{% url 'projects:detail' slug=project.slug %}">{{ project.title|linebreaksbr }}</a></h1>
+            <h2 class="project-band__title"><a class="project-band__title-link" href="{% url 'projects:detail' slug=project.slug %}">{{ project.title|linebreaksbr }}</a></h2>
             <div class="project-band__meta">
               {% if project.location %}
                 <span class="project-band__badge">{{ project.location }}</span>

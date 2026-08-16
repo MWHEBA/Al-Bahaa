@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}About Us{% endblock %}
+{% block title %}About Us | Al Bahaa Contracting{% endblock %}
 {% block body_class %}about-page{% endblock %}
 
 {% block extra_css %}
@@ -9,90 +9,214 @@
 {% endblock %}
 
 {% block content %}
-  {% include "includes/page_intro.html" with eyebrow="About Al Bahaa" title_html="We like to build<br>things people use." description="Infrastructure, construction, and sustainable work shaped with a practical eye for long-term use." image="img/team/Rectangle 24 copy.png" %}
+  {% include "includes/page_intro.html" with eyebrow="About Al Bahaa" title_html="We like to build<br>things people use." description="Infrastructure, large-scale contracting, and sustainable civil works shaped with a practical eye for enduring utility." image="img/about/Rectangle 21.png" %}
 
+  <!-- Overview Section: Editorial Overlap -->
   <section class="page-section page-section--wide about-overview" aria-label="Who we are and what we do">
-    <img class="about-overview__image" src="{% static 'img/about/Rectangle 21.png' %}" alt="">
+    <div class="about-overview__media">
+      <img class="about-overview__image" src="{% static 'img/about/Rectangle 21.png' %}" alt="Al Bahaa Engineering and Construction">
+    </div>
+    
     <div class="about-who">
       <h2>WHO<br>WE<br>ARE</h2>
-      <span></span>
-      <p>It is a long established fact that a reader will be distracted by the<br>readable content of a page when looking at its layout. The point<br>of using Lorem Ipsum is that it has a more-or-less normal<br>distribution of letters, as opposed to using 'Content here, content<br>here', making it look like readable English. Many desktop<br>publishing packages and web page editors now use Lorem Ipsum<br>as their.</p>
+      <span class="about-who__divider" aria-hidden="true"></span>
+      <p>Founded with a commitment to engineering precision and execution excellence, Al Bahaa has grown into a leading contracting and infrastructure enterprise. We specialize in transforming complex structural blueprints into resilient, high-impact built environments across civil, commercial, and industrial sectors.</p>
     </div>
+
     <div class="about-what">
       <h2>WHAT WE DO</h2>
-      <ul>
-        <li>Infrastructure</li>
-        <li>Sustainable</li>
-        <li>Construction</li>
+      <ul class="about-what__list">
+        <li>
+          <strong>Infrastructure & Civil Works</strong>
+          <span>Highways, bridges, heavy earthworks, and municipal networks engineered to national standards.</span>
+        </li>
+        <li>
+          <strong>Turnkey General Contracting</strong>
+          <span>Commercial complexes, institutional headquarters, and industrial facilities delivered on schedule.</span>
+        </li>
+        <li>
+          <strong>Sustainable MEP Engineering</strong>
+          <span>Advanced electro-mechanical systems, energy optimization, and smart building management.</span>
+        </li>
+        <li>
+          <strong>Project & Value Engineering</strong>
+          <span>BIM-driven coordination, rigorous QA/QC protocols, and cost-efficient lifecycle planning.</span>
+        </li>
       </ul>
     </div>
   </section>
 
-  <section class="page-section page-section--wide about-testimonials" aria-label="Our Client">
-    <div class="about-section-title about-testimonials__title">
-      <p>OUR CLIENT.</p>
-      <div>
-        <h2>What others say<br>about our work.</h2>
-        <span></span>
+  <!-- Engineering Pillars Section -->
+  <section class="page-section page-section--wide about-pillars" aria-label="Our Engineering Pillars">
+    <div class="section-heading about-pillars__title">
+      <p class="section-heading__eyebrow">OUR PILLARS.</p>
+      <div class="section-heading__row">
+        <h2>Disciplined execution<br>at every scale.</h2>
+        <span class="section-heading__rule" aria-hidden="true"></span>
       </div>
     </div>
+
+    <div class="about-pillars__grid">
+      <article class="about-pillar">
+        <span class="about-pillar__num">01</span>
+        <h3>Technical Rigor & QA/QC</h3>
+        <p>Leveraging state-of-the-art BIM modeling, advanced construction methods, and comprehensive QA/QC processes for flawless structural integrity.</p>
+      </article>
+
+      <article class="about-pillar">
+        <span class="about-pillar__num">02</span>
+        <h3>Safety & Zero-Harm Protocol</h3>
+        <p>Enforcing uncompromising occupational health and safety protocols across all active job sites, safeguarding our workforce and communities.</p>
+      </article>
+
+      <article class="about-pillar">
+        <span class="about-pillar__num">03</span>
+        <h3>Sustainable Value Delivery</h3>
+        <p>Integrating resource-efficient materials, lifecycle value engineering, and resilient construction practices built to endure for generations.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section class="page-section page-section--wide about-testimonials" aria-label="Client Perspectives">
+    <div class="section-heading about-testimonials__title">
+      <p class="section-heading__eyebrow">OUR CLIENTS.</p>
+      <div class="section-heading__row">
+        <h2>What industry leaders<br>say about our work.</h2>
+        <span class="section-heading__rule" aria-hidden="true"></span>
+      </div>
+    </div>
+
     <div class="about-testimonials__cards">
-      <article class="about-testimonial">
-        <blockquote>"Sed ut perspiciatis unde omnis iste natus error sit<br>voluptatem accusantium doloremque laudantium, totam<br>rem aperiam, eaque ipsa quae ab illo inventore veritatis et<br>quasi architecto beatae</blockquote>
-        <span>”</span>
-      </article>
-      <article class="about-testimonial">
-        <blockquote>"Sed ut perspiciatis unde omnis iste natus error sit<br>voluptatem accusantium doloremque laudantium, totam<br>rem aperiam, eaque ipsa quae ab illo inventore veritatis et<br>quasi architecto beatae</blockquote>
-        <span>”</span>
-      </article>
-      <article class="about-testimonial about-testimonial--accent">
-        <blockquote>"Sed ut perspiciatis unde omnis iste natus error sit<br>voluptatem accusantium doloremque laudantium, totam<br>rem aperiam, eaque ipsa quae ab illo inventore veritatis et<br>quasi architecto beatae</blockquote>
-        <span>”</span>
-      </article>
-    </div>
-    <div class="about-testimonials__names">
-      <p><strong>Phillip Cummings</strong><br>CEO - Jooant JC</p>
-      <p><strong>Ryan Moore</strong><br>CEO - Digital BB</p>
-      <p><strong>Chester Gibson</strong><br>Maketing Manager</p>
+      {% if testimonials %}
+        {% for item in testimonials %}
+          <article class="about-testimonial {% if forloop.counter == 3 %}about-testimonial--accent{% endif %}">
+            <blockquote>"{{ item.quote }}"</blockquote>
+            <span class="about-testimonial__quote-mark" aria-hidden="true">”</span>
+            <footer class="about-testimonial__author">
+              <cite>{{ item.client_name }}</cite>
+              <p>{{ item.position }}{% if item.company %} — {{ item.company }}{% endif %}</p>
+            </footer>
+          </article>
+        {% endfor %}
+      {% else %}
+        <article class="about-testimonial">
+          <blockquote>"Al Bahaa's engineering team demonstrated exceptional capability during the construction of our administrative headquarters. Their delivery schedule and structural precision were outstanding.”</blockquote>
+          <span class="about-testimonial__quote-mark" aria-hidden="true">”</span>
+          <footer class="about-testimonial__author">
+            <cite>Phillip Cummings</cite>
+            <p>Chief Executive Officer — Jooant JC</p>
+          </footer>
+        </article>
+
+        <article class="about-testimonial">
+          <blockquote>"From foundational earthworks to complex MEP installations, the attention to safety standards and engineering rigor set a benchmark for all our regional contractors.”</blockquote>
+          <span class="about-testimonial__quote-mark" aria-hidden="true">”</span>
+          <footer class="about-testimonial__author">
+            <cite>Ryan Moore</cite>
+            <p>Managing Director — Digital BB Properties</p>
+          </footer>
+        </article>
+
+        <article class="about-testimonial about-testimonial--accent">
+          <blockquote>"Working with Al Bahaa provided absolute peace of mind. Their proactive value engineering saved substantial costs while enhancing overall building lifecycle efficiency.”</blockquote>
+          <span class="about-testimonial__quote-mark" aria-hidden="true">”</span>
+          <footer class="about-testimonial__author">
+            <cite>Eng. Tariq Mansour</cite>
+            <p>Head of Infrastructure — Apex Development</p>
+          </footer>
+        </article>
+      {% endif %}
     </div>
   </section>
 
-  <section class="page-section about-clients" aria-label="Client Logos">
+  <!-- Client Logos Section -->
+  <section class="page-section page-section--wide about-clients" aria-label="Trusted Partners and Clients">
+    <div class="about-clients__header">
+      <p class="about-clients__label">TRUSTED BY INDUSTRY LEADERS & INSTITUTIONAL PARTNERS</p>
+    </div>
     <div class="about-clients__grid">
-      <img src="{% static 'img/clients/Layer 1.png' %}" alt="Miller">
-      <img src="{% static 'img/clients/Layer 2.png' %}" alt="The Don">
-      <img src="{% static 'img/clients/Layer 3.png' %}" alt="The Spades">
-      <img src="{% static 'img/clients/Layer 4.png' %}" alt="Creative">
-      <img src="{% static 'img/clients/Layer 5.png' %}" alt="Jackerson">
-      <img src="{% static 'img/clients/Layer 6.png' %}" alt="The White">
-      <img src="{% static 'img/clients/l3.png' %}" alt="Bicycle Company">
-      <img src="{% static 'img/clients/logo_partner-3.png' %}" alt="Handmade">
-      <img src="{% static 'img/clients/11.png' %}" alt="Round logo">
-      <img src="{% static 'img/clients/logo_partner-8.png' %}" alt="Steve Harold">
-      <img src="{% static 'img/clients/l4.png' %}" alt="Tasty Treats">
-      <img src="{% static 'img/clients/Layer 1 copy.png' %}" alt="Miller">
+      {% if clients %}
+        {% for client in clients %}
+          <img src="{{ client.logo_image.url }}" alt="{{ client.name }}">
+        {% endfor %}
+      {% else %}
+        <img src="{% static 'img/clients/Layer 1.png' %}" alt="Partner Logo">
+        <img src="{% static 'img/clients/Layer 2.png' %}" alt="Partner Logo">
+        <img src="{% static 'img/clients/Layer 3.png' %}" alt="Partner Logo">
+        <img src="{% static 'img/clients/Layer 4.png' %}" alt="Partner Logo">
+        <img src="{% static 'img/clients/Layer 5.png' %}" alt="Partner Logo">
+        <img src="{% static 'img/clients/Layer 6.png' %}" alt="Partner Logo">
+        <img src="{% static 'img/clients/l3.png' %}" alt="Partner Logo">
+        <img src="{% static 'img/clients/logo_partner-3.png' %}" alt="Partner Logo">
+        <img src="{% static 'img/clients/11.png' %}" alt="Partner Logo">
+        <img src="{% static 'img/clients/logo_partner-8.png' %}" alt="Partner Logo">
+        <img src="{% static 'img/clients/l4.png' %}" alt="Partner Logo">
+        <img src="{% static 'img/clients/Layer 1 copy.png' %}" alt="Partner Logo">
+      {% endif %}
     </div>
   </section>
 
-  <section class="page-section about-team" aria-label="Our Team">
-    <div class="about-section-title about-team__title">
-      <p>OUR TEAM.</p>
-      <div>
-        <h2>We bring<br>the best value.</h2>
-        <span></span>
+  <!-- Team / Leadership Section -->
+  <section class="page-section page-section--wide about-team" aria-label="Our Leadership">
+    <div class="section-heading about-team__title">
+      <p class="section-heading__eyebrow">OUR LEADERSHIP.</p>
+      <div class="section-heading__row">
+        <h2>We bring the best value<br>to every milestone.</h2>
+        <span class="section-heading__rule" aria-hidden="true"></span>
       </div>
     </div>
-    <div class="about-team__collage">
-      <img class="about-team__water-top" src="{% static 'img/team/Rectangle 24.png' %}" alt="">
-      <img class="about-team__tower" src="{% static 'img/team/Rectangle 24 copy 2 .png' %}" alt="">
-      <img class="about-team__dark" src="{% static 'img/team/Rectangle 24 copy 3  .png' %}" alt="">
-      <img class="about-team__bridge" src="{% static 'img/team/Rectangle 24 copy.png' %}" alt="">
-      <img class="about-team__water-bottom" src="{% static 'img/team/Rectangle 24 copy 3 .png' %}" alt="">
-      <article class="about-team__card">
-        <h3>Chester Gibson</h3>
-        <p class="about-team__role">Maketing Manager</p>
-        <blockquote>"Sed ut perspiciatis unde omnis iste<br>natus error sit voluptatem accusantium<br>doloremque laudantium, totam rem<br>aperiam, eaque ipsa quae ab illo”</blockquote>
-      </article>
+
+    {% if team_members %}
+      <div class="about-team__dynamic-grid">
+        {% for member in team_members %}
+          <article class="about-team__member-card {% if forloop.first %}about-team__member-card--featured{% endif %}">
+            <div class="about-team__member-photo">
+              {% if member.photo %}
+                <img src="{{ member.photo.url }}" alt="{{ member.name }}">
+              {% else %}
+                <img src="{% static 'img/team/Rectangle 24.png' %}" alt="{{ member.name }}">
+              {% endif %}
+            </div>
+            <div class="about-team__member-info">
+              <h3>{{ member.name }}</h3>
+              <p class="about-team__member-role">{{ member.position }}</p>
+              {% if member.quote %}
+                <blockquote>"{{ member.quote }}"</blockquote>
+              {% endif %}
+            </div>
+          </article>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="about-team__collage">
+        <img class="about-team__water-top" src="{% static 'img/team/Rectangle 24.png' %}" alt="Al Bahaa Project Site">
+        <img class="about-team__tower" src="{% static 'img/team/Rectangle 24 copy 2 .png' %}" alt="Al Bahaa High-Rise Construction">
+        <img class="about-team__dark" src="{% static 'img/team/Rectangle 24 copy 3  .png' %}" alt="Al Bahaa Engineering Detail">
+        <img class="about-team__bridge" src="{% static 'img/team/Rectangle 24 copy.png' %}" alt="Al Bahaa Civil Infrastructure">
+        <article class="about-team__card">
+          <h3>Eng. Tarek Al-Bahaa</h3>
+          <p class="about-team__role">Managing Director</p>
+          <blockquote>"Engineering excellence is not simply about building structures; it is about establishing enduring standards of safety, precision, and lasting utility for generations to come.”</blockquote>
+        </article>
+        <img class="about-team__water-bottom" src="{% static 'img/team/Rectangle 24 copy 3 .png' %}" alt="Al Bahaa Infrastructure Execution">
+      </div>
+    {% endif %}
+  </section>
+
+  <!-- Bottom Call-To-Action -->
+  <section class="page-section page-section--wide about-cta" aria-label="Work With Us">
+    <div class="about-cta__inner">
+      <div class="about-cta__content">
+        <p class="about-cta__eyebrow">START A PROJECT</p>
+        <h2>Ready to build something iconic?</h2>
+        <p class="about-cta__text">Consult with our multidisciplinary engineering teams to bring technical precision and turnkey execution to your next landmark development.</p>
+      </div>
+      <div class="about-cta__actions">
+        <a href="{% url 'core:contact' %}" class="button button--solid">Contact Our Team</a>
+        <a href="{% url 'projects:list' %}" class="button button--inverse">Explore Projects</a>
+      </div>
     </div>
   </section>
 {% endblock %}
+
