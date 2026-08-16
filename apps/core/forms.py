@@ -6,7 +6,32 @@ from .models import ContactMessage, JobApplication
 class ContactForm(forms.ModelForm):
     class Meta:
         model = ContactMessage
-        fields = ["name", "email", "message"]
+        fields = ["name", "company", "email", "phone", "inquiry_type", "message"]
+        widgets = {
+            "name": forms.TextInput(
+                attrs={"placeholder": "Your Full Name", "class": "form-input", "required": "required"}
+            ),
+            "company": forms.TextInput(
+                attrs={"placeholder": "Company / Organization (Optional)", "class": "form-input"}
+            ),
+            "email": forms.EmailInput(
+                attrs={"placeholder": "corporate@domain.com", "class": "form-input", "required": "required"}
+            ),
+            "phone": forms.TextInput(
+                attrs={"placeholder": "+20 1X XXXX XXXX", "class": "form-input"}
+            ),
+            "inquiry_type": forms.Select(
+                attrs={"class": "form-select"}
+            ),
+            "message": forms.Textarea(
+                attrs={
+                    "placeholder": "Provide details regarding your project scope, tender requirements, or inquiry...",
+                    "class": "form-textarea",
+                    "rows": 5,
+                    "required": "required",
+                }
+            ),
+        }
 
 
 class JobApplicationForm(forms.ModelForm):

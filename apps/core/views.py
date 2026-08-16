@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views import View
 from django.views.generic import TemplateView
@@ -141,15 +142,45 @@ class JobDetailView(View):
 class ContactView(View):
     template_name = "pages/contact.html"
 
-    def get_context_data(self, form=None):
-        return {"form": form or ContactForm()}
+    def get_context_data(self, form=None, contact_success=False):
+        return {
+            "form": form or ContactForm(),
+            "contact_success": contact_success,
+        }
 
     def get(self, request):
         return render(request, self.template_name, self.get_context_data())
 
     def post(self, request):
         form = ContactForm(request.POST)
+        is_ajax = request.headers.get("x-requested-with") == "XMLHttpRequest" or "application/json" in request.headers.get("accept", "")
+
         if form.is_valid():
             form.save()
-            return redirect("core:contact")
-        return render(request, self.template_name, self.get_context_data(form=form), status=400)
+            if is_ajax:
+                return JsonResponse({
+                    "success": True,
+                    "message": "Your inquiry has been successfully transmitted to our engineering and business development committee. We will review your project requirements and respond promptly.",
+                })
+            return render(
+                request,
+                self.template_name,
+                self.get_context_data(form=ContactForm(), contact_success=True),
+            )
+
+        if is_ajax:
+            errors = {}
+            for field, field_errors in form.errors.items():
+                errors[field] = [str(e) for e in field_errors]
+            return JsonResponse({
+                "success": False,
+                "errors": errors,
+                "message": "Please check the highlighted required fields.",
+            }, status=400)
+
+        return render(
+            request,
+            self.template_name,
+            self.get_context_data(form=form, contact_success=False),
+            status=400,
+        )

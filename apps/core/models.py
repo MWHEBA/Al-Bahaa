@@ -79,8 +79,19 @@ class ServiceItem(models.Model):
 
 
 class ContactMessage(models.Model):
+    INQUIRY_CHOICES = (
+        ("tenders", "Tenders & Project Estimations"),
+        ("procurement", "Subcontractors & Supplier Registration"),
+        ("general", "General Inquiries & Client Relations"),
+        ("consulting", "Engineering & Architectural Coordination"),
+        ("other", "Other Inquiries"),
+    )
+
     name = models.CharField(max_length=120)
+    company = models.CharField(max_length=140, blank=True)
     email = models.EmailField()
+    phone = models.CharField(max_length=40, blank=True)
+    inquiry_type = models.CharField(max_length=60, choices=INQUIRY_CHOICES, default="general")
     message = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     is_read = models.BooleanField(default=False)

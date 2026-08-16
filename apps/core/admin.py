@@ -13,6 +13,36 @@ from .models import (
 )
 
 
+@admin.register(SiteSettings)
+class SiteSettingsAdmin(admin.ModelAdmin):
+    list_display = ("__str__", "phone_sale", "email_sale")
+
+
+@admin.register(Testimonial)
+class TestimonialAdmin(admin.ModelAdmin):
+    list_display = ("client_name", "position", "company", "is_featured", "order")
+    list_filter = ("is_featured",)
+    search_fields = ("client_name", "company", "quote")
+
+
+@admin.register(ClientLogo)
+class ClientLogoAdmin(admin.ModelAdmin):
+    list_display = ("name", "order")
+    search_fields = ("name",)
+
+
+@admin.register(TeamMember)
+class TeamMemberAdmin(admin.ModelAdmin):
+    list_display = ("name", "position", "order")
+    search_fields = ("name", "position", "quote")
+
+
+@admin.register(ServiceItem)
+class ServiceItemAdmin(admin.ModelAdmin):
+    list_display = ("title", "order")
+    search_fields = ("title", "description")
+
+
 @admin.register(JobDepartment)
 class JobDepartmentAdmin(admin.ModelAdmin):
     list_display = ("name", "slug", "order")
@@ -37,8 +67,8 @@ class JobApplicationAdmin(admin.ModelAdmin):
 
 @admin.register(ContactMessage)
 class ContactMessageAdmin(admin.ModelAdmin):
-    list_display = ("name", "email", "created_at", "is_read")
-    list_filter = ("is_read", "created_at")
-    search_fields = ("name", "email", "message")
+    list_display = ("name", "company", "inquiry_type", "email", "phone", "created_at", "is_read")
+    list_filter = ("inquiry_type", "is_read", "created_at")
+    search_fields = ("name", "company", "email", "phone", "message")
     readonly_fields = ("created_at",)
 
