@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Careers | Al Bahaa Contracting{% endblock %}
+{% block body_class %}careers-page{% endblock %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/pages/careers.css' %}">
+{% endblock %}
+
+{% block content %}
+  {% include "includes/page_intro.html" with eyebrow="Careers" title_html="Build what matters." image="img/projects/projects-band-1-recovered.png" %}
+
+  <section class="page-section page-section--wide careers-intro" aria-label="Why Join Us">
+    <div class="careers-intro__header">
+      <p class="careers-eyebrow">OUR CULTURE & VALUES</p>
+      <h2>A workplace built on integrity, safety, and engineering excellence.</h2>
+      <span class="careers-divider" aria-hidden="true"></span>
+    </div>
+
+    <div class="careers-pillars">
+      <article class="careers-pillar">
+        <span class="careers-pillar__num">01</span>
+        <h3>Engineering Precision</h3>
+        <p>We take pride in executing complex engineering and construction challenges with uncompromising standards, modern methodologies, and meticulous attention to detail.</p>
+      </article>
+
+      <article class="careers-pillar">
+        <span class="careers-pillar__num">02</span>
+        <h3>Safety & Culture</h3>
+        <p>People come first. We maintain strict occupational health and safety protocols across all job sites while fostering an inclusive, collaborative team culture.</p>
+      </article>
+
+      <article class="careers-pillar">
+        <span class="careers-pillar__num">03</span>
+        <h3>Career Growth</h3>
+        <p>We invest in continuous learning, digital workflows, and leadership pathways to empower our professionals to build long-term, fulfilling careers.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="page-section page-section--wide careers-openings" id="careers-ajax-container" aria-label="Open Positions">
+    <div class="careers-openings__header">
+      <div>
+        <p class="careers-eyebrow">OPPORTUNITIES</p>
+        <h2>Current Open Positions</h2>
+      </div>
+      <p class="careers-openings__subtitle">Explore current job openings across our project sites and headquarters.</p>
+    </div>
+
+    <!-- Category Filter Navigation (Exact Match to Projects) -->
+    <nav class="projects-filter-nav" id="careers-filter-nav" aria-label="Filter jobs by department">
+      <a
+        href="{% url 'core:careers' %}"
+        class="projects-filter-btn {% if selected_department == 'all' or not selected_department %}is-active{% endif %}"
+      >
+        All Roles <span class="projects-filter-count">({{ total_all_jobs_count }})</span>
+      </a>
+      {% for dept in departments_with_counts %}
+        <a
+          href="{% url 'core:careers' %}?department={{ dept.slug }}"
+          class="projects-filter-btn {% if selected_department == dept.slug %}is-active{% endif %}"
+        >
+          {{ dept.name }} <span class="projects-filter-count">({{ dept.count }})</span>
+        </a>
+      {% endfor %}
+    </nav>
+
+    <!-- Careers List with Staggered Reveal -->
+    <div class="careers-list" id="jobs-container">
+      {% for job in jobs %}
+        <article class="job-card">
+          <div class="job-card__main">
+            <div class="job-card__meta">
+              {% if job.department %}
+                <span class="job-badge job-badge--dept">{{ job.department.name }}</span>
+              {% endif %}
+              {% if job.location %}
+                <span class="job-badge">{{ job.location }}</span>
+              {% endif %}
+              {% if job.job_type %}
+                <span class="job-badge">{{ job.job_type }}</span>
+              {% endif %}
+              {% if job.experience %}
+                <span class="job-badge">{{ job.experience }}</span>
+              {% endif %}
+            </div>
+            <h3 class="job-card__title">
+              <a href="{% url 'core:job_detail' slug=job.slug %}">
+                {{ job.title }}
+              </a>
+            </h3>
+            <p class="job-card__summary">{{ job.summary }}</p>
+            
+            {% if job.requirements_list %}
+              <div class="job-card__requirements">
+                <h4>Key Requirements:</h4>
+                <ul>
+                  {% for req in job.requirements_list|slice:":3" %}
+                    <li>{{ req }}</li>
+                  {% endfor %}
+                </ul>
+              </div>
+            {% endif %}
+          </div>
+
+          <div class="job-card__action">
+            <a
+              href="{% url 'core:job_detail' slug=job.slug %}"
+              class="button button--solid job-card__apply-btn"
+            >
+              View &amp; Apply
+            </a>
+          </div>
+        </article>
+      {% empty %}
+        <div class="careers-empty">
+          <p>No open positions match your selected department.</p>
+          <a href="{% url 'core:careers' %}" class="button button--solid">View All Openings</a>
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section class="page-section page-section--wide careers-spontaneous" aria-label="General Application">
+    <div class="careers-spontaneous__card">
+      <div class="careers-spontaneous__content">
+        <p class="careers-spontaneous__eyebrow">SPONTANEOUS APPLICATION</p>
+        <h2>Didn't find the right role for you?</h2>
+        <p>We are constantly seeking passionate engineers, BIM coordinators, and construction managers. Send your CV and portfolio directly to our recruitment team, and we will contact you when a fitting opportunity opens.</p>
+      </div>
+      <div class="careers-spontaneous__action">
+        <a href="mailto:careers@albahaacontracting.com?subject=Spontaneous%20Application%20-%20Al%20Bahaa" class="button button--inverse">
+          Send Your CV
+        </a>
+      </div>
+    </div>
+  </section>
+{% endblock %}
+
+{% block extra_js %}
+  <script src="{% static 'js/careers.js' %}"></script>
+{% endblock %}

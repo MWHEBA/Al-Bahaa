@@ -1,10 +1,95 @@
+/* Projects Page Styles */
+
+.projects-container {
+  margin-top: var(--space-6);
+  margin-bottom: var(--space-6);
+}
+
+/* Category Filter Navigation */
+.projects-filter-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+  margin-bottom: var(--space-5);
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: var(--space-3);
+}
+
+.projects-filter-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+  padding: 8px 18px;
+  font-size: 0.923rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background-color 150ms ease, color 150ms ease, border-color 150ms ease;
+}
+
+.projects-filter-btn:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.projects-filter-btn.is-active {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-white);
+}
+
+.projects-filter-count {
+  font-size: 0.8rem;
+  opacity: 0.8;
+}
+
+/* Project Bands & Staggered Reveal Animation */
+.projects-list {
+  display: flex;
+  flex-direction: column;
+}
+
+@keyframes projectCardReveal {
+  from {
+    opacity: 0.5;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.projects-list.is-animating .project-band {
+  animation: projectCardReveal 260ms cubic-bezier(0.25, 1, 0.5, 1) both;
+}
+
+.projects-list.is-animating .project-band:nth-child(1) {
+  animation-delay: 0ms;
+}
+
+.projects-list.is-animating .project-band:nth-child(2) {
+  animation-delay: 40ms;
+}
+
+.projects-list.is-animating .project-band:nth-child(3) {
+  animation-delay: 80ms;
+}
+
+.projects-list.is-animating .project-band:nth-child(4) {
+  animation-delay: 120ms;
+}
+
 .project-band {
   position: relative;
   width: 100%;
   height: auto;
   min-height: 650px;
   margin-bottom: 28px;
-  overflow: visible;
+  overflow: hidden;
+  cursor: pointer;
 }
 
 .project-band__image {
@@ -13,6 +98,11 @@
   height: min(49vw, 650px);
   min-height: 560px;
   object-fit: cover;
+  transition: transform 450ms cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.project-band:hover .project-band__image {
+  transform: scale(1.025);
 }
 
 .project-band--tower .project-band__image {
@@ -22,7 +112,7 @@
 .project-band__panel {
   position: absolute;
   background: var(--color-primary);
-  color: #ffffff;
+  color: var(--color-white);
   left: auto;
   right: 46px;
   top: 50%;
@@ -31,6 +121,7 @@
   min-height: 510px;
   padding: 46px 42px 92px 46px;
   transform: translateY(-50%);
+  z-index: 1;
 }
 
 .project-band__panel h1 {
@@ -39,49 +130,119 @@
   font-weight: 400;
   transform: scaleX(1.08);
   transform-origin: left top;
-  font-size: clamp(2.615rem, 3vw, 3.077rem);
+  font-size: clamp(1.8rem, 2.2vw, 2.5rem);
+}
+
+.project-band__title-link {
+  color: inherit;
+  text-decoration: none;
+  display: inline-block;
+  transition: color 150ms ease;
+}
+
+.project-band__title-link:hover {
+  color: var(--color-background-soft);
+}
+
+.project-band__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+  margin-top: var(--space-2);
+}
+
+.project-band__badge {
+  display: inline-block;
+  background: var(--color-primary-deep);
+  border: 1px solid var(--color-border);
+  color: var(--color-white);
+  font-size: 0.769rem;
+  padding: 3px 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 
 .project-band__copy {
   width: auto;
-  margin-top: 46px;
+  margin-top: 28px;
 }
 
 .project-band__copy p {
   font-size: 1.077rem;
   line-height: 1.785;
   margin-bottom: 24px;
+  color: var(--color-background);
 }
 
 .project-band__link {
   position: absolute;
   left: 46px;
   bottom: 42px;
+  color: var(--color-white);
+  background: transparent;
+  box-shadow: none;
+  font-size: 1.25rem;
+  transition: color 150ms ease, transform 150ms ease;
 }
+
+.project-band__link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+}
+
+.project-band:hover .project-band__link {
+  color: var(--color-background-soft);
+  background: transparent;
+  box-shadow: none;
+  transform: translateX(6px);
+}
+
 
 .project-band__controls {
   position: absolute;
-  width: 289px;
-  height: 68px;
-  display: flex;
+  width: auto;
+  min-width: 140px;
+  height: auto;
+  display: inline-flex;
   align-items: center;
   background: var(--color-primary);
-  color: #ffffff;
+  color: var(--color-white);
   left: 24px;
   top: auto;
   bottom: 42px;
+  padding: 14px 22px;
 }
 
-.project-band__controls button {
-  margin-left: 18px;
+.project-band__category-tag {
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
-.project-band__controls span {
-  margin-left: 82px;
-  font-size: 1.077rem;
-  line-height: 1;
+.projects-empty {
+  padding: var(--space-6);
+  background: var(--color-background-soft);
+  border: 1px solid var(--color-border);
+  text-align: center;
+  color: var(--color-muted);
 }
 
+.projects-empty p {
+  margin-bottom: var(--space-4);
+  font-size: 1.1rem;
+}
+
+.projects-pagination-wrap {
+  margin-top: var(--space-5);
+  display: flex;
+  justify-content: center;
+}
+
+/* Responsive */
 @media (max-width: 1100px) {
   .project-band {
     min-height: 0;
@@ -116,12 +277,16 @@
     bottom: auto;
     top: auto;
     order: 3;
-    width: 289px;
+    width: min(100% - 64px, 320px);
     margin: 20px 0 0 32px;
   }
 }
 
 @media (max-width: 620px) {
+  .projects-filter-btn {
+    width: 100%;
+    text-align: left;
+  }
   .project-band {
     margin-bottom: 48px;
   }
@@ -135,12 +300,12 @@
     padding: 34px 28px 88px;
   }
   .project-band__panel h1 {
-    font-size: 2.462rem;
+    font-size: 2.2rem;
     line-height: 1.2;
     transform: none;
   }
   .project-band__copy {
-    margin-top: 34px;
+    margin-top: 24px;
   }
   .project-band__copy p {
     margin-bottom: 20px;
@@ -155,13 +320,6 @@
     width: 100%;
     height: 62px;
     margin: 16px 0 0;
-    justify-content: space-between;
     padding: 0 18px;
-  }
-  .project-band__controls button {
-    margin-left: 0;
-  }
-  .project-band__controls span {
-    margin-left: 0;
   }
 }

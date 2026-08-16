@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}Projects{% endblock %}
+{% block title %}Projects | Al Bahaa Contracting{% endblock %}
 {% block body_class %}projects-page{% endblock %}
 
 {% block extra_css %}
@@ -9,28 +9,76 @@
 {% endblock %}
 
 {% block content %}
-  {% include "includes/page_intro.html" with eyebrow="Selected Projects" title_html="Built work<br>with lasting value." description="A focused collection of infrastructure and construction work across practical, durable environments." image="img/projects/Rectangle 9 copy.png" %}
+  {% include "includes/page_intro.html" with eyebrow="Featured Projects" title_html="Built work<br>with lasting value." description="A focused collection of civil, administrative, and commercial infrastructure shaped with precision and engineered for long-term use." image="img/projects/Rectangle 9 copy.png" %}
 
-  <section class="page-content page-content--wide projects-list" aria-label="Projects">
-    {% for band in project_bands %}
-      <article class="project-band {{ band.modifier|default:'' }}">
-        <img class="project-band__image" src="{% static band.image %}" alt="">
-        {% if band.filter %}
-          <div class="project-band__controls" aria-label="Project filters">
-            <button class="button button--compact button--inverse" type="button">Filter</button>
-            <span>{{ band.count }}</span>
+  <section class="page-content page-content--wide projects-container" id="projects-ajax-container" aria-label="Projects">
+    
+    <!-- Category Filter Navigation -->
+    <nav class="projects-filter-nav" id="projects-filter-nav" aria-label="Filter projects by category">
+      <a
+        href="{% url 'projects:list' %}"
+        class="projects-filter-btn {% if selected_category == 'all' or not selected_category %}is-active{% endif %}"
+      >
+        All Projects <span class="projects-filter-count">({{ total_all_projects_count }})</span>
+      </a>
+      {% for cat in categories %}
+        <a
+          href="{% url 'projects:list' %}?category={{ cat.slug }}"
+          class="projects-filter-btn {% if selected_category == cat.slug %}is-active{% endif %}"
+        >
+          {{ cat.name }} <span class="projects-filter-count">({{ cat.projects_count }})</span>
+        </a>
+      {% endfor %}
+    </nav>
+
+    <!-- Projects List -->
+    <div class="projects-list">
+      {% for project in projects %}
+        <article class="project-band {% if forloop.counter|divisibleby:4 %}project-band--tower{% endif %}">
+          {% with img_info=project.display_image %}
+            {% if img_info.is_static %}
+              <img class="project-band__image" src="{% static img_info.url %}" alt="{{ project.title }}">
+            {% else %}
+              <img class="project-band__image" src="{{ img_info.url }}" alt="{{ project.title }}">
+            {% endif %}
+          {% endwith %}
+
+          <div class="project-band__controls" aria-label="Project info">
+            <span class="project-band__category-tag">{{ project.category.name|default:"Civil Contracting" }}</span>
           </div>
-        {% endif %}
-        <div class="project-band__panel">
-          <h1>{{ band.title|linebreaksbr }}</h1>
-          <div class="project-band__copy">
-            <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem.</p>
-            <p>Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page</p>
-            <p>editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will</p>
+
+          <div class="project-band__panel">
+            <h1><a class="project-band__title-link" href="{% url 'projects:detail' slug=project.slug %}">{{ project.title|linebreaksbr }}</a></h1>
+            <div class="project-band__meta">
+              {% if project.location %}
+                <span class="project-band__badge">{{ project.location }}</span>
+              {% endif %}
+              <span class="project-band__badge">{{ project.get_status_display }}</span>
+            </div>
+            <div class="project-band__copy">
+              <p>{{ project.short_description|default:project.full_description|truncatewords:45 }}</p>
+            </div>
+            <a class="button button--text button--arrow project-band__link" href="{% url 'projects:detail' slug=project.slug %}">
+              View Project
+            </a>
           </div>
-          <a class="button button--text button--arrow project-band__link" href="#">View Project</a>
+        </article>
+      {% empty %}
+        <div class="projects-empty">
+          <p>No projects match your selected category.</p>
+          <a href="{% url 'projects:list' %}" class="button button--solid">View All Projects</a>
         </div>
-      </article>
-    {% endfor %}
+      {% endfor %}
+    </div>
+
+    <!-- Pagination -->
+    <div class="projects-pagination-wrap">
+      {% include "includes/pagination.html" %}
+    </div>
+
   </section>
+{% endblock %}
+
+{% block extra_js %}
+  <script src="{% static 'js/projects.js' %}"></script>
 {% endblock %}

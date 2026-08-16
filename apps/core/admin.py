@@ -3,6 +3,9 @@ from django.contrib import admin
 from .models import (
     ClientLogo,
     ContactMessage,
+    JobApplication,
+    JobDepartment,
+    JobOpening,
     ServiceItem,
     SiteSettings,
     TeamMember,
@@ -10,40 +13,26 @@ from .models import (
 )
 
 
-@admin.register(SiteSettings)
-class SiteSettingsAdmin(admin.ModelAdmin):
-    fieldsets = (
-        ("Contact", {"fields": ("phone_sale", "phone_support", "email_support", "email_sale", "address", "map_url")}),
-        ("Social", {"fields": ("social_links",)}),
-    )
-
-    def has_add_permission(self, request):
-        return not SiteSettings.objects.exists()
+@admin.register(JobDepartment)
+class JobDepartmentAdmin(admin.ModelAdmin):
+    list_display = ("name", "slug", "order")
+    prepopulated_fields = {"slug": ("name",)}
 
 
-@admin.register(Testimonial)
-class TestimonialAdmin(admin.ModelAdmin):
-    list_display = ("client_name", "position", "company", "is_featured", "order")
-    list_filter = ("is_featured",)
-    search_fields = ("client_name", "position", "company", "quote")
+@admin.register(JobOpening)
+class JobOpeningAdmin(admin.ModelAdmin):
+    list_display = ("title", "department", "location", "job_type", "experience", "is_active", "order")
+    list_filter = ("department", "job_type", "is_active")
+    search_fields = ("title", "summary", "responsibilities", "requirements")
+    prepopulated_fields = {"slug": ("title",)}
 
 
-@admin.register(ClientLogo)
-class ClientLogoAdmin(admin.ModelAdmin):
-    list_display = ("name", "order")
-    search_fields = ("name",)
-
-
-@admin.register(TeamMember)
-class TeamMemberAdmin(admin.ModelAdmin):
-    list_display = ("name", "position", "order")
-    search_fields = ("name", "position", "quote")
-
-
-@admin.register(ServiceItem)
-class ServiceItemAdmin(admin.ModelAdmin):
-    list_display = ("title", "order")
-    search_fields = ("title", "description")
+@admin.register(JobApplication)
+class JobApplicationAdmin(admin.ModelAdmin):
+    list_display = ("full_name", "job", "email", "phone", "submitted_at")
+    list_filter = ("job", "submitted_at")
+    search_fields = ("full_name", "email", "phone", "cover_note")
+    readonly_fields = ("submitted_at",)
 
 
 @admin.register(ContactMessage)
@@ -52,3 +41,4 @@ class ContactMessageAdmin(admin.ModelAdmin):
     list_filter = ("is_read", "created_at")
     search_fields = ("name", "email", "message")
     readonly_fields = ("created_at",)
+

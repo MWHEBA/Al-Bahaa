@@ -79,7 +79,7 @@
 
 .button--text:hover {
   background: transparent;
-  color: #174a63;
+  color: var(--color-primary-deep);
   box-shadow: none;
   transform: translateX(3px);
 }
@@ -118,17 +118,21 @@
 }
 
 .button--arrow::after {
-  content: "";
-  width: 8px;
-  height: 8px;
-  border: 1px solid currentColor;
-  transition: transform 180ms ease, background-color 180ms ease;
+  content: "→";
+  font-family: var(--font-body);
+  font-size: 1.25rem;
+  line-height: 1;
+  margin-left: 8px;
+  display: inline-block;
+  transition: transform 180ms ease;
 }
 
+.button:hover.button--arrow::after,
 .button--arrow:hover::after {
-  transform: translateX(4px);
-  background: currentColor;
+  transform: translateX(5px);
+  background: transparent;
 }
+
 
 .button--split-previous::before, .button--split-next::after {
   content: "";
@@ -280,7 +284,7 @@
 .page-intro__eyebrow {
   color: var(--color-primary);
   font-size: 1.077rem;
-  font-weight: 700;
+  font-weight: 500;
   line-height: 1;
   text-transform: uppercase;
 }
@@ -290,7 +294,7 @@
   display: grid;
   grid-template-columns: minmax(0, 0.78fr) minmax(220px, 0.45fr);
   column-gap: clamp(48px, 7vw, 118px);
-  align-items: end;
+  align-items: flex-start;
 }
 
 .page-intro h1 {
@@ -321,7 +325,7 @@
 .page-intro__media {
   flex: 1 1 clamp(320px, 34dvh, 460px);
   min-height: clamp(280px, 32dvh, 420px);
-  margin-top: clamp(46px, 7dvh, 74px);
+  margin-top: clamp(35px, 4dvh, 54px);
   position: relative;
   overflow: hidden;
 }

@@ -3,7 +3,8 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url("../fonts/ridley-grotesk-demo-regular.woff2") format("woff2");
+  src: url("../fonts/RidleyGrotesk-Regular.woff2") format("woff2"),
+       url("../fonts/RidleyGrotesk-Regular.woff") format("woff");
 }
 
 @font-face {

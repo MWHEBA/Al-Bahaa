@@ -1,7 +1,17 @@
 {% if page_obj and page_obj.paginator.num_pages > 1 %}
   <nav class="pagination" aria-label="Pagination">
+    {% if page_obj.has_previous %}
+      <a class="pagination__item" href="?{% if querystring_without_page %}{{ querystring_without_page }}&{% endif %}page={{ page_obj.previous_page_number }}" aria-label="Previous page">&larr;</a>
+    {% endif %}
+
     {% for page_number in page_obj.paginator.page_range %}
-      <a class="pagination__item{% if page_obj.number == page_number %} is-active{% endif %}" href="?page={{ page_number }}">{{ page_number }}</a>
+      <a class="pagination__item{% if page_obj.number == page_number %} is-active{% endif %}" href="?{% if querystring_without_page %}{{ querystring_without_page }}&{% endif %}page={{ page_number }}">
+        {{ page_number }}
+      </a>
     {% endfor %}
+
+    {% if page_obj.has_next %}
+      <a class="pagination__item" href="?{% if querystring_without_page %}{{ querystring_without_page }}&{% endif %}page={{ page_obj.next_page_number }}" aria-label="Next page">&rarr;</a>
+    {% endif %}
   </nav>
 {% endif %}

@@ -1,46 +1,46 @@
-/* Project Detail Page Styles - World-Class Case Study */
+/* Job Detail Page Styles - World-Class Contracting Career Hub */
 
-/* Page Intro Integration for Project Detail */
-.page-intro--project-detail {
+/* Page Intro Integration for Job Detail */
+.page-intro--job-detail {
   min-height: auto;
   padding-bottom: var(--space-4);
 }
 
-.page-intro--project-detail .page-intro__eyebrow {
+.page-intro--job-detail .page-intro__eyebrow {
   margin-bottom: 0;
   display: flex;
   align-items: center;
   gap: 4px;
 }
 
-.page-intro--project-detail .page-intro__eyebrow a {
+.page-intro--job-detail .page-intro__eyebrow a {
   color: var(--color-primary);
   transition: opacity 150ms ease;
 }
 
-.page-intro--project-detail .page-intro__eyebrow a:hover {
+.page-intro--job-detail .page-intro__eyebrow a:hover {
   opacity: 0.75;
 }
 
 /* Full Width Focused Headline */
-.project-intro__title-wrap {
+.job-intro__title-wrap {
   margin-top: 24px;
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
 }
 
-.page-intro--project-detail h1,
-.page-intro--project-detail .project-intro__heading {
+.page-intro--job-detail h1,
+.page-intro--job-detail .job-intro__heading {
   max-width: none;
   width: 100%;
   font-size: clamp(2.4rem, 4vw, 3.8rem);
   line-height: 1.1;
   color: var(--color-primary);
-  text-transform: uppercase;
+  text-transform: none;
 }
 
-.project-intro__meta-strip {
+.job-intro__meta-strip {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
@@ -48,7 +48,7 @@
   margin-top: var(--space-1);
 }
 
-.project-meta-pill {
+.job-meta-pill {
   display: inline-block;
   background: var(--color-background-soft);
   border: 1px solid var(--color-border);
@@ -60,19 +60,19 @@
   letter-spacing: 0.04em;
 }
 
-.project-meta-pill--status {
+.job-meta-pill--dept {
   background: var(--color-primary);
   border-color: var(--color-primary);
   color: var(--color-white);
 }
 
 /* Key Metrics Strip */
-.project-metrics-strip {
+.job-metrics-strip {
   margin-top: var(--space-5);
   margin-bottom: var(--space-6);
 }
 
-.project-metrics-grid {
+.job-metrics-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: var(--space-3);
@@ -81,7 +81,7 @@
   padding: var(--space-4) var(--space-5);
 }
 
-.project-metric-item {
+.job-metric-item {
   display: flex;
   flex-direction: column;
 }
@@ -102,20 +102,20 @@
   line-height: 1.3;
 }
 
-/* Main Editorial Layout (2-Column) */
-.project-body-section {
+/* Main Layout (2-Column) */
+.job-body-section {
   margin-bottom: var(--space-6);
 }
 
-.project-body-layout {
+.job-body-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1.75fr) minmax(320px, 1fr);
+  grid-template-columns: minmax(0, 1.75fr) minmax(360px, 1.1fr);
   gap: var(--space-6);
   align-items: flex-start;
 }
 
 /* Left Narrative */
-.project-narrative {
+.job-narrative {
   display: flex;
   flex-direction: column;
   gap: var(--space-6);
@@ -159,7 +159,6 @@
   line-height: 1.2;
 }
 
-
 .narrative-content p {
   font-size: 1.05rem;
   line-height: 1.85;
@@ -167,90 +166,62 @@
   margin-bottom: var(--space-3);
 }
 
-.narrative-content p:last-child {
-  margin-bottom: 0;
-}
-
-/* Engineering Highlights Structured Cards */
-.highlights-card-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: var(--space-3);
-  margin-top: var(--space-2);
-}
-
-.highlight-card {
-  background: var(--color-background-soft);
-  border: 1px solid var(--color-border);
-  padding: var(--space-4);
+.job-bullet-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
   display: flex;
   flex-direction: column;
-}
-
-.highlight-card__header {
-  display: flex;
-  align-items: center;
   gap: var(--space-2);
-  margin-bottom: var(--space-2);
 }
 
-.highlight-card__num {
-  font-family: var(--font-heading);
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: var(--color-primary);
-}
-
-.highlight-card__line {
-  flex: 1;
-  height: 1px;
-  background: var(--color-border);
-}
-
-.highlight-card__text {
-  font-size: 0.95rem;
-  line-height: 1.6;
+.job-bullet-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  font-size: 1rem;
+  line-height: 1.65;
   color: var(--color-text);
-  margin: 0;
+  background: var(--color-background-soft);
+  border: 1px solid var(--color-border);
+  padding: var(--space-3) var(--space-4);
 }
 
-/* Sustainability Callout Box */
-.sustainability-box {
+.job-bullet-icon {
+  color: var(--color-primary);
+  font-size: 0.8rem;
+  line-height: 1.65;
+  flex-shrink: 0;
+}
+
+.job-benefits-box {
   background: var(--color-background-soft);
   border-left: 4px solid var(--color-primary);
   border-top: 1px solid var(--color-border);
   border-right: 1px solid var(--color-border);
   border-bottom: 1px solid var(--color-border);
   padding: var(--space-4) var(--space-5);
-  margin-top: var(--space-2);
 }
 
-.sustainability-heading {
+.benefits-heading {
   font-size: 1.25rem;
   color: var(--color-primary);
-  margin-bottom: var(--space-1);
+  margin-bottom: var(--space-3);
 }
 
-.sustainability-text {
-  color: var(--color-text);
-  font-size: 0.95rem;
-  line-height: 1.65;
-  margin: 0;
-}
-
-/* Right Sidebar: Sticky Spec Card */
-.project-sidebar {
+/* Right Column: Sticky Application Card */
+.job-sidebar {
   position: sticky;
-  top: calc(var(--header-height) + var(--space-3));
+  top: calc(var(--header-height) - 2vw);
 }
 
-.project-spec-card {
+.job-apply-card {
   background: var(--color-primary);
   color: var(--color-white);
   padding: var(--space-5) var(--space-4);
 }
 
-.spec-card-title {
+.apply-card-title {
   font-size: 1.35rem;
   color: var(--color-white);
   margin-bottom: var(--space-2);
@@ -258,7 +229,7 @@
   letter-spacing: 0.03em;
 }
 
-.spec-card-divider {
+.apply-card-divider {
   display: block;
   width: 48px;
   height: 2px;
@@ -266,87 +237,223 @@
   margin-bottom: var(--space-4);
 }
 
-.spec-list {
-  margin: 0 0 var(--space-5);
+/* Application Form Fields */
+.job-apply-form {
   display: flex;
   flex-direction: column;
-  gap: var(--space-2);
+  gap: var(--space-3);
 }
 
-.spec-row {
+.form-group {
   display: flex;
   flex-direction: column;
-  border-bottom: 1px solid var(--color-border);
-  padding-bottom: 10px;
+  gap: 4px;
 }
 
-.spec-row dt {
+.form-group label {
   font-family: var(--font-heading);
   font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   color: var(--color-background);
-  margin-bottom: 2px;
 }
 
-.spec-row dd {
-  margin: 0;
-  font-size: 1rem;
-  font-weight: 500;
-  color: var(--color-white);
-  line-height: 1.4;
-}
-
-.spec-card-action {
-  margin-top: var(--space-4);
-}
-
-.spec-inquire-btn {
-  width: 100%;
-  min-height: 52px;
-  font-size: 1.05rem;
-}
-
-/* Visual Gallery Section */
-.project-gallery-section {
-  margin-bottom: var(--space-6);
-}
-
-.gallery-header {
-  margin-bottom: var(--space-4);
-}
-
-.gallery-header h2 {
-  font-size: clamp(1.6rem, 2.5vw, 2.2rem);
-  color: var(--color-primary);
-}
-
-.gallery-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-  gap: var(--space-4);
-}
-
-.gallery-item {
-  margin: 0;
+.form-input,
+.form-textarea {
   background: var(--color-background-soft);
   border: 1px solid var(--color-border);
-}
-
-.gallery-item img {
+  color: var(--color-text);
+  padding: 10px 14px;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 150ms ease;
   width: 100%;
-  aspect-ratio: 16 / 10;
-  object-fit: cover;
 }
 
-.gallery-item figcaption {
-  padding: var(--space-2) var(--space-3);
+.form-input:focus,
+.form-textarea:focus {
+  border-color: var(--color-white);
+}
+
+/* Premium File Dropzone */
+.file-dropzone {
+  position: relative;
+  border: 1px dashed var(--color-background);
+  background: var(--color-background-soft);
+  color: var(--color-text);
+  padding: var(--space-4) var(--space-3);
+  text-align: center;
+  transition: border-color 150ms ease, background-color 150ms ease;
+  cursor: pointer;
+}
+
+.file-dropzone:hover {
+  border-color: var(--color-white);
+}
+
+.file-dropzone.is-dragover {
+  border-color: var(--color-white);
+  background: var(--color-primary-deep);
+  border-style: solid;
+}
+
+.file-dropzone__input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.file-dropzone__idle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  pointer-events: none;
+}
+
+.file-dropzone__icon {
+  stroke: var(--color-primary);
+  opacity: 0.85;
+}
+
+.file-dropzone__label {
   font-size: 0.88rem;
+  color: var(--color-text);
+  margin: 0;
+}
+
+.file-dropzone__label strong {
+  color: var(--color-primary);
+  text-decoration: underline;
+}
+
+.file-dropzone__hint {
+  font-size: 0.75rem;
   color: var(--color-muted);
 }
 
-/* Related Projects Section (Compact Thumbnails) */
-.project-related-section {
+/* Attached File State */
+.file-dropzone__attached {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  padding: 8px 12px;
+  gap: 8px;
+  z-index: 2;
+  position: relative;
+}
+
+.attached-file-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow: hidden;
+}
+
+.attached-file-icon {
+  stroke: var(--color-primary);
+  flex-shrink: 0;
+}
+
+.attached-file-name {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--color-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
+}
+
+.attached-file-remove {
+  background: transparent;
+  border: none;
+  color: var(--color-muted);
+  font-size: 1.3rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0 4px;
+  transition: color 150ms ease;
+}
+
+.attached-file-remove:hover {
+  color: var(--color-primary);
+}
+
+.form-error-msg {
+  color: var(--color-background);
+  font-size: 0.78rem;
+  font-weight: 500;
+}
+
+.apply-submit-btn {
+  width: 100%;
+  min-height: 52px;
+  font-size: 1.05rem;
+  margin-top: var(--space-2);
+  cursor: pointer;
+}
+
+.apply-success-box {
+  background: var(--color-background-soft);
+  border: 1px solid var(--color-border);
+  padding: var(--space-4);
+  color: var(--color-primary);
+  margin-bottom: var(--space-3);
+}
+
+.apply-success-box h4 {
+  font-size: 1.15rem;
+  margin-bottom: var(--space-1);
+}
+
+.apply-success-box p {
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+.apply-error-box {
+  background: var(--color-primary-deep);
+  border: 1px solid var(--color-border);
+  padding: 10px 14px;
+  font-size: 0.85rem;
+  color: var(--color-white);
+}
+
+.apply-card-footer {
+  margin-top: var(--space-4);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--color-border);
+  text-align: center;
+}
+
+.apply-card-footer p {
+  font-size: 0.82rem;
+  color: var(--color-background);
+  margin-bottom: 2px;
+}
+
+.apply-email-link {
+  color: var(--color-white);
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-decoration: underline;
+  transition: opacity 150ms ease;
+}
+
+.apply-email-link:hover {
+  opacity: 0.8;
+}
+
+/* Related Openings Section */
+.job-related-section {
   margin-bottom: var(--space-6);
   border-top: 1px solid var(--color-border);
   padding-top: var(--space-6);
@@ -361,88 +468,69 @@
   color: var(--color-primary);
 }
 
-.related-grid {
+.related-jobs-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--space-4);
 }
 
-
-.related-card-thumb {
+.related-job-card {
   display: flex;
   flex-direction: column;
   background: var(--color-background-soft);
   border: 1px solid var(--color-border);
+  padding: var(--space-4);
   text-decoration: none;
   transition: border-color 150ms ease, transform 150ms ease;
-  overflow: hidden;
 }
 
-.related-card-thumb:hover {
+.related-job-card:hover {
   border-color: var(--color-primary);
   transform: translateY(-2px);
 }
 
-.related-thumb-media {
-  width: 100%;
-  aspect-ratio: 16 / 10;
-  overflow: hidden;
-  background: var(--color-background);
-}
-
-.related-thumb-media img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 300ms ease;
-}
-
-.related-card-thumb:hover .related-thumb-media img {
-  transform: scale(1.03);
-}
-
-.related-thumb-info {
-  padding: var(--space-3) var(--space-4) var(--space-4);
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.related-thumb-sector {
+.related-job-dept {
   font-family: var(--font-heading);
   font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   color: var(--color-muted);
+  margin-bottom: 4px;
 }
 
-.related-thumb-title {
-  font-size: 1.15rem;
+.related-job-title {
+  font-size: 1.25rem;
   color: var(--color-primary);
   line-height: 1.25;
   margin: 2px 0 6px;
-  font-weight: 600;
+  font-weight: 500;
 }
 
-.related-thumb-action {
+.related-job-meta {
+  font-size: 0.85rem;
+  color: var(--color-muted);
+  margin-bottom: var(--space-3);
+}
+
+.related-job-action {
   font-family: var(--font-body);
   font-size: 0.85rem;
   font-weight: 500;
   color: var(--color-primary);
-  margin-top: 4px;
+  margin-top: auto;
   display: inline-flex;
   align-items: center;
   gap: 4px;
 }
 
 /* Bottom Navigation Bar (Clean Split) */
-.project-bottom-nav {
+.job-bottom-nav {
   margin-bottom: var(--space-7);
   border-top: 1px solid var(--color-border);
   padding-top: var(--space-5);
 }
 
-.project-bottom-nav-inner {
+.job-bottom-nav-inner {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -481,41 +569,37 @@
 
 .bottom-nav-title {
   font-size: 1.2rem;
-  font-weight: 600;
+  font-weight: 500;
   color: var(--color-primary);
   line-height: 1.25;
 }
 
 /* Responsive */
 @media (max-width: 1024px) {
-  .project-body-layout {
+  .job-body-layout {
     grid-template-columns: 1fr;
   }
 
-  .project-sidebar {
+  .job-sidebar {
     position: static;
   }
 
-  .highlights-card-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .related-grid {
+  .related-jobs-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
 @media (max-width: 640px) {
-  .project-metrics-grid {
+  .job-metrics-grid {
     grid-template-columns: 1fr 1fr;
     padding: var(--space-3);
   }
 
-  .related-grid {
+  .related-jobs-grid {
     grid-template-columns: 1fr;
   }
 
-  .project-bottom-nav-inner {
+  .job-bottom-nav-inner {
     flex-direction: column;
     align-items: stretch;
     gap: var(--space-4);
@@ -530,5 +614,3 @@
     align-items: flex-start;
   }
 }
-
-

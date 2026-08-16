@@ -1,0 +1,284 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ job.title }} | Careers | Al Bahaa Contracting{% endblock %}
+{% block body_class %}job-detail-page{% endblock %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/pages/job-detail.css' %}">
+{% endblock %}
+
+{% block content %}
+  <!-- Signature Unified Page Intro -->
+  <section class="page-intro page-intro--job-detail" aria-label="{{ job.title }}">
+    <p class="page-intro__eyebrow">
+      <a href="{% url 'core:careers' %}">Careers</a>
+      {% if job.department %}
+        &nbsp;/&nbsp;
+        <a href="{% url 'core:careers' %}?department={{ job.department.slug }}">{{ job.department.name }}</a>
+      {% endif %}
+    </p>
+
+    <div class="job-intro__title-wrap">
+      <h1 class="job-intro__heading">{{ job.title }}</h1>
+      <div class="job-intro__meta-strip">
+        <span class="job-meta-pill job-meta-pill--dept">{{ job.department.name|default:"General Contracting" }}</span>
+        <span class="job-meta-pill">{{ job.location }}</span>
+        <span class="job-meta-pill">{{ job.job_type }}</span>
+        <span class="job-meta-pill">{{ job.experience }}</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Key Job Figures Strip -->
+  <section class="page-content page-content--wide job-metrics-strip" aria-label="Role Summary Figures">
+    <div class="job-metrics-grid">
+      <div class="job-metric-item">
+        <span class="metric-label">Department</span>
+        <span class="metric-value">{{ job.department.name|default:"Contracting" }}</span>
+      </div>
+      <div class="job-metric-item">
+        <span class="metric-label">Location</span>
+        <span class="metric-value">{{ job.location }}</span>
+      </div>
+      <div class="job-metric-item">
+        <span class="metric-label">Employment Type</span>
+        <span class="metric-value">{{ job.job_type }}</span>
+      </div>
+      <div class="job-metric-item">
+        <span class="metric-label">Experience</span>
+        <span class="metric-value">{{ job.experience }}</span>
+      </div>
+      <div class="job-metric-item">
+        <span class="metric-label">Posted</span>
+        <span class="metric-value">{{ job.created_at|date:"M Y" }}</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Specifications & Application Form Section -->
+  <section class="page-content page-content--wide job-body-section" id="application-section" aria-label="Job Details and Application">
+    <div class="job-body-layout">
+      
+      <!-- Left Column: Role Narrative, Responsibilities, Requirements -->
+      <div class="job-narrative">
+        
+        <!-- Section 1: Overview -->
+        <article class="narrative-block">
+          <p class="section-kicker">01. ROLE OVERVIEW</p>
+          <h2 class="narrative-heading">Scope of Work & Objectives</h2>
+          <div class="narrative-content">
+            <p>{{ job.summary }}</p>
+          </div>
+        </article>
+
+        <!-- Section 2: Responsibilities -->
+        {% if job.responsibilities_list %}
+          <article class="narrative-block">
+            <p class="section-kicker">02. KEY RESPONSIBILITIES</p>
+            <h2 class="narrative-heading">Daily Duties & Technical Execution</h2>
+            <ul class="job-bullet-list">
+              {% for resp in job.responsibilities_list %}
+                <li>
+                  <span class="job-bullet-icon" aria-hidden="true">■</span>
+                  <span>{{ resp }}</span>
+                </li>
+              {% endfor %}
+            </ul>
+          </article>
+        {% endif %}
+
+        <!-- Section 3: Requirements -->
+        {% if job.requirements_list %}
+          <article class="narrative-block">
+            <p class="section-kicker">03. QUALIFICATIONS & SKILLS</p>
+            <h2 class="narrative-heading">Candidate Profile & Credentials</h2>
+            <ul class="job-bullet-list">
+              {% for req in job.requirements_list %}
+                <li>
+                  <span class="job-bullet-icon" aria-hidden="true">■</span>
+                  <span>{{ req }}</span>
+                </li>
+              {% endfor %}
+            </ul>
+          </article>
+        {% endif %}
+
+        <!-- Section 4: Benefits -->
+        {% if job.benefits_list %}
+          <article class="narrative-block">
+            <p class="section-kicker">04. WHAT WE OFFER</p>
+            <div class="job-benefits-box">
+              <h3 class="benefits-heading">Compensation & Career Development</h3>
+              <ul class="job-bullet-list">
+                {% for ben in job.benefits_list %}
+                  <li>
+                    <span class="job-bullet-icon" aria-hidden="true">■</span>
+                    <span>{{ ben }}</span>
+                  </li>
+                {% endfor %}
+              </ul>
+            </div>
+          </article>
+        {% endif %}
+      </div>
+
+      <!-- Right Column: Sticky Application Card -->
+      <aside class="job-sidebar">
+        <div class="job-apply-card">
+          <h3 class="apply-card-title">Apply For This Position</h3>
+          <span class="apply-card-divider" aria-hidden="true"></span>
+
+          {% if application_success %}
+            <div class="apply-success-box" role="alert">
+              <h4>Application Received Successfully!</h4>
+              <p>Thank you for submitting your application for <strong>{{ job.title }}</strong>. Our HR and technical committee will review your profile and reach out if your qualifications match our requirements.</p>
+            </div>
+          {% else %}
+            <form method="post" enctype="multipart/form-data" class="job-apply-form" novalidate>
+              {% csrf_token %}
+              
+              {% if form.errors %}
+                <div class="apply-error-box" role="alert">
+                  <p>Please check the required fields and submit again.</p>
+                </div>
+              {% endif %}
+
+              <div class="form-group">
+                <label for="id_full_name">Full Name *</label>
+                {{ form.full_name }}
+                {% if form.full_name.errors %}
+                  <span class="form-error-msg">{{ form.full_name.errors.0 }}</span>
+                {% endif %}
+              </div>
+
+              <div class="form-group">
+                <label for="id_email">Email Address *</label>
+                {{ form.email }}
+                {% if form.email.errors %}
+                  <span class="form-error-msg">{{ form.email.errors.0 }}</span>
+                {% endif %}
+              </div>
+
+              <div class="form-group">
+                <label for="id_phone">Phone / WhatsApp Number *</label>
+                {{ form.phone }}
+                {% if form.phone.errors %}
+                  <span class="form-error-msg">{{ form.phone.errors.0 }}</span>
+                {% endif %}
+              </div>
+
+              <div class="form-group form-group--file">
+                <label for="id_resume">CV / Resume *</label>
+                <div class="file-dropzone" id="cv-dropzone">
+                  <input
+                    type="file"
+                    name="resume"
+                    id="id_resume"
+                    class="file-dropzone__input"
+                    accept=".pdf,.doc,.docx"
+                    required
+                  >
+                  <div class="file-dropzone__idle" id="cv-dropzone-idle">
+                    <svg class="file-dropzone__icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                      <polyline points="17 8 12 3 7 8"></polyline>
+                      <line x1="12" y1="3" x2="12" y2="15"></line>
+                    </svg>
+                    <p class="file-dropzone__label">
+                      <strong>Click to upload</strong> or drag &amp; drop
+                    </p>
+                    <span class="file-dropzone__hint">PDF, DOC, DOCX (Max 10MB)</span>
+                  </div>
+
+                  <div class="file-dropzone__attached" id="cv-dropzone-attached" style="display: none;">
+                    <div class="attached-file-info">
+                      <svg class="attached-file-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                        <polyline points="10 9 9 9 8 9"></polyline>
+                      </svg>
+                      <span class="attached-file-name" id="cv-file-name"></span>
+                    </div>
+                    <button type="button" class="attached-file-remove" id="cv-file-remove" aria-label="Remove attached file">
+                      &times;
+                    </button>
+                  </div>
+                </div>
+                {% if form.resume.errors %}
+                  <span class="form-error-msg">{{ form.resume.errors.0 }}</span>
+                {% endif %}
+              </div>
+
+              <div class="form-group">
+                <label for="id_cover_note">Cover Note (Optional)</label>
+                {{ form.cover_note }}
+              </div>
+
+              <button type="submit" class="button button--inverse apply-submit-btn">
+                Submit Application
+              </button>
+            </form>
+          {% endif %}
+
+          <div class="apply-card-footer">
+            <p>Prefer sending via email?</p>
+            <a href="mailto:careers@albahaacontracting.com?subject=Application:%20{{ job.title|urlencode }}" class="apply-email-link">
+              careers@albahaacontracting.com &rarr;
+            </a>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+  </section>
+
+  <!-- Related Jobs Section -->
+  {% if related_jobs %}
+    <section class="page-content page-content--wide job-related-section" aria-label="Related Job Openings">
+      <div class="related-header">
+        <p class="section-kicker">RELATED ROLES</p>
+        <h2>Explore Open Positions</h2>
+      </div>
+      <div class="related-jobs-grid">
+        {% for r_job in related_jobs %}
+          <a href="{% url 'core:job_detail' slug=r_job.slug %}" class="related-job-card">
+            <span class="related-job-dept">{{ r_job.department.name|default:"Contracting" }}</span>
+            <h3 class="related-job-title">{{ r_job.title }}</h3>
+            <span class="related-job-meta">{{ r_job.location }} &bull; {{ r_job.job_type }}</span>
+            <span class="related-job-action">View &rarr;</span>
+          </a>
+        {% endfor %}
+      </div>
+    </section>
+  {% endif %}
+
+  <!-- Bottom Navigation Bar (Clean Split: Prev / Next Job) -->
+  <section class="page-content page-content--wide job-bottom-nav" aria-label="Job Navigation Bottom">
+    <div class="job-bottom-nav-inner">
+      {% if prev_job %}
+        <a href="{% url 'core:job_detail' slug=prev_job.slug %}" class="bottom-nav-box bottom-nav-box--prev">
+          <span class="bottom-nav-sub">&larr; Previous Position</span>
+          <span class="bottom-nav-title">{{ prev_job.title }}</span>
+        </a>
+      {% else %}
+        <div class="bottom-nav-box bottom-nav-box--placeholder"></div>
+      {% endif %}
+
+      {% if next_job %}
+        <a href="{% url 'core:job_detail' slug=next_job.slug %}" class="bottom-nav-box bottom-nav-box--next">
+          <span class="bottom-nav-sub">Next Position &rarr;</span>
+          <span class="bottom-nav-title">{{ next_job.title }}</span>
+        </a>
+      {% else %}
+        <div class="bottom-nav-box bottom-nav-box--placeholder"></div>
+      {% endif %}
+    </div>
+  </section>
+{% endblock %}
+
+{% block extra_js %}
+  <script src="{% static 'js/job-detail.js' %}"></script>
+{% endblock %}

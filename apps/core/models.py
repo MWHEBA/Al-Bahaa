@@ -90,3 +90,84 @@ class ContactMessage(models.Model):
 
     def __str__(self):
         return f"{self.name} <{self.email}>"
+
+
+class JobDepartment(models.Model):
+    name = models.CharField(max_length=120)
+    slug = models.SlugField(max_length=140, unique=True)
+    order = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ["order", "name"]
+        verbose_name = "Job Department"
+        verbose_name_plural = "Job Departments"
+
+    def __str__(self):
+        return self.name
+
+
+class JobOpening(models.Model):
+    JOB_TYPE_CHOICES = (
+        ("Full-Time", "Full-Time"),
+        ("Part-Time", "Part-Time"),
+        ("Contract", "Contract"),
+    )
+
+    title = models.CharField(max_length=160)
+    slug = models.SlugField(max_length=180, unique=True)
+    department = models.ForeignKey(JobDepartment, on_delete=models.SET_NULL, null=True, blank=True, related_name="jobs")
+    location = models.CharField(max_length=140, default="New Cairo, Egypt")
+    job_type = models.CharField(max_length=40, choices=JOB_TYPE_CHOICES, default="Full-Time")
+    experience = models.CharField(max_length=60, default="5-8 Years")
+    summary = models.TextField()
+    responsibilities = models.TextField(help_text="One bullet per line", blank=True)
+    requirements = models.TextField(help_text="One bullet per line")
+    benefits = models.TextField(help_text="One bullet per line", blank=True)
+    is_active = models.BooleanField(default=True)
+    order = models.PositiveIntegerField(default=0)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["order", "-created_at"]
+        verbose_name = "Job Opening"
+        verbose_name_plural = "Job Openings"
+
+    def __str__(self):
+        return self.title
+
+    @property
+    def requirements_list(self):
+        if not self.requirements:
+            return []
+        return [r.strip() for r in self.requirements.splitlines() if r.strip()]
+
+    @property
+    def responsibilities_list(self):
+        if not self.responsibilities:
+            return []
+        return [r.strip() for r in self.responsibilities.splitlines() if r.strip()]
+
+    @property
+    def benefits_list(self):
+        if not self.benefits:
+            return []
+        return [b.strip() for b in self.benefits.splitlines() if b.strip()]
+
+
+class JobApplication(models.Model):
+    job = models.ForeignKey(JobOpening, on_delete=models.CASCADE, related_name="applications")
+    full_name = models.CharField(max_length=140)
+    email = models.EmailField()
+    phone = models.CharField(max_length=40)
+    cover_note = models.TextField(blank=True)
+    resume = models.FileField(upload_to="resumes/", blank=True)
+    submitted_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["-submitted_at"]
+        verbose_name = "Job Application"
+        verbose_name_plural = "Job Applications"
+
+    def __str__(self):
+        return f"{self.full_name} - {self.job.title}"
+

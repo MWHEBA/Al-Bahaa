@@ -4,9 +4,21 @@
   height: calc(100dvh - var(--header-height));
   min-height: 560px;
   margin-inline: auto;
+  overflow: hidden;
+}
+
+.home-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(90deg, rgb(219 227 233 / 92%) 0%, rgb(219 227 233 / 72%) 34%, rgb(219 227 233 / 22%) 52%, rgb(219 227 233 / 0%) 68%);
+  pointer-events: none;
 }
 
 .home-hero__image {
+  position: relative;
+  z-index: 0;
   object-fit: cover;
   width: 100%;
   height: 100%;
@@ -15,6 +27,7 @@
 
 .home-hero__copy {
   position: absolute;
+  z-index: 2;
   color: var(--color-primary);
   left: clamp(28px, 4vw, 60px);
   top: 30%;
@@ -386,6 +399,9 @@
     display: grid;
     grid-template-columns: 1fr;
     margin-inline: auto;
+  }
+  .home-hero::after {
+    display: none;
   }
   .home-hero__image {
     height: 62vw;
