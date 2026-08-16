@@ -3,6 +3,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.views import View
 from django.views.generic import TemplateView
 
+from apps.news.models import Post
 from apps.projects.models import Project
 from .forms import ContactForm, JobApplicationForm
 from .models import (
@@ -30,6 +31,7 @@ class HomeView(TemplateView):
         context["testimonials"] = Testimonial.objects.filter(is_featured=True)[:3]
         context["clients"] = ClientLogo.objects.all()[:12]
         context["services"] = ServiceItem.objects.all()[:4]
+        context["latest_posts"] = list(Post.objects.select_related("category").filter(is_published=True)[:3])
         return context
 
 

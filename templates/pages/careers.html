@@ -42,14 +42,7 @@
   </section>
 
   <section class="page-section page-section--wide careers-openings" id="careers-ajax-container" aria-label="Open Positions">
-    <div class="section-heading careers-openings__header">
-      <p class="section-heading__eyebrow">OPPORTUNITIES.</p>
-      <div class="section-heading__row">
-        <h2>Current Open Positions</h2>
-        <span class="section-heading__rule" aria-hidden="true"></span>
-      </div>
-    </div>
-    <p class="careers-openings__subtitle">Explore current job openings across our project sites and headquarters.</p>
+    {% include "includes/section_heading.html" with eyebrow="OPPORTUNITIES." title="Current Open Positions." %}
 
     <!-- Category Filter Navigation (Exact Match to Projects) -->
     <nav class="projects-filter-nav" id="careers-filter-nav" aria-label="Filter jobs by department">

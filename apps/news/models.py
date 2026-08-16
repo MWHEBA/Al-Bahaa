@@ -31,4 +31,4 @@ class Post(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse("news:list")
+        return reverse("news:detail", kwargs={"slug": self.slug})

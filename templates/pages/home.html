@@ -118,18 +118,104 @@
 
   <!-- News & Engineering Insights Section -->
   <section class="page-section page-section--wide home-news" aria-label="Latest News and Corporate Updates">
-    {% include "includes/section_heading.html" with eyebrow="LATEST NEWS." title="Updated news<br>about architecture &amp; civil works." %}
+    {% include "includes/section_heading.html" with eyebrow="LATEST NEWS." title="Updated news." %}
 
-    <div class="home-news__feature">
-      <img src="{% static 'img/home/Rectangle 15.png' %}" alt="Advancing Municipal Infrastructure in Egypt">
-      <article class="home-news__article">
-        <h3>Advancing Egypt's Water &amp; Infrastructure Networks</h3>
-        <p>Al Bahaa continues to expand its Grade A infrastructure division, implementing modern trenchless piping and automated pumping station technologies for major national development initiatives across Egypt.</p>
-        <a class="button button--text button--arrow" href="{% url 'news:list' %}">Read Full Report</a>
-      </article>
-      <div class="home-news__action">
-        <a class="button button--dark home-news__next" href="{% url 'news:list' %}">ALL NEWS</a>
+    <div class="home-news__grid">
+      <!-- Main Featured Story (Left Column) -->
+      {% if latest_posts and latest_posts.0 %}
+        {% with p0=latest_posts.0 %}
+          <article class="home-news__featured-card">
+            <div class="home-news__featured-image">
+              <img src="{{ p0.cover_image.url }}" alt="{{ p0.title }}">
+            </div>
+            <div class="home-news__featured-body">
+              <div class="home-news__meta">
+                <span class="home-news__category-tag">{{ p0.category.name|default:"INFRASTRUCTURE" }}</span>
+                <span>•</span>
+                <time datetime="{{ p0.published_at|date:'Y-m-d' }}">{{ p0.published_at|date:"M d, Y"|default:"OCT 2026" }}</time>
+              </div>
+              <h3>{{ p0.title }}</h3>
+              <p>{{ p0.excerpt|default:p0.content|truncatewords:24 }}</p>
+              <a class="button button--text button--arrow home-news__link" href="{% url 'news:list' %}">Read Full Report</a>
+            </div>
+          </article>
+        {% endwith %}
+      {% else %}
+        <article class="home-news__featured-card">
+          <div class="home-news__featured-image">
+            <img src="{% static 'img/home/Rectangle 15.png' %}" alt="Advancing Municipal Infrastructure in Egypt">
+          </div>
+          <div class="home-news__featured-body">
+            <div class="home-news__meta">
+              <span class="home-news__category-tag">INFRASTRUCTURE</span>
+              <span>•</span>
+              <time datetime="2026-10-15">OCT 15, 2026</time>
+            </div>
+            <h3>Advancing Egypt's Water &amp; Municipal Transmission Networks</h3>
+            <p>Al Bahaa continues to expand its Grade A infrastructure division, implementing modern trenchless piping and automated pumping station technologies for major national development initiatives across Egypt.</p>
+            <a class="button button--text button--arrow home-news__link" href="{% url 'news:list' %}">Read Full Report</a>
+          </div>
+        </article>
+      {% endif %}
+
+      <!-- Side Stacked Stories (Right Column) -->
+      <div class="home-news__side-stack">
+        {% if latest_posts and latest_posts|length > 1 %}
+          {% for post in latest_posts|slice:"1:3" %}
+            <article class="home-news__secondary-card">
+              <div class="home-news__secondary-image">
+                <img src="{{ post.cover_image.url }}" alt="{{ post.title }}">
+              </div>
+              <div class="home-news__secondary-body">
+                <div class="home-news__meta">
+                  <span class="home-news__category-tag">{{ post.category.name|default:"CIVIL WORKS" }}</span>
+                  <span>•</span>
+                  <time datetime="{{ post.published_at|date:'Y-m-d' }}">{{ post.published_at|date:"M d, Y"|default:"OCT 2026" }}</time>
+                </div>
+                <h3>{{ post.title }}</h3>
+                <p>{{ post.excerpt|default:post.content|truncatewords:14 }}</p>
+                <a class="button button--text button--arrow home-news__link" href="{% url 'news:list' %}">Read Article</a>
+              </div>
+            </article>
+          {% endfor %}
+        {% else %}
+          <article class="home-news__secondary-card">
+            <div class="home-news__secondary-image">
+              <img src="{% static 'img/home/Rectangle 9 copy 2.png' %}" alt="Structural Engineering and QA/QC Milestones">
+            </div>
+            <div class="home-news__secondary-body">
+              <div class="home-news__meta">
+                <span class="home-news__category-tag">CIVIL WORKS</span>
+                <span>•</span>
+                <time datetime="2026-09-28">SEP 28, 2026</time>
+              </div>
+              <h3>Pioneering Quality Control &amp; Structural Milestones</h3>
+              <p>Achieving zero-defect concrete pours on high-capacity administrative structures using advanced QA/QC monitoring.</p>
+              <a class="button button--text button--arrow home-news__link" href="{% url 'news:list' %}">Read Article</a>
+            </div>
+          </article>
+
+          <article class="home-news__secondary-card">
+            <div class="home-news__secondary-image">
+              <img src="{% static 'img/home/Rectangle 9 copy 3.png' %}" alt="Architectural Sustainability & Facade Engineering">
+            </div>
+            <div class="home-news__secondary-body">
+              <div class="home-news__meta">
+                <span class="home-news__category-tag">SUSTAINABILITY</span>
+                <span>•</span>
+                <time datetime="2026-08-14">AUG 14, 2026</time>
+              </div>
+              <h3>Sustainable High-Performance Facade Engineering</h3>
+              <p>Integrating climate-resilient envelope technologies into urban developments across Egypt.</p>
+              <a class="button button--text button--arrow home-news__link" href="{% url 'news:list' %}">Read Article</a>
+            </div>
+          </article>
+        {% endif %}
       </div>
+    </div>
+
+    <div class="home-news__footer">
+      <a class="button button--dark" href="{% url 'news:list' %}">ALL NEWS</a>
     </div>
   </section>
 {% endblock %}

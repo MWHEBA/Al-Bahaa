@@ -44,26 +44,13 @@
   margin-bottom: var(--space-6);
 }
 
-.careers-openings__header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  border-bottom: 1px solid var(--color-border);
-  padding-bottom: var(--space-3);
-  margin-bottom: var(--space-4);
-  flex-wrap: wrap;
-  gap: var(--space-2);
-}
-
-.careers-openings__header h2 {
-  font-size: clamp(1.8rem, 2.6vw, 2.3rem);
-  color: var(--color-primary);
-}
-
 .careers-openings__subtitle {
   color: var(--color-muted);
-  font-size: 0.95rem;
-  max-width: 480px;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  max-width: 620px;
+  margin-top: calc(-1 * var(--space-3));
+  margin-bottom: var(--space-4);
 }
 
 /* Filter Tabs (100% Matching Projects Filter Style) */
