@@ -4,7 +4,11 @@
 {% block page_title %}Recruitment &amp; Candidate Applications{% endblock %}
 
 {% block topbar_actions %}
-  <a href="{% url 'dashboard:careers_applications_export' %}" class="dash-btn dash-btn--secondary dash-btn--sm">
+  <a href="{% url 'core:careers' %}" target="_blank" class="dash-btn dash-btn--secondary dash-btn--sm" title="Preview Careers on Live Site">
+    <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+    Preview
+  </a>
+  <a href="{% url 'dashboard:careers_applications_export' %}" class="dash-btn dash-btn--secondary dash-btn--sm" title="Export Applications to CSV">
     <svg viewBox="0 0 24 24" style="width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
     Export CSV
   </a>
@@ -31,9 +35,15 @@
         <option value="rejected" {% if selected_status == 'rejected' %}selected{% endif %}>Rejected</option>
       </select>
 
-      <button type="submit" class="dash-btn dash-btn--secondary dash-btn--sm">Filter</button>
+      <button type="submit" class="dash-btn dash-btn--secondary dash-btn--sm" title="Filter Applications">
+        <svg viewBox="0 0 24 24"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+        Filter
+      </button>
       {% if search_query or selected_job or selected_status %}
-        <a href="{% url 'dashboard:careers_applications' %}" class="dash-btn dash-btn--danger dash-btn--sm">Clear</a>
+        <a href="{% url 'dashboard:careers_applications' %}" class="dash-btn dash-btn--danger dash-btn--sm" title="Clear Filters">
+          <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          Clear
+        </a>
       {% endif %}
     </form>
   </div>
@@ -47,13 +57,13 @@
           <th>Contact Info</th>
           <th>Applied Date</th>
           <th>Quick Status Triage</th>
-          <th>Resume CV</th>
-          <th>Action</th>
+          <th style="text-align: center; width: 90px;">Resume</th>
+          <th style="text-align: center; width: 60px;">Action</th>
         </tr>
       </thead>
       <tbody>
         {% for app in applications %}
-          <tr id="app-row-{{ app.pk }}">
+          <tr id="app-row-{{ app.pk }}" data-href="{% url 'dashboard:careers_application_detail' pk=app.pk %}">
             <td>
               <strong>{{ app.full_name }}</strong>
             </td>
@@ -74,15 +84,19 @@
                 <option value="rejected" {% if app.status == 'rejected' %}selected{% endif %}>Rejected</option>
               </select>
             </td>
-            <td>
+            <td style="text-align: center;">
               {% if app.resume %}
-                <a href="{{ app.resume.url }}" target="_blank" class="dash-btn dash-btn--secondary dash-btn--sm" title="Download CV">Download CV</a>
+                <a href="{{ app.resume.url }}" target="_blank" class="dash-btn dash-btn--secondary dash-btn--sm dash-btn--icon-only" title="Download CV Document" aria-label="Download CV Document">
+                  <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+                </a>
               {% else %}
-                <span style="font-size: 12px; color: var(--color-muted);">No File</span>
+                <span style="font-size: 12px; color: var(--color-muted);">-</span>
               {% endif %}
             </td>
-            <td>
-              <a href="{% url 'dashboard:careers_application_detail' pk=app.pk %}" class="dash-btn dash-btn--secondary dash-btn--sm">View Profile</a>
+            <td style="text-align: center;">
+              <a href="{% url 'dashboard:careers_application_detail' pk=app.pk %}" class="dash-btn dash-btn--secondary dash-btn--sm dash-btn--icon-only" title="View Full Candidate Profile" aria-label="View Full Candidate Profile">
+                <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              </a>
             </td>
           </tr>
         {% empty %}
@@ -100,10 +114,16 @@
       <span style="font-size: 12px; color: var(--color-muted);">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
       <div style="display: flex; gap: 6px;">
         {% if page_obj.has_previous %}
-          <a href="?page={{ page_obj.previous_page_number }}{% if search_query %}&q={{ search_query }}{% endif %}{% if selected_job %}&job={{ selected_job }}{% endif %}{% if selected_status %}&status={{ selected_status }}{% endif %}" class="dash-btn dash-btn--secondary dash-btn--sm">&larr; Prev</a>
+          <a href="?page={{ page_obj.previous_page_number }}{% if search_query %}&q={{ search_query }}{% endif %}{% if selected_job %}&job={{ selected_job }}{% endif %}{% if selected_status %}&status={{ selected_status }}{% endif %}" class="dash-btn dash-btn--secondary dash-btn--sm" title="Previous Page">
+            <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+            Prev
+          </a>
         {% endif %}
         {% if page_obj.has_next %}
-          <a href="?page={{ page_obj.next_page_number }}{% if search_query %}&q={{ search_query }}{% endif %}{% if selected_job %}&job={{ selected_job }}{% endif %}{% if selected_status %}&status={{ selected_status }}{% endif %}" class="dash-btn dash-btn--secondary dash-btn--sm">Next &rarr;</a>
+          <a href="?page={{ page_obj.next_page_number }}{% if search_query %}&q={{ search_query }}{% endif %}{% if selected_job %}&job={{ selected_job }}{% endif %}{% if selected_status %}&status={{ selected_status }}{% endif %}" class="dash-btn dash-btn--secondary dash-btn--sm" title="Next Page">
+            Next
+            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
         {% endif %}
       </div>
     </div>

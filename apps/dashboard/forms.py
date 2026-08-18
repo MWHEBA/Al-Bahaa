@@ -102,7 +102,7 @@ class ProjectForm(forms.ModelForm):
             "scope_of_work": forms.TextInput(attrs={"class": "dash-input", "placeholder": "e.g. Turnkey Infrastructure Contracting"}),
             "built_up_area": forms.TextInput(attrs={"class": "dash-input", "placeholder": "e.g. 350,000 LM Network Scale"}),
             "date": forms.DateInput(attrs={"class": "dash-input", "type": "date"}),
-            "cover_image": forms.ClearableFileInput(attrs={"class": "dash-file-input"}),
+            "cover_image": forms.FileInput(attrs={"class": "dash-file-input", "accept": "image/*", "id": "id_cover_image"}),
             "short_description": forms.Textarea(attrs={"class": "dash-textarea", "rows": 3, "placeholder": "Brief 1-2 sentence executive summary"}),
             "full_description": forms.Textarea(attrs={"class": "dash-textarea", "rows": 6, "placeholder": "Detailed multi-paragraph project description..."}),
             "engineering_highlights": forms.Textarea(attrs={"class": "dash-textarea", "rows": 5, "placeholder": "One engineering highlight per line..."}),
@@ -166,7 +166,7 @@ class PostForm(forms.ModelForm):
             "slug": forms.TextInput(attrs={"class": "dash-input", "placeholder": "auto-generated-if-empty"}),
             "category": forms.Select(attrs={"class": "dash-select"}),
             "author": forms.TextInput(attrs={"class": "dash-input", "placeholder": "e.g. Eng. Ahmed Bahaa (CEO)"}),
-            "cover_image": forms.ClearableFileInput(attrs={"class": "dash-file-input"}),
+            "cover_image": forms.FileInput(attrs={"class": "dash-file-input", "accept": "image/*", "id": "id_cover_image"}),
             "excerpt": forms.Textarea(attrs={"class": "dash-textarea", "rows": 3, "placeholder": "Brief summary kicker"}),
             "content": forms.Textarea(attrs={"class": "dash-textarea", "rows": 8, "placeholder": "Full article content..."}),
             "published_at": forms.DateTimeInput(attrs={"class": "dash-input", "type": "datetime-local"}),
@@ -323,9 +323,9 @@ class SiteSettingsForm(forms.ModelForm):
         ]
         widgets = {
             "company_name": forms.TextInput(attrs={"class": "dash-input"}),
-            "header_logo": forms.ClearableFileInput(attrs={"class": "dash-file-input"}),
-            "footer_logo": forms.ClearableFileInput(attrs={"class": "dash-file-input"}),
-            "favicon": forms.ClearableFileInput(attrs={"class": "dash-file-input"}),
+            "header_logo": forms.FileInput(attrs={"class": "dash-file-input", "accept": "image/*", "id": "id_header_logo"}),
+            "footer_logo": forms.FileInput(attrs={"class": "dash-file-input", "accept": "image/*", "id": "id_footer_logo"}),
+            "favicon": forms.FileInput(attrs={"class": "dash-file-input", "accept": "image/*,.ico,.svg", "id": "id_favicon"}),
             "copyright_text": forms.TextInput(attrs={"class": "dash-input"}),
             "footer_quote": forms.Textarea(attrs={"class": "dash-textarea", "rows": 3}),
             "footer_quote_author": forms.TextInput(attrs={"class": "dash-input"}),
@@ -374,7 +374,7 @@ class ClientLogoForm(forms.ModelForm):
         fields = ["name", "logo_image", "show_on_home", "show_on_about", "is_active", "order"]
         widgets = {
             "name": forms.TextInput(attrs={"class": "dash-input", "placeholder": "Partner / Client Name"}),
-            "logo_image": forms.ClearableFileInput(attrs={"class": "dash-file-input"}),
+            "logo_image": forms.FileInput(attrs={"class": "dash-file-input", "accept": "image/*", "id": "id_logo_image"}),
             "show_on_home": forms.CheckboxInput(attrs={"class": "dash-checkbox"}),
             "show_on_about": forms.CheckboxInput(attrs={"class": "dash-checkbox"}),
             "is_active": forms.CheckboxInput(attrs={"class": "dash-checkbox"}),
@@ -390,7 +390,7 @@ class TeamMemberForm(forms.ModelForm):
             "name": forms.TextInput(attrs={"class": "dash-input", "placeholder": "Full Name"}),
             "position": forms.TextInput(attrs={"class": "dash-input", "placeholder": "e.g. CEO / Board Member"}),
             "member_type": forms.Select(attrs={"class": "dash-select"}),
-            "photo": forms.ClearableFileInput(attrs={"class": "dash-file-input"}),
+            "photo": forms.FileInput(attrs={"class": "dash-file-input", "accept": "image/*", "id": "id_photo"}),
             "quote": forms.Textarea(attrs={"class": "dash-textarea", "rows": 3, "placeholder": "Executive quote or vision statement"}),
             "bio": forms.Textarea(attrs={"class": "dash-textarea", "rows": 4, "placeholder": "Detailed biographical summary..."}),
             "order": forms.NumberInput(attrs={"class": "dash-input", "style": "width: 120px;"}),

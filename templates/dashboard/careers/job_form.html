@@ -4,7 +4,16 @@
 {% block page_title %}{% if object %}Edit Vacancy: {{ object.title }}{% else %}Post New Vacancy{% endif %}{% endblock %}
 
 {% block topbar_actions %}
-  <a href="{% url 'dashboard:careers_jobs' %}" class="dash-btn dash-btn--secondary dash-btn--sm">Back to Vacancies</a>
+  <a href="{% url 'dashboard:careers_jobs' %}" class="dash-btn dash-btn--secondary dash-btn--sm" title="Back to Vacancies">
+    <svg viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+    Back to Vacancies
+  </a>
+  {% if object %}
+    <a href="{% url 'core:job_detail' slug=object.slug %}" target="_blank" class="dash-btn dash-btn--secondary dash-btn--sm" title="Preview on Live Site">
+      <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+      Preview
+    </a>
+  {% endif %}
 {% endblock %}
 
 {% block content %}
@@ -21,11 +30,13 @@
         <div class="dash-form-group">
           <label class="dash-label">Job Title *</label>
           {{ form.title }}
+          {% if form.title.errors %}<span class="dash-help" style="color: var(--color-text);">{{ form.title.errors.0 }}</span>{% endif %}
         </div>
 
         <div class="dash-form-group">
           <label class="dash-label">URL Slug (Auto-generated if empty)</label>
           {{ form.slug }}
+          {% if form.slug.errors %}<span class="dash-help" style="color: var(--color-text);">{{ form.slug.errors.0 }}</span>{% endif %}
         </div>
 
         <div class="dash-grid-2">
@@ -53,16 +64,20 @@
         <div class="dash-form-group">
           <label class="dash-label">Executive Role Summary *</label>
           {{ form.summary }}
+          {% if form.summary.errors %}<span class="dash-help" style="color: var(--color-text);">{{ form.summary.errors.0 }}</span>{% endif %}
         </div>
 
         <div class="dash-grid-2">
           <div class="dash-form-group">
             <label class="dash-label">Display Order</label>
             {{ form.order }}
+            <span class="dash-help">Lower numbers appear first.</span>
           </div>
           <div class="dash-form-group" style="display: flex; align-items: center; gap: 10px; margin-top: 28px;">
-            {{ form.is_active }}
-            <label class="dash-label" style="margin: 0;">Open for Applications</label>
+            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+              {{ form.is_active }}
+              <strong style="font-size: 13px;">Open for Applications</strong>
+            </label>
           </div>
         </div>
       </div>
@@ -82,6 +97,7 @@
         <div class="dash-form-group">
           <label class="dash-label">Candidate Requirements * (One bullet per line)</label>
           {{ form.requirements }}
+          {% if form.requirements.errors %}<span class="dash-help" style="color: var(--color-text);">{{ form.requirements.errors.0 }}</span>{% endif %}
         </div>
 
         <div class="dash-form-group">
@@ -93,7 +109,10 @@
   </div>
 
   <div style="margin-bottom: 40px; display: flex; gap: 12px;">
-    <button type="submit" class="dash-btn dash-btn--primary" style="padding: 12px 32px; font-size: 13px;">Save Vacancy Specifications</button>
+    <button type="submit" class="dash-btn dash-btn--primary" style="padding: 12px 28px; font-size: 13px;">
+      <svg viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+      {% if object %}Save Vacancy Changes{% else %}Publish New Vacancy{% endif %}
+    </button>
     <a href="{% url 'dashboard:careers_jobs' %}" class="dash-btn dash-btn--secondary" style="padding: 12px 24px;">Cancel</a>
   </div>
 </form>

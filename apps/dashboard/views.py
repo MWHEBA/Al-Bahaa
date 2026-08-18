@@ -3,11 +3,14 @@ from django.contrib import messages
 from django.contrib.auth import login, logout, update_session_auth_hash
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.contrib.auth.mixins import UserPassesTestMixin
+from django.conf import settings
+from django.core.mail import send_mail
 from django.core.paginator import Paginator
 from django.db.models import Count, Q
 from django.http import HttpResponse, HttpResponseForbidden, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse, reverse_lazy
+from django.utils import timezone
 from django.views import View
 from django.views.generic import (
     CreateView,
@@ -516,16 +519,61 @@ class InquiryDetailView(StaffRequiredMixin, View):
             inquiry.is_read = True
             inquiry.save()
         form = ContactMessageReviewForm(instance=inquiry)
-        return render(request, self.template_name, {"inquiry": inquiry, "form": form})
+        default_subject = f"Re: {inquiry.get_inquiry_type_display()} - Al Bahaa Contracting"
+        default_reply_body = (
+            f"Dear {inquiry.name},\n\n"
+            f"Thank you for reaching out to Al Bahaa Contracting regarding '{inquiry.get_inquiry_type_display()}'.\n\n"
+            f"We have thoroughly reviewed your inquiry and would like to inform you that ...\n\n"
+            f"Should you have any further questions or require immediate engineering assistance, please feel free to reply to this email or call our headquarters.\n\n"
+            f"Best regards,\n"
+            f"Al Bahaa Contracting & General Supplies\n"
+            f"https://albahaacontracting.com"
+        )
+        return render(request, self.template_name, {
+            "inquiry": inquiry,
+            "form": form,
+            "default_subject": default_subject,
+            "default_reply_body": default_reply_body,
+        })
 
     def post(self, request, pk):
         inquiry = get_object_or_404(ContactMessage, pk=pk)
-        form = ContactMessageReviewForm(request.POST, instance=inquiry)
-        if form.is_valid():
-            form.save()
-            messages.success(request, f"Inquiry status & internal notes saved.")
+        action = request.POST.get("action")
+
+        if action == "send_reply":
+            reply_subject = request.POST.get("reply_subject", "").strip()
+            reply_body = request.POST.get("reply_body", "").strip()
+
+            if not reply_subject or not reply_body:
+                messages.error(request, "Subject and reply message body cannot be empty.")
+            else:
+                from_email = getattr(settings, "DEFAULT_FROM_EMAIL", "info@albahaacontracting.com")
+                try:
+                    send_mail(
+                        subject=reply_subject,
+                        message=reply_body,
+                        from_email=from_email,
+                        recipient_list=[inquiry.email],
+                        fail_silently=False,
+                    )
+                    timestamp = timezone.now().strftime("%Y-%m-%d %H:%M")
+                    log_entry = f"--- [Official Email Reply Sent on {timestamp}] ---\nSubject: {reply_subject}\n\n{reply_body}\n\n"
+                    inquiry.internal_notes = log_entry + (inquiry.internal_notes or "")
+                    inquiry.status = "resolved"
+                    inquiry.is_read = True
+                    inquiry.save()
+                    messages.success(request, f"Official reply email successfully dispatched to '{inquiry.email}'.")
+                    return redirect("dashboard:inquiry_detail", pk=inquiry.pk)
+                except Exception as e:
+                    messages.error(request, f"Could not send email: {str(e)}")
             return redirect("dashboard:inquiry_detail", pk=inquiry.pk)
-        return render(request, self.template_name, {"inquiry": inquiry, "form": form})
+        else:
+            form = ContactMessageReviewForm(request.POST, instance=inquiry)
+            if form.is_valid():
+                form.save()
+                messages.success(request, "Inquiry status & internal notes saved.")
+                return redirect("dashboard:inquiry_detail", pk=inquiry.pk)
+            return render(request, self.template_name, {"inquiry": inquiry, "form": form})
 
 
 class InquiryQuickStatusView(StaffRequiredMixin, View):
@@ -578,6 +626,15 @@ class SiteSettingsEditView(StaffRequiredMixin, View):
 
     def post(self, request):
         settings_obj = SiteSettings.load()
+        if request.POST.get("header_logo-clear") and settings_obj.header_logo:
+            settings_obj.header_logo.delete(save=False)
+            settings_obj.header_logo = ""
+        if request.POST.get("footer_logo-clear") and settings_obj.footer_logo:
+            settings_obj.footer_logo.delete(save=False)
+            settings_obj.footer_logo = ""
+        if request.POST.get("favicon-clear") and settings_obj.favicon:
+            settings_obj.favicon.delete(save=False)
+            settings_obj.favicon = ""
         form = SiteSettingsForm(request.POST, request.FILES, instance=settings_obj)
         if form.is_valid():
             form.save()
@@ -611,22 +668,59 @@ class ClientLogosManageView(StaffRequiredMixin, View):
 
     def get(self, request):
         logos = ClientLogo.objects.all().order_by("order", "name")
-        form = ClientLogoForm()
-        return render(request, self.template_name, {"logos": logos, "form": form})
+        edit_id = request.GET.get("edit")
+        editing_logo = None
+        if edit_id:
+            try:
+                editing_logo = ClientLogo.objects.get(pk=edit_id)
+                form = ClientLogoForm(instance=editing_logo)
+            except ClientLogo.DoesNotExist:
+                form = ClientLogoForm()
+        else:
+            form = ClientLogoForm()
+        return render(request, self.template_name, {
+            "logos": logos,
+            "form": form,
+            "editing_logo": editing_logo,
+        })
 
     def post(self, request):
         action = request.POST.get("action")
         if action == "create":
             form = ClientLogoForm(request.POST, request.FILES)
             if form.is_valid():
+                logo = form.save()
+                messages.success(request, f"Partner logo '{logo.name}' added successfully.")
+            else:
+                messages.error(request, "Please correct the form errors.")
+                logos = ClientLogo.objects.all().order_by("order", "name")
+                return render(request, self.template_name, {"logos": logos, "form": form})
+        elif action == "update":
+            logo_id = request.POST.get("logo_id")
+            logo = get_object_or_404(ClientLogo, pk=logo_id)
+            if request.POST.get("logo-clear") and logo.logo_image:
+                logo.logo_image.delete(save=False)
+                logo.logo_image = ""
+            form = ClientLogoForm(request.POST, request.FILES, instance=logo)
+            if form.is_valid():
                 form.save()
-                messages.success(request, "Partner logo added.")
+                messages.success(request, f"Partner logo '{logo.name}' updated successfully.")
+            else:
+                messages.error(request, "Failed to update partner logo. Please check the fields.")
+                logos = ClientLogo.objects.all().order_by("order", "name")
+                return render(request, self.template_name, {"logos": logos, "form": form, "editing_logo": logo})
         elif action == "delete":
             logo_id = request.POST.get("logo_id")
             logo = get_object_or_404(ClientLogo, pk=logo_id)
+            name = logo.name
             logo.delete()
-            messages.success(request, f"Partner logo '{logo.name}' removed.")
+            messages.success(request, f"Partner logo '{name}' removed.")
         return redirect("dashboard:clients_manage")
+
+
+class ClientLogoEditView(StaffRequiredMixin, View):
+    def get(self, request, pk):
+        return redirect(f"{reverse('dashboard:clients_manage')}?edit={pk}")
 
 
 class TeamManageView(StaffRequiredMixin, View):
@@ -634,19 +728,60 @@ class TeamManageView(StaffRequiredMixin, View):
 
     def get(self, request):
         members = TeamMember.objects.all().order_by("order", "name")
-        form = TeamMemberForm()
-        return render(request, self.template_name, {"members": members, "form": form})
+
+        # Edit mode
+        edit_id = request.GET.get("edit")
+        editing_member = None
+        if edit_id:
+            try:
+                editing_member = TeamMember.objects.get(pk=edit_id)
+                form = TeamMemberForm(instance=editing_member)
+            except TeamMember.DoesNotExist:
+                form = TeamMemberForm()
+        else:
+            form = TeamMemberForm()
+
+        context = {
+            "members": members,
+            "form": form,
+            "editing_member": editing_member,
+        }
+        return render(request, self.template_name, context)
 
     def post(self, request):
         action = request.POST.get("action")
         if action == "create":
             form = TeamMemberForm(request.POST, request.FILES)
             if form.is_valid():
+                member = form.save()
+                messages.success(request, f"Team member '{member.name}' added successfully.")
+            else:
+                messages.error(request, "Please correct the errors in the form.")
+                members = TeamMember.objects.all().order_by("order", "name")
+                return render(request, self.template_name, {"members": members, "form": form})
+        elif action == "update":
+            member_id = request.POST.get("member_id")
+            member = get_object_or_404(TeamMember, pk=member_id)
+            if request.POST.get("photo-clear") and member.photo:
+                member.photo.delete(save=False)
+                member.photo = ""
+            form = TeamMemberForm(request.POST, request.FILES, instance=member)
+            if form.is_valid():
                 form.save()
-                messages.success(request, "Team member added.")
+                messages.success(request, f"Leadership profile '{member.name}' updated successfully.")
+            else:
+                messages.error(request, "Failed to update member. Please check the fields.")
+                members = TeamMember.objects.all().order_by("order", "name")
+                return render(request, self.template_name, {"members": members, "form": form, "editing_member": member})
         elif action == "delete":
             member_id = request.POST.get("member_id")
             member = get_object_or_404(TeamMember, pk=member_id)
+            name = member.name
             member.delete()
-            messages.success(request, f"Team member '{member.name}' removed.")
+            messages.success(request, f"Team member '{name}' removed.")
         return redirect("dashboard:team_manage")
+
+
+class TeamMemberEditView(StaffRequiredMixin, View):
+    def get(self, request, pk):
+        return redirect(f"{reverse('dashboard:team_manage')}?edit={pk}")

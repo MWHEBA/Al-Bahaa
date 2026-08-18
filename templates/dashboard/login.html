@@ -16,9 +16,16 @@
       background-color: var(--color-primary);
       padding: 24px;
     }
-    .dash-login-box {
+    .dash-login-wrapper {
       width: 100%;
       max-width: 440px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+    }
+    .dash-login-box {
+      width: 100%;
       background-color: var(--color-white);
       border-radius: 4px;
       padding: 48px 40px;
@@ -26,7 +33,7 @@
       text-align: center;
     }
     .dash-login-logo {
-      height: 48px;
+      height: 75px;
       width: auto;
       margin: 0 auto 24px auto;
       display: block;
@@ -38,7 +45,7 @@
       color: var(--color-primary);
       text-transform: uppercase;
       letter-spacing: 0.05em;
-      margin: 0 0 8px 0;
+      margin: 0 0 22px 0;
       text-align: center;
     }
     .dash-login-subtitle {
@@ -59,44 +66,84 @@
       text-align: center;
       justify-content: center;
     }
+    .dash-login-return-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--color-white);
+      font-family: var(--font-heading);
+      font-size: 13.5px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 6px 0;
+      border-bottom: 2px solid transparent;
+      opacity: 0.9;
+      transition: opacity var(--transition-fast), border-color var(--transition-fast);
+    }
+    .dash-login-return-link:hover {
+      opacity: 1;
+      border-bottom-color: var(--color-white);
+    }
+    .dash-login-return-link svg {
+      width: 16px;
+      height: 16px;
+      stroke: var(--color-white);
+      fill: none;
+      stroke-width: 2.2;
+      transition: transform var(--transition-fast);
+    }
+    .dash-login-return-link:hover svg {
+      transform: translateX(-4px);
+    }
   </style>
 </head>
 <body class="dash-login-shell">
-  <div class="dash-login-box">
-    <img class="dash-login-logo" src="{% static 'img/branding/AlBahaa logo.svg' %}" alt="Al Bahaa Contracting">
-    <h1 class="dash-login-title">Executive Control Panel</h1>
-    <p class="dash-login-subtitle">Sign in to access corporate operations &amp; management.</p>
+  <div class="dash-login-wrapper">
+    <div class="dash-login-box">
+      <a href="{% url 'core:home' %}" title="Al Bahaa Contracting Home">
+        <img class="dash-login-logo" src="{% static 'img/branding/AlBahaa logo.svg' %}" alt="Al Bahaa Contracting">
+      </a>
+      <h1 class="dash-login-title">Executive Control Panel</h1>
 
-    {% if messages %}
-      {% for message in messages %}
-        <div class="dash-alert {% if message.tags == 'error' %}dash-alert--error{% else %}dash-alert--success{% endif %}" style="margin-bottom: 20px;">
-          <span>{{ message }}</span>
+      {% if messages %}
+        {% for message in messages %}
+          <div class="dash-alert {% if message.tags == 'error' %}dash-alert--error{% else %}dash-alert--success{% endif %}" style="margin-bottom: 20px;">
+            <span>{{ message }}</span>
+          </div>
+        {% endfor %}
+      {% endif %}
+
+      {% if form.errors %}
+        <div class="dash-alert dash-alert--error" style="margin-bottom: 20px;">
+          <span>Invalid credentials. Please verify username and password.</span>
         </div>
-      {% endfor %}
-    {% endif %}
+      {% endif %}
 
-    {% if form.errors %}
-      <div class="dash-alert dash-alert--error" style="margin-bottom: 20px;">
-        <span>Invalid credentials. Please verify username and password.</span>
-      </div>
-    {% endif %}
+      <form method="post" action="{% url 'dashboard:login' %}">
+        {% csrf_token %}
+        <div class="dash-form-group">
+          <label class="dash-label" for="id_username">Username</label>
+          <input type="text" name="username" autofocus required id="id_username" class="dash-input" placeholder="admin">
+        </div>
 
-    <form method="post" action="{% url 'dashboard:login' %}">
-      {% csrf_token %}
-      <div class="dash-form-group">
-        <label class="dash-label" for="id_username">Username</label>
-        <input type="text" name="username" autofocus required id="id_username" class="dash-input" placeholder="admin">
-      </div>
+        <div class="dash-form-group">
+          <label class="dash-label" for="id_password">Password</label>
+          <input type="password" name="password" required id="id_password" class="dash-input" placeholder="••••••••">
+        </div>
 
-      <div class="dash-form-group">
-        <label class="dash-label" for="id_password">Password</label>
-        <input type="password" name="password" required id="id_password" class="dash-input" placeholder="••••••••">
-      </div>
+        <button type="submit" class="dash-btn dash-btn--primary" style="width: 100%; padding: 12px; margin-top: 12px; font-size: 13px;">
+          Sign In
+        </button>
+      </form>
+    </div>
 
-      <button type="submit" class="dash-btn dash-btn--primary" style="width: 100%; padding: 12px; margin-top: 12px; font-size: 13px;">
-        Sign In to Executive Panel
-      </button>
-    </form>
+    <!-- White Return Link Outside Box -->
+    <a href="{% url 'core:home' %}" class="dash-login-return-link" title="Return to Live Website">
+      <svg viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+      <span>Back to Website</span>
+    </a>
   </div>
 </body>
 </html>

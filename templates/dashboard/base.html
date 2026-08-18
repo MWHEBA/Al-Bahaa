@@ -7,7 +7,7 @@
   <title>{% block title %}Dashboard | Al Bahaa Contracting (S.A.E){% endblock %}</title>
   
   <link rel="stylesheet" href="{% static 'css/base.css' %}">
-  <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+  <link rel="stylesheet" href="{% static 'css/dashboard.css' %}?v=2.0">
   {% block extra_css %}{% endblock %}
 </head>
 <body class="dash-body">
@@ -152,6 +152,20 @@
           const panel = document.getElementById(target);
           if (panel) panel.classList.add("is-active");
         });
+      });
+
+      // Global Clickable Table Rows with data-href
+      document.querySelectorAll("tr[data-href]").forEach(r => {
+        r.style.cursor = "pointer";
+      });
+      document.addEventListener("click", (e) => {
+        const row = e.target.closest("tr[data-href]");
+        if (row && !e.target.closest("a, button, input, select, textarea, label")) {
+          const href = row.getAttribute("data-href");
+          if (href) {
+            window.location.href = href;
+          }
+        }
       });
     });
   </script>

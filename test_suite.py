@@ -6,7 +6,7 @@ django.setup()
 
 from django.contrib.auth import get_user_model
 from django.test import Client
-from apps.core.models import SiteSettings, JobOpening, ContactMessage, JobApplication
+from apps.core.models import SiteSettings, JobOpening, ContactMessage, JobApplication, TeamMember, ClientLogo
 from apps.projects.models import Project, ProjectCategory
 from apps.news.models import Post
 
@@ -147,6 +147,18 @@ def run_tests():
         assert res.status_code == 200
         print(f"  [PASS] Contact Inquiry Detail View -> HTTP 200")
 
+        # Test In-App Email Reply
+        reply_res = c.post(f"/dashboard/inquiries/{latest_inq.pk}/", {
+            "action": "send_reply",
+            "reply_subject": "Official Engineering Estimation Offer",
+            "reply_body": "Thank you for contacting Al Bahaa. We have attached our technical quotation.",
+        })
+        assert reply_res.status_code in [200, 302]
+        latest_inq.refresh_from_db()
+        assert latest_inq.status == "resolved"
+        assert "Official Engineering Estimation Offer" in latest_inq.internal_notes
+        print(f"  [PASS] In-App Official Email Reply -> Dispatched & logged successfully")
+
     # 4. Test Quick AJAX Status updates
     if latest_app:
         res = c.post(f"/dashboard/careers/applications/{latest_app.pk}/status/", {"status": "shortlisted"})
@@ -174,6 +186,108 @@ def run_tests():
     assert csv_inq.status_code == 200
     assert "text/csv" in csv_inq["Content-Type"]
     print("  [PASS] 1-Click Contact Inquiries CSV Export -> HTTP 200 with text/csv")
+
+    # 6. Test Team Management CRUD & Filters
+    print("\n[TEST] Testing Team Management Suite...")
+    # Create
+    create_res = c.post("/dashboard/team/", {
+        "action": "create",
+        "name": "Eng. Test Executive Leader",
+        "position": "Chief Technology Officer",
+        "member_type": "executive",
+        "quote": "Building the future with sustainable engineering.",
+        "bio": "Extensive experience in infrastructure modernization.",
+        "order": 99,
+        "is_active": "on",
+    })
+    assert create_res.status_code in [200, 302]
+    new_member = TeamMember.objects.filter(name="Eng. Test Executive Leader").first()
+    assert new_member is not None
+    assert new_member.position == "Chief Technology Officer"
+    print("  [PASS] Team Member Create -> Successfully created in DB")
+
+    # Team List & Member Presence
+    team_list_res = c.get("/dashboard/team/")
+    assert team_list_res.status_code == 200
+    assert "Eng. Test Executive Leader" in team_list_res.content.decode("utf-8")
+    print("  [PASS] Team List View -> Matched created member successfully")
+
+    # Update / Edit
+    update_res = c.post("/dashboard/team/", {
+        "action": "update",
+        "member_id": new_member.pk,
+        "name": "Eng. Test Executive Leader Updated",
+        "position": "Executive Vice President",
+        "member_type": "executive",
+        "quote": "Updated vision statement.",
+        "bio": "Updated bio narrative.",
+        "order": 100,
+        "is_active": "on",
+    })
+    assert update_res.status_code in [200, 302]
+    new_member.refresh_from_db()
+    assert new_member.name == "Eng. Test Executive Leader Updated"
+    assert new_member.position == "Executive Vice President"
+    print("  [PASS] Team Member Edit/Update -> Successfully updated in DB")
+
+    # Delete
+    del_res = c.post("/dashboard/team/", {
+        "action": "delete",
+        "member_id": new_member.pk,
+    })
+    assert del_res.status_code in [200, 302]
+    assert not TeamMember.objects.filter(pk=new_member.pk).exists()
+    print("  [PASS] Team Member Delete -> Successfully removed from DB")
+
+    print("\n[TEST] Testing Partner Logos Management Suite...")
+    # Create Logo
+    logo_create_res = c.post("/dashboard/clients/", {
+        "action": "create",
+        "name": "Test Engineering Authority",
+        "order": 50,
+        "is_active": "on",
+        "show_on_home": "on",
+        "show_on_about": "on",
+    })
+    assert logo_create_res.status_code in [200, 302]
+    test_logo = ClientLogo.objects.filter(name="Test Engineering Authority").first()
+    assert test_logo is not None
+    assert test_logo.order == 50
+    print("  [PASS] Partner Logo Create -> Successfully created in DB")
+
+    # List & Edit View
+    logo_list_res = c.get("/dashboard/clients/")
+    assert logo_list_res.status_code == 200
+    assert "Test Engineering Authority" in logo_list_res.content.decode("utf-8")
+    logo_edit_res = c.get(f"/dashboard/clients/?edit={test_logo.pk}")
+    assert logo_edit_res.status_code == 200
+    assert "Edit Partner Logo" in logo_edit_res.content.decode("utf-8")
+    print("  [PASS] Partner Logo List & Edit View -> OK")
+
+    # Update Logo
+    logo_update_res = c.post("/dashboard/clients/", {
+        "action": "update",
+        "logo_id": test_logo.pk,
+        "name": "Test Engineering Authority Updated",
+        "order": 55,
+        "is_active": "on",
+        "show_on_home": "on",
+        "show_on_about": "on",
+    })
+    assert logo_update_res.status_code in [200, 302]
+    test_logo.refresh_from_db()
+    assert test_logo.name == "Test Engineering Authority Updated"
+    assert test_logo.order == 55
+    print("  [PASS] Partner Logo Edit/Update -> Successfully updated in DB")
+
+    # Delete Logo
+    logo_del_res = c.post("/dashboard/clients/", {
+        "action": "delete",
+        "logo_id": test_logo.pk,
+    })
+    assert logo_del_res.status_code in [200, 302]
+    assert not ClientLogo.objects.filter(pk=test_logo.pk).exists()
+    print("  [PASS] Partner Logo Delete -> Successfully removed from DB")
 
     print("\n[SUCCESS] ALL PUBLIC AND EXECUTIVE DASHBOARD TESTS PASSED WITH 100% SUCCESS!")
 

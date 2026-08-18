@@ -4,8 +4,18 @@
 {% block page_title %}Careers &amp; Job Openings{% endblock %}
 
 {% block topbar_actions %}
-  <a href="{% url 'dashboard:careers_applications' %}" class="dash-btn dash-btn--secondary dash-btn--sm">View Candidates Inbox</a>
-  <a href="{% url 'dashboard:careers_jobs_create' %}" class="dash-btn dash-btn--primary dash-btn--sm">+ Post New Vacancy</a>
+  <a href="{% url 'core:careers' %}" target="_blank" class="dash-btn dash-btn--secondary dash-btn--sm" title="Preview Careers on Live Site">
+    <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+    Preview
+  </a>
+  <a href="{% url 'dashboard:careers_applications' %}" class="dash-btn dash-btn--secondary dash-btn--sm" title="View Candidates Inbox">
+    <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+    Candidates Inbox
+  </a>
+  <a href="{% url 'dashboard:careers_jobs_create' %}" class="dash-btn dash-btn--primary dash-btn--sm" title="Post New Vacancy">
+    <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+    Post New Vacancy
+  </a>
 {% endblock %}
 
 {% block content %}
@@ -24,12 +34,12 @@
           <th>Experience</th>
           <th>Applicants</th>
           <th>Status</th>
-          <th>Actions</th>
+          <th style="text-align: center; width: 120px;">Actions</th>
         </tr>
       </thead>
       <tbody>
         {% for job in jobs %}
-          <tr>
+          <tr data-href="{% url 'dashboard:careers_jobs_edit' pk=job.pk %}">
             <td>
               <strong>{{ job.title }}</strong><br>
               <span style="font-size: 12px; color: var(--color-muted);">{{ job.location }}</span>
@@ -38,7 +48,8 @@
             <td>{{ job.job_type }}</td>
             <td>{{ job.experience }}</td>
             <td>
-              <a href="{% url 'dashboard:careers_applications' %}?job={{ job.pk }}" style="font-weight: 700; color: var(--color-primary); text-decoration: none;">
+              <a href="{% url 'dashboard:careers_applications' %}?job={{ job.pk }}" style="font-weight: 700; color: var(--color-primary); text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">
+                <svg viewBox="0 0 24 24" style="width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 2;"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
                 {{ job.applicants_count }} Candidates
               </a>
             </td>
@@ -49,11 +60,17 @@
                 <span class="dash-badge dash-badge--draft">Closed</span>
               {% endif %}
             </td>
-            <td>
-              <div style="display: flex; gap: 6px;">
-                <a href="{% url 'dashboard:careers_jobs_edit' pk=job.pk %}" class="dash-btn dash-btn--secondary dash-btn--sm">Edit</a>
-                <a href="{% url 'core:job_detail' slug=job.slug %}" target="_blank" class="dash-btn dash-btn--secondary dash-btn--sm" title="Preview on live site">&#8599;</a>
-                <a href="{% url 'dashboard:careers_jobs_delete' pk=job.pk %}" class="dash-btn dash-btn--danger dash-btn--sm" title="Delete">&times;</a>
+            <td style="text-align: center;">
+              <div style="display: inline-flex; gap: 6px;">
+                <a href="{% url 'dashboard:careers_jobs_edit' pk=job.pk %}" class="dash-btn dash-btn--secondary dash-btn--sm dash-btn--icon-only" title="Edit Vacancy" aria-label="Edit Vacancy">
+                  <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                </a>
+                <a href="{% url 'core:job_detail' slug=job.slug %}" target="_blank" class="dash-btn dash-btn--secondary dash-btn--sm dash-btn--icon-only" title="Preview" aria-label="Preview">
+                  <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+                </a>
+                <a href="{% url 'dashboard:careers_jobs_delete' pk=job.pk %}" class="dash-btn dash-btn--danger dash-btn--sm dash-btn--icon-only" title="Delete Vacancy" aria-label="Delete Vacancy">
+                  <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
+                </a>
               </div>
             </td>
           </tr>

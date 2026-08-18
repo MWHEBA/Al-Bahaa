@@ -882,7 +882,7 @@
 
 /* Executive Quick-Bar on Public Site */
 .executive-quick-bar {
-  background-color: var(--color-primary);
+  background-color: var(--color-primary-midnight);
   color: var(--color-white);
   font-family: var(--font-heading);
   font-size: 11px;

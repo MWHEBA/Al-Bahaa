@@ -3,47 +3,106 @@
 {% block title %}Leadership &amp; Team | Al Bahaa Dashboard{% endblock %}
 {% block page_title %}Board of Directors &amp; Leadership{% endblock %}
 
+{% block topbar_actions %}
+  <a href="{% url 'core:about' %}#leadership" target="_blank" class="dash-btn dash-btn--secondary dash-btn--sm" title="Preview Leadership on Live Site">
+    <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+    Preview
+  </a>
+  {% if editing_member %}
+    <a href="{% url 'dashboard:team_manage' %}" class="dash-btn dash-btn--primary dash-btn--sm" title="Add New Member">
+      <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      Add New Member
+    </a>
+  {% endif %}
+{% endblock %}
+
 {% block content %}
 <div class="dash-grid-2">
-  <!-- Team List -->
+  <!-- Team Members Table List -->
   <div class="dash-card">
     <div class="dash-card__header">
       <h2 class="dash-card__title">Executive Leadership ({{ members.count }})</h2>
     </div>
+
     <div class="dash-table-wrap">
       <table class="dash-table">
         <thead>
           <tr>
-            <th style="width: 60px;">Photo</th>
-            <th>Name</th>
-            <th>Position</th>
-            <th>Action</th>
+            <th style="width: 54px; text-align: center;">Photo</th>
+            <th>Member Info</th>
+            <th>Classification</th>
+            <th style="width: 60px; text-align: center;">Order</th>
+            <th style="width: 70px; text-align: center;">Status</th>
+            <th style="text-align: center; width: 100px;">Actions</th>
           </tr>
         </thead>
         <tbody>
           {% for m in members %}
-            <tr>
-              <td>
-                <div style="width: 44px; height: 44px; border-radius: 50%; overflow: hidden; border: 1px solid var(--color-border); background: var(--color-primary);">
+            <tr data-href="{% url 'dashboard:team_manage' %}?edit={{ m.pk }}" {% if editing_member and editing_member.pk == m.pk %}style="background-color: var(--color-background-soft); border-left: 3px solid var(--color-primary);"{% endif %}>
+              <td style="text-align: center;">
+                <div style="width: 44px; height: 44px; border-radius: 50%; overflow: hidden; border: 1px solid var(--color-border); background: var(--color-primary); display: inline-flex; align-items: center; justify-content: center;">
                   {% if m.photo %}
                     <img src="{{ m.photo.url }}" style="width: 100%; height: 100%; object-fit: cover;">
+                  {% else %}
+                    <svg viewBox="0 0 24 24" style="width: 22px; height: 22px; stroke: var(--color-white); fill: none; stroke-width: 1.8;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
                   {% endif %}
                 </div>
               </td>
-              <td><strong>{{ m.name }}</strong></td>
-              <td>{{ m.position }}</td>
               <td>
-                <form method="post" onsubmit="return confirm('Remove team member {{ m.name }}?');">
-                  {% csrf_token %}
-                  <input type="hidden" name="action" value="delete">
-                  <input type="hidden" name="member_id" value="{{ m.pk }}">
-                  <button type="submit" class="dash-btn dash-btn--danger dash-btn--sm">Delete</button>
-                </form>
+                <strong style="font-size: 14px; color: var(--color-primary);">{{ m.name }}</strong><br>
+                <span style="font-size: 12px; color: var(--color-muted);">{{ m.position }}</span>
+                {% if m.quote or m.bio %}
+                  <div style="margin-top: 4px; display: flex; gap: 4px;">
+                    {% if m.quote %}
+                      <span class="dash-badge dash-badge--reviewed" style="font-size: 9px; padding: 2px 6px;" title="Executive quote attached">Quote</span>
+                    {% endif %}
+                    {% if m.bio %}
+                      <span class="dash-badge dash-badge--reviewed" style="font-size: 9px; padding: 2px 6px;" title="Biography attached">Bio</span>
+                    {% endif %}
+                  </div>
+                {% endif %}
+              </td>
+              <td style="white-space: nowrap;">
+                {% if m.member_type == 'founder' %}
+                  <span class="dash-badge dash-badge--shortlisted" style="white-space: nowrap; font-size: 10px; padding: 3px 6px;">Founding Card</span>
+                {% elif m.member_type == 'executive' %}
+                  <span class="dash-badge dash-badge--new" style="white-space: nowrap; font-size: 10px; padding: 3px 6px;">Executive Board</span>
+                {% else %}
+                  <span class="dash-badge dash-badge--reviewed" style="white-space: nowrap; font-size: 10px; padding: 3px 6px;">General Team</span>
+                {% endif %}
+              </td>
+              <td style="text-align: center; font-weight: 600; color: var(--color-muted); font-size: 12px; white-space: nowrap;">
+                #{{ m.order }}
+              </td>
+              <td style="text-align: center; white-space: nowrap;">
+                {% if m.is_active %}
+                  <span class="dash-badge dash-badge--active" style="white-space: nowrap; font-size: 10px; padding: 3px 6px;">Active</span>
+                {% else %}
+                  <span class="dash-badge dash-badge--draft" style="white-space: nowrap; font-size: 10px; padding: 3px 6px;">Hidden</span>
+                {% endif %}
+              </td>
+              <td style="text-align: center;">
+                <div style="display: inline-flex; gap: 6px; align-items: center;">
+                  <a href="{% url 'dashboard:team_manage' %}?edit={{ m.pk }}" class="dash-btn dash-btn--secondary dash-btn--sm dash-btn--icon-only" title="Edit Member Profile" aria-label="Edit Member Profile">
+                    <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                  </a>
+                  <a href="{% url 'core:about' %}#leadership" target="_blank" class="dash-btn dash-btn--secondary dash-btn--sm dash-btn--icon-only" title="Preview" aria-label="Preview">
+                    <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+                  </a>
+                  <form method="post" onsubmit="return confirm('Are you sure you want to remove {{ m.name }}?');" style="margin: 0;">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="delete">
+                    <input type="hidden" name="member_id" value="{{ m.pk }}">
+                    <button type="submit" class="dash-btn dash-btn--danger dash-btn--sm dash-btn--icon-only" title="Delete Member" aria-label="Delete Member">
+                      <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
+                    </button>
+                  </form>
+                </div>
               </td>
             </tr>
           {% empty %}
             <tr>
-              <td colspan="4" style="text-align: center; color: var(--color-muted); padding: 30px;">No leadership members added yet.</td>
+              <td colspan="6" style="text-align: center; color: var(--color-muted); padding: 40px;">No leadership members added yet.</td>
             </tr>
           {% endfor %}
         </tbody>
@@ -51,62 +110,143 @@
     </div>
   </div>
 
-  <!-- Add Member Form -->
+  <!-- Add / Edit Member Form Card -->
   <div class="dash-card">
     <div class="dash-card__header">
-      <h2 class="dash-card__title">+ Add Leadership Member</h2>
+      <h2 class="dash-card__title">
+        {% if editing_member %}
+          Edit Profile: {{ editing_member.name }}
+        {% else %}
+          Add Leadership Member
+        {% endif %}
+      </h2>
+      {% if editing_member %}
+        <a href="{% url 'dashboard:team_manage' %}" class="dash-btn dash-btn--secondary dash-btn--sm" title="Cancel Editing">
+          <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          Cancel
+        </a>
+      {% endif %}
     </div>
     <div class="dash-card__body">
       <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        <input type="hidden" name="action" value="create">
+        <input type="hidden" name="action" value="{% if editing_member %}update{% else %}create{% endif %}">
+        {% if editing_member %}
+          <input type="hidden" name="member_id" value="{{ editing_member.pk }}">
+        {% endif %}
 
         <div class="dash-form-group">
           <label class="dash-label">Full Name *</label>
           {{ form.name }}
+          {% if form.name.errors %}<span class="dash-help" style="color: var(--color-text);">{{ form.name.errors.0 }}</span>{% endif %}
         </div>
 
         <div class="dash-grid-2">
           <div class="dash-form-group">
             <label class="dash-label">Executive Position *</label>
             {{ form.position }}
+            {% if form.position.errors %}<span class="dash-help" style="color: var(--color-text);">{{ form.position.errors.0 }}</span>{% endif %}
           </div>
           <div class="dash-form-group">
-            <label class="dash-label">Classification</label>
+            <label class="dash-label">Classification / Role *</label>
             {{ form.member_type }}
+            <span class="dash-help">Founder Card (Heritage), Executive Board, or General Team.</span>
           </div>
         </div>
 
         <div class="dash-form-group">
           <label class="dash-label">Executive Portrait Photo</label>
-          {{ form.photo }}
+          <div class="dash-upload-card">
+            <div class="dash-upload-preview" id="js-avatar-preview-box">
+              {% if editing_member and editing_member.photo %}
+                <img src="{{ editing_member.photo.url }}" id="js-avatar-img" alt="{{ editing_member.name }}">
+              {% else %}
+                <svg viewBox="0 0 24 24" id="js-avatar-svg"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                <img src="" id="js-avatar-img" style="display: none;" alt="Preview">
+              {% endif %}
+            </div>
+            <div class="dash-upload-meta">
+              {{ form.photo }}
+              {% if editing_member and editing_member.photo %}
+                <div style="margin-top: 8px;">
+                  <label style="display: inline-flex; align-items: center; gap: 6px; font-size: 11.5px; color: var(--color-muted); cursor: pointer;">
+                    <input type="checkbox" name="photo-clear" id="photo-clear_id" class="dash-checkbox">
+                    <span>Remove current photo</span>
+                  </label>
+                </div>
+              {% endif %}
+              <span class="dash-help" style="margin-top: 6px;">Recommended: 600&times;700px (JPG/PNG).</span>
+            </div>
+          </div>
         </div>
 
         <div class="dash-form-group">
-          <label class="dash-label">Vision Statement / Quote</label>
+          <label class="dash-label">Vision Statement / Executive Quote</label>
           {{ form.quote }}
+          <span class="dash-help">Featured quote displayed on the public leadership card.</span>
         </div>
 
         <div class="dash-form-group">
           <label class="dash-label">Biographical Narrative</label>
           {{ form.bio }}
+          <span class="dash-help">Extended bio (displayed prominently for Founder and Board members).</span>
         </div>
 
         <div class="dash-grid-2">
           <div class="dash-form-group">
             <label class="dash-label">Display Order</label>
             {{ form.order }}
+            <span class="dash-help">Lower numbers appear first.</span>
           </div>
           <div class="dash-form-group" style="margin-top: 28px;">
-            <label style="display: flex; align-items: center; gap: 8px;">
-              {{ form.is_active }} <strong>Show on About Page</strong>
+            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+              {{ form.is_active }} <strong style="font-size: 13px;">Show on About Page</strong>
             </label>
           </div>
         </div>
 
-        <button type="submit" class="dash-btn dash-btn--primary">Save Leadership Profile</button>
+        <div style="display: flex; gap: 10px; margin-top: 8px;">
+          <button type="submit" class="dash-btn dash-btn--primary" style="flex: 1; padding: 11px 20px;">
+            <svg viewBox="0 0 24 24">
+              {% if editing_member %}
+                <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/>
+              {% else %}
+                <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+              {% endif %}
+            </svg>
+            {% if editing_member %}Save Leadership Changes{% else %}Add Leadership Profile{% endif %}
+          </button>
+          {% if editing_member %}
+            <a href="{% url 'dashboard:team_manage' %}" class="dash-btn dash-btn--secondary" style="padding: 11px 20px;">Cancel</a>
+          {% endif %}
+        </div>
       </form>
     </div>
   </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const photoInput = document.getElementById("id_photo");
+    const previewImg = document.getElementById("js-avatar-img");
+    const previewSvg = document.getElementById("js-avatar-svg");
+
+    if (photoInput && previewImg) {
+      photoInput.addEventListener("change", function() {
+        const file = this.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            previewImg.src = e.target.result;
+            previewImg.style.display = "block";
+            if (previewSvg) previewSvg.style.display = "none";
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+    }
+  });
+</script>
 {% endblock %}

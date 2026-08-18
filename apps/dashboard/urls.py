@@ -49,5 +49,7 @@ urlpatterns = [
 
     # Clients & Team
     path("clients/", views.ClientLogosManageView.as_view(), name="clients_manage"),
+    path("clients/<int:pk>/edit/", views.ClientLogoEditView.as_view(), name="clients_edit"),
     path("team/", views.TeamManageView.as_view(), name="team_manage"),
+    path("team/<int:pk>/edit/", views.TeamMemberEditView.as_view(), name="team_edit"),
 ]

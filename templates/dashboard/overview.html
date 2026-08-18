@@ -7,25 +7,50 @@
 <!-- KPI Cards -->
 <div class="dash-kpi-grid">
   <div class="dash-kpi-card">
-    <span class="dash-kpi-card__label">Landmark Projects</span>
+    <div class="dash-kpi-card__header-row">
+      <span class="dash-kpi-card__label">Landmark Projects</span>
+      <a href="{% url 'dashboard:projects_list' %}" class="dash-kpi-card__icon-btn" title="View Landmark Projects" aria-label="View Landmark Projects">
+        <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+      </a>
+    </div>
     <span class="dash-kpi-card__val">{{ kpis.projects_count }}</span>
-    <span class="dash-kpi-card__sub"><a href="{% url 'dashboard:projects_list' %}" style="color: var(--color-primary); font-weight: 600; text-decoration: none;">Manage Portfolio &rarr;</a></span>
+    <span class="dash-kpi-card__sub">
+      <a href="{% url 'dashboard:projects_list' %}" style="color: var(--color-primary); font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">
+        <span>Manage Portfolio</span>
+        <svg viewBox="0 0 24 24" style="width: 12px; height: 12px; stroke: currentColor; fill: none; stroke-width: 2;"><polyline points="9 18 15 12 9 6"/></svg>
+      </a>
+    </span>
   </div>
 
   <div class="dash-kpi-card">
-    <span class="dash-kpi-card__label">New Applications</span>
+    <div class="dash-kpi-card__header-row">
+      <span class="dash-kpi-card__label">New Applications</span>
+      <a href="{% url 'dashboard:careers_applications' %}" class="dash-kpi-card__icon-btn" title="View Candidate Applications" aria-label="View Candidate Applications">
+        <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+      </a>
+    </div>
     <span class="dash-kpi-card__val">{{ kpis.new_applications_count }}</span>
     <span class="dash-kpi-card__sub">{{ kpis.total_applications_count }} Total candidates</span>
   </div>
 
   <div class="dash-kpi-card">
-    <span class="dash-kpi-card__label">Unread Inquiries</span>
+    <div class="dash-kpi-card__header-row">
+      <span class="dash-kpi-card__label">Unread Inquiries</span>
+      <a href="{% url 'dashboard:inquiries_list' %}" class="dash-kpi-card__icon-btn" title="View Inquiries & Tenders" aria-label="View Inquiries & Tenders">
+        <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+      </a>
+    </div>
     <span class="dash-kpi-card__val">{{ kpis.unread_inquiries_count }}</span>
     <span class="dash-kpi-card__sub">{{ kpis.tender_inquiries_count }} Pending tender estimations</span>
   </div>
 
   <div class="dash-kpi-card">
-    <span class="dash-kpi-card__label">Published Insights</span>
+    <div class="dash-kpi-card__header-row">
+      <span class="dash-kpi-card__label">Published Insights</span>
+      <a href="{% url 'dashboard:news_list' %}" class="dash-kpi-card__icon-btn" title="View Articles & Insights" aria-label="View Articles & Insights">
+        <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+      </a>
+    </div>
     <span class="dash-kpi-card__val">{{ kpis.published_articles_count }}</span>
     <span class="dash-kpi-card__sub">{{ kpis.partners_count }} Institutional partners</span>
   </div>
@@ -36,7 +61,10 @@
   <div class="dash-card">
     <div class="dash-card__header">
       <h2 class="dash-card__title">Recent Candidate Applications</h2>
-      <a href="{% url 'dashboard:careers_applications' %}" class="dash-btn dash-btn--secondary dash-btn--sm">View All</a>
+      <a href="{% url 'dashboard:careers_applications' %}" class="dash-btn dash-btn--secondary dash-btn--sm" title="View All Candidate Applications">
+        <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        <span>View All</span>
+      </a>
     </div>
     <div class="dash-table-wrap">
       <table class="dash-table">
@@ -45,12 +73,12 @@
             <th>Candidate</th>
             <th>Role</th>
             <th>Status</th>
-            <th>Action</th>
+            <th style="width: 50px; text-align: center;">Action</th>
           </tr>
         </thead>
         <tbody>
           {% for app in recent_applications %}
-            <tr>
+            <tr data-href="{% url 'dashboard:careers_application_detail' pk=app.pk %}">
               <td>
                 <strong>{{ app.full_name }}</strong><br>
                 <span style="font-size: 12px; color: var(--color-muted);">{{ app.phone }}</span>
@@ -59,8 +87,10 @@
               <td>
                 <span class="dash-badge dash-badge--{{ app.status }}">{{ app.get_status_display }}</span>
               </td>
-              <td>
-                <a href="{% url 'dashboard:careers_application_detail' pk=app.pk %}" class="dash-btn dash-btn--secondary dash-btn--sm">Review</a>
+              <td style="text-align: center;">
+                <a href="{% url 'dashboard:careers_application_detail' pk=app.pk %}" class="dash-btn dash-btn--secondary dash-btn--sm dash-btn--icon-only" title="Review Application" aria-label="Review Application">
+                  <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                </a>
               </td>
             </tr>
           {% empty %}
@@ -77,7 +107,10 @@
   <div class="dash-card">
     <div class="dash-card__header">
       <h2 class="dash-card__title">Recent Contact &amp; Tender Inquiries</h2>
-      <a href="{% url 'dashboard:inquiries_list' %}" class="dash-btn dash-btn--secondary dash-btn--sm">View All</a>
+      <a href="{% url 'dashboard:inquiries_list' %}" class="dash-btn dash-btn--secondary dash-btn--sm" title="View All Inquiries">
+        <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        <span>View All</span>
+      </a>
     </div>
     <div class="dash-table-wrap">
       <table class="dash-table">
@@ -86,12 +119,12 @@
             <th>Client</th>
             <th>Type</th>
             <th>Status</th>
-            <th>Action</th>
+            <th style="width: 50px; text-align: center;">Action</th>
           </tr>
         </thead>
         <tbody>
           {% for inq in recent_inquiries %}
-            <tr>
+            <tr data-href="{% url 'dashboard:inquiry_detail' pk=inq.pk %}">
               <td>
                 <strong>{{ inq.name }}</strong><br>
                 <span style="font-size: 12px; color: var(--color-muted);">{{ inq.company|default:inq.email }}</span>
@@ -100,8 +133,10 @@
               <td>
                 <span class="dash-badge dash-badge--{{ inq.status }}">{{ inq.get_status_display }}</span>
               </td>
-              <td>
-                <a href="{% url 'dashboard:inquiry_detail' pk=inq.pk %}" class="dash-btn dash-btn--secondary dash-btn--sm">Open</a>
+              <td style="text-align: center;">
+                <a href="{% url 'dashboard:inquiry_detail' pk=inq.pk %}" class="dash-btn dash-btn--secondary dash-btn--sm dash-btn--icon-only" title="Open Inquiry" aria-label="Open Inquiry">
+                  <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                </a>
               </td>
             </tr>
           {% empty %}

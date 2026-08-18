@@ -1,79 +1,166 @@
 {% extends "dashboard/base.html" %}
 
-{% block title %}Inquiry: {{ inquiry.name }} | Al Bahaa Dashboard{% endblock %}
+{% block title %}Inquiry #{{ inquiry.pk }}: {{ inquiry.name }} | Al Bahaa Dashboard{% endblock %}
 {% block page_title %}Contact &amp; Tender Inquiry{% endblock %}
 
 {% block topbar_actions %}
-  <a href="{% url 'dashboard:inquiries_list' %}" class="dash-btn dash-btn--secondary dash-btn--sm">Back to Inbox</a>
+  <a href="{% url 'dashboard:inquiries_list' %}" class="dash-btn dash-btn--secondary dash-btn--sm" title="Back to Inquiries Inbox">
+    <svg viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+    Back to Inbox
+  </a>
+  <a href="mailto:{{ inquiry.email }}?subject=Re:%20{{ inquiry.get_inquiry_type_display|urlencode }}%20-%20Al%20Bahaa%20Contracting" class="dash-btn dash-btn--primary dash-btn--sm" title="Reply to {{ inquiry.name }} via Email">
+    <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+    Reply via Email
+  </a>
+  {% if inquiry.phone %}
+    <a href="tel:{{ inquiry.phone }}" class="dash-btn dash-btn--secondary dash-btn--sm" title="Call {{ inquiry.phone }}">
+      <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      Call Phone
+    </a>
+  {% endif %}
 {% endblock %}
 
 {% block content %}
 <div class="dash-grid-2">
-  <!-- Message Body & Sender Info -->
-  <div class="dash-card">
-    <div class="dash-card__header">
-      <h2 class="dash-card__title">Inquiry Details</h2>
+  <!-- Left Column: Details & Reply Composer -->
+  <div style="display: flex; flex-direction: column; gap: 24px;">
+    <!-- Sender & Message Scope Card -->
+    <div class="dash-card">
+      <div class="dash-card__header" style="display: flex; justify-content: space-between; align-items: center;">
+        <h2 class="dash-card__title">Inquiry Details</h2>
+        <span class="dash-badge dash-badge--{{ inquiry.status }}" style="white-space: nowrap;">{{ inquiry.get_status_display }}</span>
+      </div>
+      <div class="dash-card__body">
+        <!-- Sender Identity Banner -->
+        <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 24px; padding-bottom: 20px; border-bottom: 1px solid var(--color-border);">
+          <div style="width: 52px; height: 52px; border-radius: 50%; background-color: var(--color-primary); color: var(--color-white); display: flex; align-items: center; justify-content: center; font-family: var(--font-heading); font-size: 18px; font-weight: 700; flex-shrink: 0;">
+            {{ inquiry.name|slice:":2"|upper }}
+          </div>
+          <div>
+            <h3 style="margin: 0 0 4px 0; font-size: 20px; font-family: var(--font-heading); color: var(--color-primary);">{{ inquiry.name }}</h3>
+            <p style="margin: 0; color: var(--color-muted); font-size: 13.5px;">
+              Entity / Firm: <strong style="color: var(--color-text);">{{ inquiry.company|default:"Independent Client / Consultant" }}</strong>
+            </p>
+          </div>
+        </div>
+
+        <!-- Key Metadata Grid -->
+        <div class="dash-grid-2" style="margin-bottom: 20px;">
+          <div style="background: var(--color-background-soft); padding: 12px 16px; border-radius: 4px; border: 1px solid var(--color-border);">
+            <label class="dash-label" style="margin-bottom: 4px;">Classification</label>
+            <span style="font-weight: 700; color: var(--color-primary); font-size: 13px;">{{ inquiry.get_inquiry_type_display }}</span>
+          </div>
+          <div style="background: var(--color-background-soft); padding: 12px 16px; border-radius: 4px; border: 1px solid var(--color-border);">
+            <label class="dash-label" style="margin-bottom: 4px;">Received Date</label>
+            <span style="font-size: 13px; color: var(--color-text);">{{ inquiry.created_at|date:"l, M d, Y - H:i A" }}</span>
+          </div>
+        </div>
+
+        <div class="dash-grid-2" style="margin-bottom: 24px;">
+          <div style="background: var(--color-background-soft); padding: 12px 16px; border-radius: 4px; border: 1px solid var(--color-border);">
+            <label class="dash-label" style="margin-bottom: 4px;">Email Address</label>
+            <a href="mailto:{{ inquiry.email }}" style="color: var(--color-primary); font-weight: 600; text-decoration: none; font-size: 13px; word-break: break-all;">
+              {{ inquiry.email }}
+            </a>
+          </div>
+          <div style="background: var(--color-background-soft); padding: 12px 16px; border-radius: 4px; border: 1px solid var(--color-border);">
+            <label class="dash-label" style="margin-bottom: 4px;">Phone Number</label>
+            {% if inquiry.phone %}
+              <a href="tel:{{ inquiry.phone }}" style="color: var(--color-primary); font-weight: 600; text-decoration: none; font-size: 13px;">
+                {{ inquiry.phone }}
+              </a>
+            {% else %}
+              <span style="color: var(--color-muted); font-size: 13px;">Not provided</span>
+            {% endif %}
+          </div>
+        </div>
+
+        <!-- Message Content Box -->
+        <div>
+          <label class="dash-label">Message Scope &amp; Content</label>
+          <div style="background-color: var(--color-background); padding: 20px; border-radius: 4px; border: 1px solid var(--color-border); font-size: 14px; line-height: 1.7; color: var(--color-text); white-space: pre-wrap;">{{ inquiry.message }}</div>
+        </div>
+      </div>
     </div>
-    <div class="dash-card__body">
-      <div style="margin-bottom: 24px;">
-        <span class="dash-badge dash-badge--{{ inquiry.status }}" style="margin-bottom: 8px;">{{ inquiry.get_status_display }}</span>
-        <h3 style="margin: 6px 0 2px 0; font-size: 20px; font-family: var(--font-heading); color: var(--color-primary);">{{ inquiry.name }}</h3>
-        <p style="margin: 0; color: var(--color-muted); font-size: 14px;">Entity / Firm: <strong>{{ inquiry.company|default:"Independent Client" }}</strong></p>
-      </div>
 
-      <div class="dash-grid-2" style="margin-bottom: 20px;">
-        <div>
-          <label class="dash-label">Inquiry Classification</label>
-          <span style="font-weight: 700; color: var(--color-primary);">{{ inquiry.get_inquiry_type_display }}</span>
-        </div>
-        <div>
-          <label class="dash-label">Received Date</label>
-          <span>{{ inquiry.created_at|date:"l, F d, Y - H:i A" }}</span>
-        </div>
+    <!-- Direct Email Reply Composer Card -->
+    <div class="dash-card" id="reply-composer">
+      <div class="dash-card__header" style="display: flex; justify-content: space-between; align-items: center;">
+        <h2 class="dash-card__title">Direct Email Reply Composer</h2>
+        <span style="font-size: 12px; color: var(--color-muted);">Send to: <strong>{{ inquiry.email }}</strong></span>
       </div>
+      <div class="dash-card__body">
+        <form method="post">
+          {% csrf_token %}
+          <input type="hidden" name="action" value="send_reply">
 
-      <div class="dash-grid-2" style="margin-bottom: 24px;">
-        <div>
-          <label class="dash-label">Email</label>
-          <a href="mailto:{{ inquiry.email }}" style="color: var(--color-primary); font-weight: 600; text-decoration: none;">{{ inquiry.email }}</a>
-        </div>
-        <div>
-          <label class="dash-label">Phone</label>
-          <a href="tel:{{ inquiry.phone }}" style="color: var(--color-primary); font-weight: 600; text-decoration: none;">{{ inquiry.phone }}</a>
-        </div>
-      </div>
+          <div class="dash-form-group">
+            <label class="dash-label">Email Subject *</label>
+            <input type="text" name="reply_subject" value="{{ default_subject }}" class="dash-input" required>
+          </div>
 
-      <div>
-        <label class="dash-label">Message Body / Scope</label>
-        <div style="background-color: var(--color-background-soft); padding: 18px; border-radius: 4px; border: 1px solid var(--color-border); font-size: 14px; line-height: 1.6;">
-          {{ inquiry.message|linebreaks }}
-        </div>
+          <div class="dash-form-group">
+            <label class="dash-label">Reply Message Body *</label>
+            <textarea name="reply_body" rows="7" class="dash-textarea" required>{{ default_reply_body }}</textarea>
+            <span class="dash-help">The client will receive this message directly at <strong>{{ inquiry.email }}</strong>. A copy will also be logged in internal notes.</span>
+          </div>
+
+          <button type="submit" class="dash-btn dash-btn--primary" style="padding: 11px 24px; font-size: 13px;">
+            <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            Send Email Reply
+          </button>
+        </form>
       </div>
     </div>
   </div>
 
-  <!-- Internal Triage & Notes -->
-  <div class="dash-card">
-    <div class="dash-card__header">
-      <h2 class="dash-card__title">Executive Triage &amp; Notes</h2>
-    </div>
-    <div class="dash-card__body">
-      <form method="post">
-        {% csrf_token %}
+  <!-- Right Column: Internal Triage & Technical Notes -->
+  <div style="display: flex; flex-direction: column; gap: 24px;">
+    <div class="dash-card">
+      <div class="dash-card__header">
+        <h2 class="dash-card__title">Executive Triage &amp; Notes</h2>
+      </div>
+      <div class="dash-card__body">
+        <form method="post">
+          {% csrf_token %}
+          <input type="hidden" name="action" value="save_notes">
 
-        <div class="dash-form-group">
-          <label class="dash-label">Inquiry Resolution Status</label>
-          {{ form.status }}
+          <div class="dash-form-group">
+            <label class="dash-label">Inquiry Resolution Status</label>
+            {{ form.status }}
+            <span class="dash-help">Update status to indicate review progress or successful client resolution.</span>
+          </div>
+
+          <div class="dash-form-group">
+            <label class="dash-label">Internal Engineering &amp; Estimation Notes</label>
+            {{ form.internal_notes }}
+            <span class="dash-help">Record tender estimation numbers, assigned technical leads, bid coordination notes, or follow-up call summaries.</span>
+          </div>
+
+          <div style="margin-top: 24px;">
+            <button type="submit" class="dash-btn dash-btn--primary" style="width: 100%; padding: 12px 20px; font-size: 13px;">
+              <svg viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+              Save Status &amp; Notes
+            </button>
+          </div>
+        </form>
+
+        <!-- Quick Inquiry Audit Metadata -->
+        <div style="margin-top: 28px; padding-top: 20px; border-top: 1px solid var(--color-border); font-size: 12px; color: var(--color-muted);">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+            <span>Inquiry Ticket ID:</span>
+            <strong>#{{ inquiry.pk }}</strong>
+          </div>
+          <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+            <span>First Received:</span>
+            <span>{{ inquiry.created_at|date:"M d, Y - H:i" }}</span>
+          </div>
+          <div style="display: flex; justify-content: space-between;">
+            <span>Database Read Status:</span>
+            <span style="font-weight: 600; color: var(--color-primary);">{% if inquiry.is_read %}Marked as Read{% else %}Unread{% endif %}</span>
+          </div>
         </div>
-
-        <div class="dash-form-group">
-          <label class="dash-label">Internal Engineering &amp; Estimation Notes</label>
-          {{ form.internal_notes }}
-          <span class="dash-help">Record tender estimation numbers, assigned technical leads, or follow-up logs.</span>
-        </div>
-
-        <button type="submit" class="dash-btn dash-btn--primary" style="width: 100%; padding: 12px;">Save Status &amp; Notes</button>
-      </form>
+      </div>
     </div>
   </div>
 </div>

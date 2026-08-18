@@ -22,7 +22,7 @@
       </thead>
       <tbody>
         {% for hero in heroes %}
-          <tr>
+          <tr data-href="{% url 'dashboard:settings_hero_edit' pk=hero.pk %}">
             <td>
               <div style="width: 90px; height: 50px; border-radius: 3px; overflow: hidden; background: var(--color-primary); border: 1px solid var(--color-border);">
                 {% if hero.hero_image %}
@@ -35,8 +35,10 @@
             </td>
             <td>{{ hero.title_line1 }}</td>
             <td><span class="dash-badge dash-badge--reviewed">{{ hero.eyebrow|default:"-" }}</span></td>
-            <td>
-              <a href="{% url 'dashboard:settings_hero_edit' pk=hero.pk %}" class="dash-btn dash-btn--primary dash-btn--sm">Edit Banner</a>
+            <td style="text-align: center;">
+              <a href="{% url 'dashboard:settings_hero_edit' pk=hero.pk %}" class="dash-btn dash-btn--primary dash-btn--sm dash-btn--icon-only" title="Edit Hero Banner" aria-label="Edit Hero Banner">
+                <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+              </a>
             </td>
           </tr>
         {% empty %}
