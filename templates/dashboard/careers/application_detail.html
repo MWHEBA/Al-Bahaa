@@ -8,18 +8,18 @@
     <svg viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
     Back to Candidates
   </a>
-  <a href="mailto:{{ application.email }}?subject=Regarding%20Your%20Application%20for%20{{ application.job.title|urlencode }}%20-%20Al%20Bahaa%20Contracting" class="dash-btn dash-btn--primary dash-btn--sm" title="Email Candidate">
+  <button type="button" class="dash-btn dash-btn--primary dash-btn--sm" onclick="openDashModal('emailCandidateModal')" title="Send Official Email to Candidate">
     <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-    Email Candidate
-  </a>
+    Send Email
+  </button>
   {% if application.phone %}
     <a href="tel:{{ application.phone }}" class="dash-btn dash-btn--secondary dash-btn--sm" title="Call {{ application.phone }}">
       <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-      Call Phone
+      Call
     </a>
   {% endif %}
   {% if application.resume %}
-    <a href="{{ application.resume.url }}" target="_blank" class="dash-btn dash-btn--secondary dash-btn--sm" title="Download CV">
+    <a href="{% url 'dashboard:careers_application_cv' pk=application.pk %}" target="_blank" rel="noopener noreferrer" class="dash-btn dash-btn--secondary dash-btn--sm" title="Download CV">
       <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
       Download CV
     </a>
@@ -32,17 +32,19 @@
   <div class="dash-card">
     <div class="dash-card__header" style="display: flex; justify-content: space-between; align-items: center;">
       <h2 class="dash-card__title">Candidate Application Details</h2>
-      <span class="dash-badge dash-badge--{{ application.status }}" style="white-space: nowrap;">{{ application.get_status_display }}</span>
+      <span class="dash-badge {% if application.status == 'shortlisted' %}dash-badge--success{% elif application.status == 'rejected' %}dash-badge--danger{% else %}dash-badge--reviewed{% endif %}">
+        {{ application.get_status_display }}
+      </span>
     </div>
     <div class="dash-card__body">
       <!-- Candidate Identity Banner -->
       <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 24px; padding-bottom: 20px; border-bottom: 1px solid var(--color-border);">
-        <div style="width: 52px; height: 52px; border-radius: 50%; background-color: var(--color-primary); color: var(--color-white); display: flex; align-items: center; justify-content: center; font-family: var(--font-heading); font-size: 18px; font-weight: 700; flex-shrink: 0;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background-color: var(--color-primary); color: white; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 700; flex-shrink: 0;">
           {{ application.full_name|slice:":2"|upper }}
         </div>
         <div>
-          <h3 style="margin: 0 0 4px 0; font-size: 20px; font-family: var(--font-heading); color: var(--color-primary);">{{ application.full_name }}</h3>
-          <p style="margin: 0; color: var(--color-muted); font-size: 13.5px;">
+          <h3 style="margin: 0 0 4px 0; font-size: 20px; color: var(--color-primary-light);">{{ application.full_name }}</h3>
+          <p style="margin: 0; color: var(--color-text-muted); font-size: 13.5px;">
             Target Position: <strong style="color: var(--color-text);">{{ application.job.title }}</strong>
             {% if application.job.department %}&bull; {{ application.job.department.name }}{% endif %}
           </p>
@@ -51,28 +53,28 @@
 
       <!-- Key Metadata Grid -->
       <div class="dash-grid-2" style="margin-bottom: 20px;">
-        <div style="background: var(--color-background-soft); padding: 12px 16px; border-radius: 4px; border: 1px solid var(--color-border);">
+        <div style="background: var(--color-surface-hover); padding: 12px 16px; border-radius: 4px; border: 1px solid var(--color-border);">
           <label class="dash-label" style="margin-bottom: 4px;">Applied Vacancy</label>
-          <a href="{% url 'dashboard:careers_jobs_edit' pk=application.job.pk %}" style="font-weight: 700; color: var(--color-primary); font-size: 13px; text-decoration: none;">
+          <a href="{% url 'dashboard:careers_jobs_edit' pk=application.job.pk %}" style="font-weight: 700; color: var(--color-primary-light); font-size: 13px; text-decoration: none;">
             {{ application.job.title }} &rarr;
           </a>
         </div>
-        <div style="background: var(--color-background-soft); padding: 12px 16px; border-radius: 4px; border: 1px solid var(--color-border);">
+        <div style="background: var(--color-surface-hover); padding: 12px 16px; border-radius: 4px; border: 1px solid var(--color-border);">
           <label class="dash-label" style="margin-bottom: 4px;">Submission Timestamp</label>
           <span style="font-size: 13px; color: var(--color-text);">{{ application.submitted_at|date:"l, M d, Y - H:i A" }}</span>
         </div>
       </div>
 
       <div class="dash-grid-2" style="margin-bottom: 24px;">
-        <div style="background: var(--color-background-soft); padding: 12px 16px; border-radius: 4px; border: 1px solid var(--color-border);">
+        <div style="background: var(--color-surface-hover); padding: 12px 16px; border-radius: 4px; border: 1px solid var(--color-border);">
           <label class="dash-label" style="margin-bottom: 4px;">Email Address</label>
-          <a href="mailto:{{ application.email }}" style="color: var(--color-primary); font-weight: 600; text-decoration: none; font-size: 13px; word-break: break-all;">
+          <a href="mailto:{{ application.email }}" style="color: var(--color-primary-light); font-weight: 600; text-decoration: none; font-size: 13px; word-break: break-all;">
             {{ application.email }}
           </a>
         </div>
-        <div style="background: var(--color-background-soft); padding: 12px 16px; border-radius: 4px; border: 1px solid var(--color-border);">
+        <div style="background: var(--color-surface-hover); padding: 12px 16px; border-radius: 4px; border: 1px solid var(--color-border);">
           <label class="dash-label" style="margin-bottom: 4px;">Phone Number</label>
-          <a href="tel:{{ application.phone }}" style="color: var(--color-primary); font-weight: 600; text-decoration: none; font-size: 13px;">
+          <a href="tel:{{ application.phone }}" style="color: var(--color-primary-light); font-weight: 600; text-decoration: none; font-size: 13px;">
             {{ application.phone }}
           </a>
         </div>
@@ -81,80 +83,112 @@
       <!-- Cover Note / Introduction -->
       <div style="margin-bottom: 24px;">
         <label class="dash-label">Cover Note / Candidate Statement</label>
-        <div style="background-color: var(--color-background); padding: 18px; border-radius: 4px; border: 1px solid var(--color-border); font-size: 14px; line-height: 1.7; color: var(--color-text); white-space: pre-wrap;">{{ application.cover_note|default:"No cover note provided with this submission." }}</div>
+        <div style="background-color: var(--color-surface-hover); padding: 18px; border-radius: 4px; border: 1px solid var(--color-border); font-size: 14px; line-height: 1.7; color: var(--color-text); white-space: pre-wrap; overflow-wrap: break-word;">{{ application.cover_note|default:"No cover note provided with this submission." }}</div>
       </div>
 
       <!-- Curriculum Vitae (CV) -->
       <div>
         <label class="dash-label">Curriculum Vitae (CV) Attachment</label>
         {% if application.resume %}
-          <div style="display: flex; align-items: center; justify-content: space-between; padding: 14px 18px; background-color: var(--color-background-soft); border: 1px solid var(--color-border); border-radius: 4px;">
+          <div style="display: flex; align-items: center; justify-content: space-between; padding: 14px 18px; background-color: var(--color-surface-hover); border: 1px solid var(--color-border); border-radius: 4px;">
             <div style="display: flex; align-items: center; gap: 12px;">
-              <svg viewBox="0 0 24 24" style="width: 24px; height: 24px; stroke: var(--color-primary); fill: none; stroke-width: 2;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+              <svg viewBox="0 0 24 24" style="width: 24px; height: 24px; stroke: var(--color-primary-light); fill: none; stroke-width: 2;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
               <div>
-                <strong style="font-size: 13.5px; color: var(--color-primary);">Candidate Resume Document</strong><br>
-                <span style="font-size: 11.5px; color: var(--color-muted);">PDF / Word format attached</span>
+                <strong style="font-size: 13.5px; color: var(--color-primary-light);">Candidate Resume Document</strong><br>
+                <span style="font-size: 11.5px; color: var(--color-text-muted);">Protected PDF/DOC file attached</span>
               </div>
             </div>
-            <a href="{{ application.resume.url }}" target="_blank" class="dash-btn dash-btn--primary dash-btn--sm">
+            <a href="{% url 'dashboard:careers_application_cv' pk=application.pk %}" target="_blank" rel="noopener noreferrer" class="dash-btn dash-btn--primary dash-btn--sm">
               <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
               Download CV
             </a>
           </div>
         {% else %}
-          <div style="padding: 14px 18px; background-color: var(--color-background-soft); border: 1px solid var(--color-border); border-radius: 4px; color: var(--color-muted); font-size: 13px;">
-            No resume file was attached by the candidate.
-          </div>
+          <p style="color: var(--color-text-muted); font-size: 13px; margin: 0;">No resume uploaded.</p>
         {% endif %}
       </div>
     </div>
   </div>
 
-  <!-- HR Review & Evaluation -->
-  <div class="dash-card">
-    <div class="dash-card__header">
-      <h2 class="dash-card__title">HR Evaluation &amp; Triage</h2>
-    </div>
-    <div class="dash-card__body">
-      <form method="post">
-        {% csrf_token %}
+  <!-- Candidate Evaluation & Internal History Log -->
+  <div style="display: flex; flex-direction: column; gap: var(--space-6);">
+    <div class="dash-card">
+      <div class="dash-card__header">
+        <h2 class="dash-card__title">HR Triage &amp; Notes</h2>
+        <span class="dash-badge">Confidential Internal Record</span>
+      </div>
+      <div class="dash-card__body">
+        <form method="post">
+          {% csrf_token %}
 
-        <div class="dash-form-group">
-          <label class="dash-label">Application Status</label>
-          {{ form.status }}
-          <span class="dash-help">Set candidate stage: New, Reviewed, Shortlisted for Interview, or Rejected.</span>
-        </div>
+          <div class="dash-form-group">
+            <label class="dash-label">Application Status</label>
+            {{ form.status }}
+          </div>
 
-        <div class="dash-form-group">
-          <label class="dash-label">Private HR Internal Notes</label>
-          {{ form.internal_notes }}
-          <span class="dash-help">Interview feedback, salary expectations, technical assessments, or coordinator remarks.</span>
-        </div>
+          <div class="dash-form-group">
+            <label class="dash-label">HR Evaluation Notes &amp; Communication Log</label>
+            {{ form.internal_notes }}
+            <p style="font-size: 12px; color: var(--color-text-muted); margin-top: 4px;">
+              Internal notes and automated outgoing email logs are documented here.
+            </p>
+          </div>
 
-        <div style="margin-top: 24px;">
-          <button type="submit" class="dash-btn dash-btn--primary" style="width: 100%; padding: 12px 20px; font-size: 13px;">
-            <svg viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
-            Save Evaluation
-          </button>
-        </div>
-      </form>
-
-      <!-- Quick Candidate Audit Metadata -->
-      <div style="margin-top: 28px; padding-top: 20px; border-top: 1px solid var(--color-border); font-size: 12px; color: var(--color-muted);">
-        <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
-          <span>Application Ticket ID:</span>
-          <strong>#{{ application.pk }}</strong>
-        </div>
-        <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
-          <span>Submission Time:</span>
-          <span>{{ application.submitted_at|date:"M d, Y - H:i" }}</span>
-        </div>
-        <div style="display: flex; justify-content: space-between;">
-          <span>Vacancy Open Status:</span>
-          <span style="font-weight: 600; color: var(--color-primary);">{% if application.job.is_active %}Active Position{% else %}Closed Vacancy{% endif %}</span>
-        </div>
+          <div class="dash-form-actions">
+            <button type="submit" class="dash-btn dash-btn--primary">Save Evaluation</button>
+          </div>
+        </form>
       </div>
     </div>
+
+    <!-- Quick Action / Delete Card -->
+    <div class="dash-card">
+      <div class="dash-card__header">
+        <h2 class="dash-card__title">Record Management</h2>
+      </div>
+      <div class="dash-card__body" style="display: flex; justify-content: space-between; align-items: center;">
+        <div>
+          <strong style="font-size: var(--text-sm);">Delete Candidate Submission</strong>
+          <p style="margin: 2px 0 0 0; font-size: var(--text-xs); color: var(--color-text-muted);">Permanently removes candidate profile and purges CV from storage.</p>
+        </div>
+        <form method="post" action="{% url 'dashboard:careers_application_delete' pk=application.pk %}" onsubmit="return confirm('Permanently delete candidate application from {{ application.full_name }}?');">
+          {% csrf_token %}
+          <button type="submit" class="dash-btn dash-btn--danger dash-btn--sm">Delete Candidate</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Direct Candidate Email Dispatch -->
+<div id="emailCandidateModal" class="dash-modal">
+  <div class="dash-modal__dialog">
+    <div class="dash-modal__header">
+      <h3 class="dash-modal__title">Send Official Email to Candidate</h3>
+      <button type="button" class="dash-modal__close" onclick="closeDashModal('emailCandidateModal')">&times;</button>
+    </div>
+    <form method="post">
+      {% csrf_token %}
+      <input type="hidden" name="action" value="send_candidate_email">
+      <div class="dash-modal__body">
+        <div class="dash-form-group">
+          <label class="dash-label">Recipient Email</label>
+          <input type="email" value="{{ application.email }}" class="dash-input" readonly style="background: var(--color-surface-hover);">
+        </div>
+        <div class="dash-form-group">
+          <label class="dash-label">Email Subject</label>
+          <input type="text" name="subject" value="{{ default_subject }}" class="dash-input" dir="auto" required>
+        </div>
+        <div class="dash-form-group">
+          <label class="dash-label">Message Body</label>
+          <textarea name="body" rows="8" class="dash-textarea" dir="auto" required>{{ default_email_body }}</textarea>
+        </div>
+      </div>
+      <div class="dash-modal__footer">
+        <button type="button" class="dash-btn dash-btn--secondary" onclick="closeDashModal('emailCandidateModal')">Cancel</button>
+        <button type="submit" class="dash-btn dash-btn--primary">Send Official Email</button>
+      </div>
+    </form>
   </div>
 </div>
 {% endblock %}

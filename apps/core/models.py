@@ -1,5 +1,6 @@
 import re
 from django.db import models
+from django.utils.html import escape, mark_safe
 
 
 class SingletonModel(models.Model):
@@ -138,8 +139,10 @@ class PageHero(models.Model):
     @property
     def title_html(self):
         if self.title_line1 and self.title_line2:
-            return f"{self.title_line1}<br>{self.title_line2}"
-        return self.title_line1 or self.title_line2 or ""
+            return mark_safe(f"{escape(self.title_line1)}<br>{escape(self.title_line2)}")
+        if self.title_line1 or self.title_line2:
+            return escape(self.title_line1 or self.title_line2)
+        return ""
 
     @property
     def image_url(self):

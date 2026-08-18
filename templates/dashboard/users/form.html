@@ -1,0 +1,96 @@
+{% extends "dashboard/base.html" %}
+
+{% block title %}{% if object %}Edit User: {{ object.username }}{% else %}Create Staff User{% endif %} | Al Bahaa Dashboard{% endblock %}
+{% block page_title %}{% if object %}Edit Staff Account: {{ object.username }}{% else %}Create Staff User Account{% endif %}{% endblock %}
+
+{% block topbar_actions %}
+  <a href="{% url 'dashboard:users_list' %}" class="dash-btn dash-btn--secondary dash-btn--sm">
+    &larr; Back to Staff List
+  </a>
+{% endblock %}
+
+{% block content %}
+<div style="max-width: 680px; margin: 0 auto;">
+  <div class="dash-card">
+    <div class="dash-card__header">
+      <h2 class="dash-card__title">{% if object %}Account Specifications{% else %}Account Credentials{% endif %}</h2>
+      <span class="dash-badge">Superuser Authorization</span>
+    </div>
+    <div class="dash-card__body">
+      <form method="post">
+        {% csrf_token %}
+
+        {% if form.non_field_errors %}
+          <div class="dash-alert dash-alert--error" style="margin-bottom: var(--space-4);">
+            {{ form.non_field_errors }}
+          </div>
+        {% endif %}
+
+        {% if not object %}
+          <div class="dash-form-group">
+            <label class="dash-label">Username</label>
+            {{ form.username }}
+            {% if form.username.errors %}<div style="color: var(--color-danger); font-size: var(--text-xs); margin-top: 4px;">{{ form.username.errors.0 }}</div>{% endif %}
+          </div>
+        {% endif %}
+
+        <div class="dash-form-row">
+          <div class="dash-form-group">
+            <label class="dash-label">First Name</label>
+            {{ form.first_name }}
+          </div>
+          <div class="dash-form-group">
+            <label class="dash-label">Last Name</label>
+            {{ form.last_name }}
+          </div>
+        </div>
+
+        <div class="dash-form-group">
+          <label class="dash-label">Corporate Email Address</label>
+          {{ form.email }}
+          {% if form.email.errors %}<div style="color: var(--color-danger); font-size: var(--text-xs); margin-top: 4px;">{{ form.email.errors.0 }}</div>{% endif %}
+        </div>
+
+        {% if not object %}
+          <div class="dash-form-group">
+            <label class="dash-label">Password</label>
+            {{ form.password1 }}
+            {% if form.password1.help_text %}
+              <div style="color: var(--color-text-muted); font-size: var(--text-xs); margin-top: 4px; line-height: 1.4;">{{ form.password1.help_text|safe }}</div>
+            {% endif %}
+            {% if form.password1.errors %}<div style="color: var(--color-danger); font-size: var(--text-xs); margin-top: 4px;">{{ form.password1.errors.0 }}</div>{% endif %}
+          </div>
+
+          <div class="dash-form-group">
+            <label class="dash-label">Confirm Password</label>
+            {{ form.password2 }}
+            {% if form.password2.errors %}<div style="color: var(--color-danger); font-size: var(--text-xs); margin-top: 4px;">{{ form.password2.errors.0 }}</div>{% endif %}
+          </div>
+        {% endif %}
+
+        <div style="background: var(--color-surface-hover); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--space-4); margin: var(--space-6) 0;">
+          <h4 style="font-size: var(--text-sm); font-weight: 600; margin-bottom: var(--space-3);">Security Roles &amp; Permissions</h4>
+          <div style="display: flex; flex-direction: column; gap: var(--space-3);">
+            <label class="dash-checkbox-label">
+              {{ form.is_staff }} <strong>Staff Access:</strong> Authorized to log into the Executive Control Panel.
+            </label>
+            <label class="dash-checkbox-label">
+              {{ form.is_superuser }} <strong>Root Superuser:</strong> Has full administrative permissions, including staff account management.
+            </label>
+            {% if object %}
+              <label class="dash-checkbox-label">
+                {{ form.is_active }} <strong>Account Active:</strong> Allows the user to sign in. Uncheck to disable access immediately.
+              </label>
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="dash-form-actions">
+          <a href="{% url 'dashboard:users_list' %}" class="dash-btn dash-btn--secondary">Cancel</a>
+          <button type="submit" class="dash-btn dash-btn--primary">{% if object %}Save Account Changes{% else %}Create Staff User{% endif %}</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

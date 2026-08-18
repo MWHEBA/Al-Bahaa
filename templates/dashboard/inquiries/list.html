@@ -4,11 +4,15 @@
 {% block page_title %}Tenders &amp; Contact Inquiries{% endblock %}
 
 {% block topbar_actions %}
-  <a href="{% url 'core:contact' %}" target="_blank" class="dash-btn dash-btn--secondary dash-btn--sm" title="Preview Contact Page on Live Site">
+  <button type="button" class="dash-btn dash-btn--secondary dash-btn--sm" onclick="openDashModal('heroBannerModal')" title="Edit Contact Page Banner">
+    <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+    Page Banner
+  </button>
+  <a href="{% url 'core:contact' %}" target="_blank" rel="noopener noreferrer" class="dash-btn dash-btn--secondary dash-btn--sm" title="Preview Contact Page on Live Site">
     <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
-    Preview
+    Live Page
   </a>
-  <a href="{% url 'dashboard:inquiries_export' %}" class="dash-btn dash-btn--secondary dash-btn--sm" title="Export Inquiries to CSV">
+  <a href="{% url 'dashboard:inquiries_csv' %}" class="dash-btn dash-btn--secondary dash-btn--sm" title="Export Inquiries to CSV">
     <svg viewBox="0 0 24 24" style="width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
     Export CSV
   </a>
@@ -18,14 +22,13 @@
 <div class="dash-card">
   <div class="dash-card__header">
     <form method="get" style="display: flex; gap: 12px; flex-wrap: wrap; width: 100%;">
-      <input type="text" name="q" value="{{ search_query }}" class="dash-input" placeholder="Search by name, company, email, phone..." style="max-width: 320px;">
+      <input type="text" name="q" value="{{ q }}" class="dash-input" placeholder="Search by name, company, email, phone..." style="max-width: 320px;">
       
-      <select name="type" class="dash-select" style="max-width: 240px;" onchange="this.form.submit()">
+      <select name="inquiry_type" class="dash-select" style="max-width: 240px;" onchange="this.form.submit()">
         <option value="">All Inquiry Types</option>
-        <option value="tenders" {% if selected_type == 'tenders' %}selected{% endif %}>Tenders &amp; Estimations</option>
-        <option value="procurement" {% if selected_type == 'procurement' %}selected{% endif %}>Procurement &amp; Suppliers</option>
-        <option value="general" {% if selected_type == 'general' %}selected{% endif %}>General Inquiries</option>
-        <option value="careers" {% if selected_type == 'careers' %}selected{% endif %}>Careers</option>
+        {% for val, label in inquiry_types %}
+          <option value="{{ val }}" {% if selected_type == val %}selected{% endif %}>{{ label }}</option>
+        {% endfor %}
       </select>
 
       <select name="status" class="dash-select" style="max-width: 180px;" onchange="this.form.submit()">
@@ -39,7 +42,7 @@
         <svg viewBox="0 0 24 24"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
         Filter
       </button>
-      {% if search_query or selected_type or selected_status %}
+      {% if q or selected_type or selected_status %}
         <a href="{% url 'dashboard:inquiries_list' %}" class="dash-btn dash-btn--danger dash-btn--sm" title="Clear Filters">
           <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
           Clear
@@ -58,7 +61,7 @@
           <th>Contact Coordinates</th>
           <th>Received Date</th>
           <th>Status Triage</th>
-          <th style="text-align: center; width: 60px;">Action</th>
+          <th style="text-align: center; width: 100px;">Action</th>
         </tr>
       </thead>
       <tbody>
@@ -69,11 +72,11 @@
             </td>
             <td>{{ inq.company|default:"-" }}</td>
             <td>
-              <span style="font-weight: 600; color: var(--color-primary);">{{ inq.get_inquiry_type_display }}</span>
+              <span style="font-weight: 600; color: var(--color-primary-light);">{{ inq.get_inquiry_type_display }}</span>
             </td>
             <td>
-              <a href="mailto:{{ inq.email }}" style="color: var(--color-primary); text-decoration: none;">{{ inq.email }}</a><br>
-              <span style="font-size: 12px; color: var(--color-muted);">{{ inq.phone }}</span>
+              <a href="mailto:{{ inq.email }}" style="color: var(--color-primary-light); text-decoration: none;">{{ inq.email }}</a><br>
+              <span style="font-size: 12px; color: var(--color-text-muted);">{{ inq.phone }}</span>
             </td>
             <td>{{ inq.created_at|date:"M d, Y H:i" }}</td>
             <td>
@@ -84,14 +87,29 @@
               </select>
             </td>
             <td style="text-align: center;">
-              <a href="{% url 'dashboard:inquiry_detail' pk=inq.pk %}" class="dash-btn dash-btn--secondary dash-btn--sm dash-btn--icon-only" title="Open Inquiry Message" aria-label="Open Inquiry Message">
-                <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-              </a>
+              <div style="display: inline-flex; gap: 6px;">
+                <a href="{% url 'dashboard:inquiry_detail' pk=inq.pk %}" class="dash-btn dash-btn--secondary dash-btn--sm dash-btn--icon-only" title="Open Inquiry Message" aria-label="Open Inquiry Message">
+                  <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                </a>
+                <form method="post" action="{% url 'dashboard:inquiry_delete' pk=inq.pk %}" style="display: inline;" onsubmit="return confirm('Permanently delete inquiry from {{ inq.name }}?');">
+                  {% csrf_token %}
+                  <button type="submit" class="dash-btn dash-btn--danger dash-btn--sm dash-btn--icon-only" title="Delete Inquiry" aria-label="Delete Inquiry">
+                    <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
+                  </button>
+                </form>
+              </div>
             </td>
           </tr>
         {% empty %}
           <tr>
-            <td colspan="7" style="text-align: center; color: var(--color-muted); padding: 40px;">No contact inquiries found.</td>
+            <td colspan="7" style="text-align: center; color: var(--color-muted); padding: 40px;">
+              No contact inquiries found.
+              {% if q or selected_type or selected_status %}
+                <div style="margin-top: 10px;">
+                  <a href="{% url 'dashboard:inquiries_list' %}" class="dash-btn dash-btn--secondary dash-btn--sm">Reset Filters</a>
+                </div>
+              {% endif %}
+            </td>
           </tr>
         {% endfor %}
       </tbody>
@@ -104,13 +122,13 @@
       <span style="font-size: 12px; color: var(--color-muted);">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
       <div style="display: flex; gap: 6px;">
         {% if page_obj.has_previous %}
-          <a href="?page={{ page_obj.previous_page_number }}{% if search_query %}&q={{ search_query }}{% endif %}{% if selected_type %}&type={{ selected_type }}{% endif %}{% if selected_status %}&status={{ selected_status }}{% endif %}" class="dash-btn dash-btn--secondary dash-btn--sm" title="Previous Page">
+          <a href="?page={{ page_obj.previous_page_number }}{% if querystring_without_page %}&{{ querystring_without_page }}{% endif %}" class="dash-btn dash-btn--secondary dash-btn--sm" title="Previous Page">
             <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
             Prev
           </a>
         {% endif %}
         {% if page_obj.has_next %}
-          <a href="?page={{ page_obj.next_page_number }}{% if search_query %}&q={{ search_query }}{% endif %}{% if selected_type %}&type={{ selected_type }}{% endif %}{% if selected_status %}&status={{ selected_status }}{% endif %}" class="dash-btn dash-btn--secondary dash-btn--sm" title="Next Page">
+          <a href="?page={{ page_obj.next_page_number }}{% if querystring_without_page %}&{{ querystring_without_page }}{% endif %}" class="dash-btn dash-btn--secondary dash-btn--sm" title="Next Page">
             Next
             <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
           </a>
@@ -119,34 +137,81 @@
     </div>
   {% endif %}
 </div>
+
+<!-- Modal: In-context Contact Hero Banner -->
+<div id="heroBannerModal" class="dash-modal">
+  <div class="dash-modal__dialog">
+    <div class="dash-modal__header">
+      <h3 class="dash-modal__title">Contact &amp; Tenders Page Banner</h3>
+      <button type="button" class="dash-modal__close" onclick="closeDashModal('heroBannerModal')">&times;</button>
+    </div>
+    <form method="post" action="{% url 'dashboard:hero_edit' pk=hero.pk %}" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="dash-modal__body">
+        <div class="dash-form-group">
+          <label class="dash-label">Eyebrow Kicker</label>
+          <input type="text" name="eyebrow" value="{{ hero.eyebrow }}" class="dash-input" dir="auto">
+        </div>
+        <div class="dash-form-row">
+          <div class="dash-form-group">
+            <label class="dash-label">Title Line 1</label>
+            <input type="text" name="title_line1" value="{{ hero.title_line1 }}" class="dash-input" dir="auto">
+          </div>
+          <div class="dash-form-group">
+            <label class="dash-label">Title Line 2</label>
+            <input type="text" name="title_line2" value="{{ hero.title_line2 }}" class="dash-input" dir="auto">
+          </div>
+        </div>
+        <div class="dash-form-group">
+          <label class="dash-label">Banner Narrative</label>
+          <textarea name="description" rows="3" class="dash-textarea" dir="auto">{{ hero.description }}</textarea>
+        </div>
+        <div class="dash-form-group">
+          <label class="dash-label">Background Banner Image</label>
+          {% if hero.hero_image %}
+            <div style="margin-bottom: var(--space-2); display: flex; align-items: center; gap: var(--space-3);">
+              <img src="{{ hero.hero_image.url }}" alt="Preview" style="width: 100px; height: 50px; object-fit: cover;">
+              <label class="dash-checkbox-label" style="font-size: var(--text-xs); color: var(--color-danger);">
+                <input type="checkbox" name="hero_image-clear" value="1"> Clear Image
+              </label>
+            </div>
+          {% endif %}
+          <input type="file" name="hero_image" class="dash-file-input" accept="image/*">
+        </div>
+      </div>
+      <div class="dash-modal__footer">
+        <button type="button" class="dash-btn dash-btn--secondary" onclick="closeDashModal('heroBannerModal')">Cancel</button>
+        <button type="submit" class="dash-btn dash-btn--primary">Save Banner</button>
+      </div>
+    </form>
+  </div>
+</div>
 {% endblock %}
 
 {% block extra_js %}
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    document.querySelectorAll(".js-inq-status-select").forEach(select => {
-      select.addEventListener("change", function() {
-        const inqId = this.getAttribute("data-inq-id");
-        const newStatus = this.value;
-        const csrftoken = getCookie('csrftoken');
-        const formData = new FormData();
-        formData.append('status', newStatus);
+  document.querySelectorAll(".js-inq-status-select").forEach(sel => {
+    sel.addEventListener("change", (e) => {
+      e.stopPropagation();
+      const inqId = sel.dataset.inqId;
+      const newStatus = sel.value;
+      const csrfToken = getCookie("csrftoken");
 
-        fetch(`/dashboard/inquiries/${inqId}/status/`, {
-          method: 'POST',
-          headers: {
-            'X-CSRFToken': csrftoken
-          },
-          body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-          if (data.success) {
-            select.style.borderColor = "var(--color-primary)";
-            setTimeout(() => { select.style.borderColor = "var(--color-border)"; }, 1200);
-          }
-        })
-        .catch(err => alert("Failed to update status. Please try again."));
+      fetch(`/dashboard/inquiries/${inqId}/status/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          "X-CSRFToken": csrfToken,
+          "X-Requested-With": "XMLHttpRequest"
+        },
+        body: `status=${encodeURIComponent(newStatus)}`
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          sel.style.borderColor = "var(--color-success)";
+          setTimeout(() => { sel.style.borderColor = ""; }, 1500);
+        }
       });
     });
   });

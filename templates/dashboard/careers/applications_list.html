@@ -4,11 +4,11 @@
 {% block page_title %}Recruitment &amp; Candidate Applications{% endblock %}
 
 {% block topbar_actions %}
-  <a href="{% url 'core:careers' %}" target="_blank" class="dash-btn dash-btn--secondary dash-btn--sm" title="Preview Careers on Live Site">
+  <a href="{% url 'core:careers' %}" target="_blank" rel="noopener noreferrer" class="dash-btn dash-btn--secondary dash-btn--sm" title="Preview Careers on Live Site">
     <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
-    Preview
+    Live Page
   </a>
-  <a href="{% url 'dashboard:careers_applications_export' %}" class="dash-btn dash-btn--secondary dash-btn--sm" title="Export Applications to CSV">
+  <a href="{% url 'dashboard:careers_applications_csv' %}" class="dash-btn dash-btn--secondary dash-btn--sm" title="Export Applications to CSV">
     <svg viewBox="0 0 24 24" style="width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
     Export CSV
   </a>
@@ -18,7 +18,7 @@
 <div class="dash-card">
   <div class="dash-card__header">
     <form method="get" style="display: flex; gap: 12px; flex-wrap: wrap; width: 100%;">
-      <input type="text" name="q" value="{{ search_query }}" class="dash-input" placeholder="Search by candidate name, email, phone..." style="max-width: 320px;">
+      <input type="text" name="q" value="{{ q }}" class="dash-input" placeholder="Search by candidate name, email, phone..." style="max-width: 320px;">
       
       <select name="job" class="dash-select" style="max-width: 260px;" onchange="this.form.submit()">
         <option value="">All Job Openings</option>
@@ -39,7 +39,7 @@
         <svg viewBox="0 0 24 24"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
         Filter
       </button>
-      {% if search_query or selected_job or selected_status %}
+      {% if q or selected_job or selected_status %}
         <a href="{% url 'dashboard:careers_applications' %}" class="dash-btn dash-btn--danger dash-btn--sm" title="Clear Filters">
           <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
           Clear
@@ -56,9 +56,9 @@
           <th>Applied Vacancy</th>
           <th>Contact Info</th>
           <th>Applied Date</th>
-          <th>Quick Status Triage</th>
-          <th style="text-align: center; width: 90px;">Resume</th>
-          <th style="text-align: center; width: 60px;">Action</th>
+          <th>Status Triage</th>
+          <th style="text-align: center; width: 90px;">CV Document</th>
+          <th style="text-align: center; width: 100px;">Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -68,12 +68,12 @@
               <strong>{{ app.full_name }}</strong>
             </td>
             <td>
-              <span style="font-weight: 600; color: var(--color-primary);">{{ app.job.title }}</span><br>
-              <span style="font-size: 11px; color: var(--color-muted);">{{ app.job.department.name|default:"General" }}</span>
+              <span style="font-weight: 600; color: var(--color-primary-light);">{{ app.job.title }}</span><br>
+              <span style="font-size: 11px; color: var(--color-text-muted);">{{ app.job.department.name|default:"General" }}</span>
             </td>
             <td>
-              <a href="mailto:{{ app.email }}" style="color: var(--color-primary); text-decoration: none;">{{ app.email }}</a><br>
-              <span style="font-size: 12px; color: var(--color-muted);">{{ app.phone }}</span>
+              <a href="mailto:{{ app.email }}" style="color: var(--color-primary-light); text-decoration: none;">{{ app.email }}</a><br>
+              <span style="font-size: 12px; color: var(--color-text-muted);">{{ app.phone }}</span>
             </td>
             <td>{{ app.submitted_at|date:"M d, Y H:i" }}</td>
             <td>
@@ -86,7 +86,7 @@
             </td>
             <td style="text-align: center;">
               {% if app.resume %}
-                <a href="{{ app.resume.url }}" target="_blank" class="dash-btn dash-btn--secondary dash-btn--sm dash-btn--icon-only" title="Download CV Document" aria-label="Download CV Document">
+                <a href="{% url 'dashboard:careers_application_cv' pk=app.pk %}" target="_blank" rel="noopener noreferrer" class="dash-btn dash-btn--secondary dash-btn--sm dash-btn--icon-only" title="Secure CV Download" aria-label="Secure CV Download">
                   <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
                 </a>
               {% else %}
@@ -94,14 +94,29 @@
               {% endif %}
             </td>
             <td style="text-align: center;">
-              <a href="{% url 'dashboard:careers_application_detail' pk=app.pk %}" class="dash-btn dash-btn--secondary dash-btn--sm dash-btn--icon-only" title="View Full Candidate Profile" aria-label="View Full Candidate Profile">
-                <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-              </a>
+              <div style="display: inline-flex; gap: 6px;">
+                <a href="{% url 'dashboard:careers_application_detail' pk=app.pk %}" class="dash-btn dash-btn--secondary dash-btn--sm dash-btn--icon-only" title="Candidate Profile &amp; Messaging" aria-label="Candidate Profile">
+                  <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                </a>
+                <form method="post" action="{% url 'dashboard:careers_application_delete' pk=app.pk %}" style="display: inline;" onsubmit="return confirm('Permanently delete application for {{ app.full_name }} and attached resume?');">
+                  {% csrf_token %}
+                  <button type="submit" class="dash-btn dash-btn--danger dash-btn--sm dash-btn--icon-only" title="Delete Application" aria-label="Delete Application">
+                    <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
+                  </button>
+                </form>
+              </div>
             </td>
           </tr>
         {% empty %}
           <tr>
-            <td colspan="7" style="text-align: center; color: var(--color-muted); padding: 40px;">No applications found.</td>
+            <td colspan="7" style="text-align: center; color: var(--color-muted); padding: 40px;">
+              No candidate applications found.
+              {% if q or selected_job or selected_status %}
+                <div style="margin-top: 10px;">
+                  <a href="{% url 'dashboard:careers_applications' %}" class="dash-btn dash-btn--secondary dash-btn--sm">Reset Filters</a>
+                </div>
+              {% endif %}
+            </td>
           </tr>
         {% endfor %}
       </tbody>
@@ -114,13 +129,13 @@
       <span style="font-size: 12px; color: var(--color-muted);">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
       <div style="display: flex; gap: 6px;">
         {% if page_obj.has_previous %}
-          <a href="?page={{ page_obj.previous_page_number }}{% if search_query %}&q={{ search_query }}{% endif %}{% if selected_job %}&job={{ selected_job }}{% endif %}{% if selected_status %}&status={{ selected_status }}{% endif %}" class="dash-btn dash-btn--secondary dash-btn--sm" title="Previous Page">
+          <a href="?page={{ page_obj.previous_page_number }}{% if querystring_without_page %}&{{ querystring_without_page }}{% endif %}" class="dash-btn dash-btn--secondary dash-btn--sm" title="Previous Page">
             <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
             Prev
           </a>
         {% endif %}
         {% if page_obj.has_next %}
-          <a href="?page={{ page_obj.next_page_number }}{% if search_query %}&q={{ search_query }}{% endif %}{% if selected_job %}&job={{ selected_job }}{% endif %}{% if selected_status %}&status={{ selected_status }}{% endif %}" class="dash-btn dash-btn--secondary dash-btn--sm" title="Next Page">
+          <a href="?page={{ page_obj.next_page_number }}{% if querystring_without_page %}&{{ querystring_without_page }}{% endif %}" class="dash-btn dash-btn--secondary dash-btn--sm" title="Next Page">
             Next
             <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
           </a>
@@ -133,30 +148,28 @@
 
 {% block extra_js %}
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    document.querySelectorAll(".js-app-status-select").forEach(select => {
-      select.addEventListener("change", function() {
-        const appId = this.getAttribute("data-app-id");
-        const newStatus = this.value;
-        const csrftoken = getCookie('csrftoken');
-        const formData = new FormData();
-        formData.append('status', newStatus);
+  document.querySelectorAll(".js-app-status-select").forEach(sel => {
+    sel.addEventListener("change", (e) => {
+      e.stopPropagation();
+      const appId = sel.dataset.appId;
+      const newStatus = sel.value;
+      const csrfToken = getCookie("csrftoken");
 
-        fetch(`/dashboard/careers/applications/${appId}/status/`, {
-          method: 'POST',
-          headers: {
-            'X-CSRFToken': csrftoken
-          },
-          body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-          if (data.success) {
-            select.style.borderColor = "var(--color-primary)";
-            setTimeout(() => { select.style.borderColor = "var(--color-border)"; }, 1200);
-          }
-        })
-        .catch(err => alert("Failed to update status. Please try again."));
+      fetch(`/dashboard/careers/applications/${appId}/status/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          "X-CSRFToken": csrfToken,
+          "X-Requested-With": "XMLHttpRequest"
+        },
+        body: `status=${encodeURIComponent(newStatus)}`
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          sel.style.borderColor = "var(--color-success)";
+          setTimeout(() => { sel.style.borderColor = ""; }, 1500);
+        }
       });
     });
   });

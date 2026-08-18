@@ -1,0 +1,119 @@
+{% extends "dashboard/base.html" %}
+
+{% block title %}Job Departments | Al Bahaa Dashboard{% endblock %}
+{% block page_title %}Engineering &amp; Corporate Departments{% endblock %}
+
+{% block topbar_actions %}
+  <a href="{% url 'dashboard:careers_jobs' %}" class="dash-btn dash-btn--secondary dash-btn--sm">
+    &larr; Back to Job Vacancies
+  </a>
+{% endblock %}
+
+{% block content %}
+<div class="dash-grid-2">
+
+  <!-- Left: Department Form -->
+  <div>
+    <div class="dash-card">
+      <div class="dash-card__header">
+        <h2 class="dash-card__title">{% if editing_department %}Edit Department{% else %}Add Engineering Department{% endif %}</h2>
+        <span class="dash-badge">Organizational Unit</span>
+      </div>
+      <div class="dash-card__body">
+        <form method="post">
+          {% csrf_token %}
+          {% if editing_department %}
+            <input type="hidden" name="action" value="update">
+            <input type="hidden" name="department_id" value="{{ editing_department.id }}">
+          {% else %}
+            <input type="hidden" name="action" value="create">
+          {% endif %}
+
+          <div class="dash-form-group">
+            <label class="dash-label">Department Name</label>
+            {{ form.name }}
+          </div>
+
+          <div class="dash-form-group">
+            <label class="dash-label">URL Slug (Auto-generated if left empty)</label>
+            {{ form.slug }}
+          </div>
+
+          <div class="dash-form-group">
+            <label class="dash-label">Display Order</label>
+            {{ form.order }}
+          </div>
+
+          <div class="dash-form-actions">
+            {% if editing_department %}
+              <a href="{% url 'dashboard:careers_departments' %}" class="dash-btn dash-btn--secondary">Cancel</a>
+              <button type="submit" class="dash-btn dash-btn--primary">Update Department</button>
+            {% else %}
+              <button type="submit" class="dash-btn dash-btn--primary">Add Department</button>
+            {% endif %}
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right: Departments List -->
+  <div>
+    <div class="dash-card">
+      <div class="dash-card__header">
+        <h2 class="dash-card__title">Registered Departments</h2>
+        <span class="dash-badge">{{ departments|length }} Departments</span>
+      </div>
+      <div class="dash-card__body">
+        {% if departments %}
+          <div class="dash-table-wrap">
+            <table class="dash-table">
+              <thead>
+                <tr>
+                  <th style="width: 60px;">Order</th>
+                  <th>Department Name</th>
+                  <th>Slug</th>
+                  <th>Openings</th>
+                  <th style="width: 120px; text-align: right;">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for dept in departments %}
+                  <tr data-href="?edit={{ dept.id }}">
+                    <td><code>{{ dept.order }}</code></td>
+                    <td><strong>{{ dept.name }}</strong></td>
+                    <td><code>{{ dept.slug }}</code></td>
+                    <td>
+                      <span class="dash-badge {% if dept.jobs_count > 0 %}dash-badge--success{% endif %}">
+                        {{ dept.jobs_count }} vacancies
+                      </span>
+                    </td>
+                    <td style="text-align: center;">
+                      <div style="display: inline-flex; gap: 6px; align-items: center;">
+                        <a href="?edit={{ dept.id }}" class="dash-btn dash-btn--secondary dash-btn--sm dash-btn--icon-only" title="Edit Department" aria-label="Edit Department">
+                          <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                        </a>
+                        <form method="post" style="display: inline; margin: 0;" onsubmit="return confirm('Delete department \'{{ dept.name }}\'? Linked vacancies will become unassigned.');">
+                          {% csrf_token %}
+                          <input type="hidden" name="action" value="delete">
+                          <input type="hidden" name="department_id" value="{{ dept.id }}">
+                          <button type="submit" class="dash-btn dash-btn--danger dash-btn--sm dash-btn--icon-only" title="Delete Department" aria-label="Delete Department">
+                            <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
+                          </button>
+                        </form>
+                      </div>
+                    </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        {% else %}
+          <div class="dash-empty-state"><p>No departments registered yet.</p></div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+</div>
+{% endblock %}

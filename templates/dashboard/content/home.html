@@ -1,0 +1,259 @@
+{% extends "dashboard/base.html" %}
+{% load static %}
+
+{% block title %}Home Page CMS | Al Bahaa Dashboard{% endblock %}
+{% block page_title %}Home Page CMS &amp; Specializations{% endblock %}
+
+{% block topbar_actions %}
+  <a href="{% url 'core:home' %}" target="_blank" rel="noopener noreferrer" class="dash-btn dash-btn--primary dash-btn--sm">
+    <svg viewBox="0 0 24 24" style="width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2;"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+    Live Page Preview
+  </a>
+{% endblock %}
+
+{% block content %}
+<div class="dash-grid-2">
+
+  <!-- Left Column: Hero Banner & Blueprints Section -->
+  <div style="display: flex; flex-direction: column; gap: var(--space-6);">
+    
+    <!-- 1. Hero Banner Card -->
+    <div class="dash-card">
+      <div class="dash-card__header">
+        <h2 class="dash-card__title">1. Home Hero Banner</h2>
+        <span class="dash-badge">Main Landing Impression</span>
+      </div>
+      <div class="dash-card__body">
+        <form method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          <input type="hidden" name="action" value="save_hero">
+
+          <div class="dash-form-group">
+            <label class="dash-label">Eyebrow Kicker</label>
+            {{ hero_form.eyebrow }}
+          </div>
+
+          <div class="dash-form-row">
+            <div class="dash-form-group">
+              <label class="dash-label">Architectural Title (Line 1)</label>
+              {{ hero_form.title_line1 }}
+            </div>
+            <div class="dash-form-group">
+              <label class="dash-label">Architectural Title (Line 2)</label>
+              {{ hero_form.title_line2 }}
+            </div>
+          </div>
+
+          <div class="dash-form-group">
+            <label class="dash-label">Hero Narrative Paragraph</label>
+            {{ hero_form.description }}
+          </div>
+
+          <div class="dash-form-group">
+            <label class="dash-label">Banner Background Image</label>
+            {% if hero_obj.hero_image %}
+              <div style="margin-bottom: var(--space-3); display: flex; align-items: center; gap: var(--space-3);">
+                <img src="{{ hero_obj.hero_image.url }}" alt="Hero Preview" style="width: 120px; height: 60px; object-fit: cover; border-radius: var(--radius-sm); border: 1px solid var(--color-border);">
+                <label class="dash-checkbox-label" style="font-size: var(--text-xs); color: var(--color-danger);">
+                  <input type="checkbox" name="hero-hero_image-clear" value="1"> Clear Image (Restore Default)
+                </label>
+              </div>
+            {% endif %}
+            {{ hero_form.hero_image }}
+          </div>
+
+          <div class="dash-form-actions">
+            <button type="submit" class="dash-btn dash-btn--primary">Save Hero Banner</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- 2. Blueprints Narrative Section Card -->
+    <div class="dash-card">
+      <div class="dash-card__header">
+        <h2 class="dash-card__title">2. Blueprints Section Narrative</h2>
+        <span class="dash-badge">Core Capability Intro</span>
+      </div>
+      <div class="dash-card__body">
+        <form method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          <input type="hidden" name="action" value="save_content">
+
+          <div class="dash-form-group">
+            <label class="dash-label">Eyebrow Kicker</label>
+            {{ content_form.blueprints_eyebrow }}
+          </div>
+
+          <div class="dash-form-row">
+            <div class="dash-form-group">
+              <label class="dash-label">Heading Line 1</label>
+              {{ content_form.blueprints_title_line1 }}
+            </div>
+            <div class="dash-form-group">
+              <label class="dash-label">Heading Line 2</label>
+              {{ content_form.blueprints_title_line2 }}
+            </div>
+          </div>
+
+          <div class="dash-form-group">
+            <label class="dash-label">Section Narrative</label>
+            {{ content_form.blueprints_description }}
+          </div>
+
+          <div class="dash-form-row">
+            <div class="dash-form-group">
+              <label class="dash-label">Button Text</label>
+              {{ content_form.blueprints_btn_text }}
+            </div>
+            <div class="dash-form-group">
+              <label class="dash-label">Button Target URL</label>
+              {{ content_form.blueprints_btn_url }}
+            </div>
+          </div>
+
+          <div class="dash-form-group">
+            <label class="dash-label">Featured Discipline Blueprint Photo</label>
+            {% if home_content.blueprints_image %}
+              <div style="margin-bottom: var(--space-3); display: flex; align-items: center; gap: var(--space-3);">
+                <img src="{{ home_content.blueprints_image.url }}" alt="Preview" style="width: 120px; height: 60px; object-fit: cover; border-radius: var(--radius-sm); border: 1px solid var(--color-border);">
+                <label class="dash-checkbox-label" style="font-size: var(--text-xs); color: var(--color-danger);">
+                  <input type="checkbox" name="content-blueprints_image-clear" value="1"> Clear Photo
+                </label>
+              </div>
+            {% endif %}
+            {{ content_form.blueprints_image }}
+          </div>
+
+          <div class="dash-form-actions">
+            <button type="submit" class="dash-btn dash-btn--primary">Save Blueprints Section</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Right Column: Specialization Interactive Slider Items -->
+  <div>
+    <div class="dash-card">
+      <div class="dash-card__header">
+        <div>
+          <h2 class="dash-card__title">3. Specialization Disciplines</h2>
+          <p class="dash-card__subtitle">Interactive discipline slides showcased on the homepage.</p>
+        </div>
+        <button type="button" class="dash-btn dash-btn--secondary dash-btn--sm" onclick="openDashModal('addSlideModal')">
+          + Add Discipline Slide
+        </button>
+      </div>
+      <div class="dash-card__body">
+        {% if slides %}
+          <div class="dash-table-wrap">
+            <table class="dash-table">
+              <thead>
+                <tr>
+                  <th style="width: 60px;">Order</th>
+                  <th>Discipline Code</th>
+                  <th>Title &amp; Narrative</th>
+                  <th style="width: 80px;">Status</th>
+                  <th style="width: 120px; text-align: right;">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for slide in slides %}
+                  <tr data-href="?edit_slide={{ slide.id }}">
+                    <td><code>{{ slide.order }}</code></td>
+                    <td><strong style="color: var(--color-primary-light);">{{ slide.discipline }}</strong></td>
+                    <td>
+                      <div style="font-weight: 500;">{{ slide.title }}</div>
+                      <div style="font-size: var(--text-xs); color: var(--color-text-muted); line-height: 1.4; margin-top: 4px;">
+                        {{ slide.description|truncatewords:15 }}
+                      </div>
+                    </td>
+                    <td>
+                      {% if slide.is_active %}
+                        <span class="dash-badge dash-badge--success">Active</span>
+                      {% else %}
+                        <span class="dash-badge">Hidden</span>
+                      {% endif %}
+                    </td>
+                    <td style="text-align: center;">
+                      <div style="display: inline-flex; gap: 6px; align-items: center;">
+                        <a href="?edit_slide={{ slide.id }}" class="dash-btn dash-btn--secondary dash-btn--sm dash-btn--icon-only" title="Edit Slide" aria-label="Edit Slide">
+                          <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                        </a>
+                        <form method="post" style="display: inline; margin: 0;" onsubmit="return confirm('Remove this discipline slide?');">
+                          {% csrf_token %}
+                          <input type="hidden" name="action" value="delete_slide">
+                          <input type="hidden" name="slide_id" value="{{ slide.id }}">
+                          <button type="submit" class="dash-btn dash-btn--danger dash-btn--sm dash-btn--icon-only" title="Delete Slide" aria-label="Delete Slide">
+                            <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
+                          </button>
+                        </form>
+                      </div>
+                    </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        {% else %}
+          <div class="dash-empty-state">
+            <p>No specialization disciplines created yet.</p>
+            <button type="button" class="dash-btn dash-btn--primary dash-btn--sm" onclick="openDashModal('addSlideModal')">Add First Discipline</button>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Modal: Add New Specialization Slide -->
+<div id="addSlideModal" class="dash-modal {% if editing_slide %}is-open{% endif %}">
+  <div class="dash-modal__dialog">
+    <div class="dash-modal__header">
+      <h3 class="dash-modal__title">{% if editing_slide %}Edit Discipline Slide{% else %}Add Specialization Discipline{% endif %}</h3>
+      <button type="button" class="dash-modal__close" onclick="closeDashModal('addSlideModal')">&times;</button>
+    </div>
+    <form method="post">
+      {% csrf_token %}
+      {% if editing_slide %}
+        <input type="hidden" name="action" value="update_slide">
+        <input type="hidden" name="slide_id" value="{{ editing_slide.id }}">
+      {% else %}
+        <input type="hidden" name="action" value="create_slide">
+      {% endif %}
+      <div class="dash-modal__body">
+        <div class="dash-form-group">
+          <label class="dash-label">Discipline Upper Label</label>
+          {{ slide_form.discipline }}
+        </div>
+        <div class="dash-form-group">
+          <label class="dash-label">Discipline Full Title</label>
+          {{ slide_form.title }}
+        </div>
+        <div class="dash-form-group">
+          <label class="dash-label">Capability Overview</label>
+          {{ slide_form.description }}
+        </div>
+        <div class="dash-form-row">
+          <div class="dash-form-group">
+            <label class="dash-label">Display Order</label>
+            {{ slide_form.order }}
+          </div>
+          <div class="dash-form-group" style="display: flex; align-items: center; margin-top: 24px;">
+            <label class="dash-checkbox-label">
+              {{ slide_form.is_active }} Active &amp; Visible
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="dash-modal__footer">
+        <button type="button" class="dash-btn dash-btn--secondary" onclick="closeDashModal('addSlideModal')">Cancel</button>
+        <button type="submit" class="dash-btn dash-btn--primary">{% if editing_slide %}Save Changes{% else %}Create Slide{% endif %}</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

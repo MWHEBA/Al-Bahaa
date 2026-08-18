@@ -31,7 +31,7 @@
     {% if request.user.is_authenticated and request.user.is_staff %}
       <div class="executive-quick-bar" aria-label="Staff Quick Actions">
         <div>
-          <span>Al Bahaa Staff &bull; <strong>{{ request.user.get_full_name|default:request.user.username }}</strong></span>
+          <span>Welcome, <strong>{{ request.user.get_full_name|default:request.user.username }}</strong></span>
         </div>
         <div class="executive-quick-bar__links">
           <a href="{% url 'dashboard:overview' %}">

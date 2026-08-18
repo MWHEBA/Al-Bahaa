@@ -1,0 +1,280 @@
+{% extends "dashboard/base.html" %}
+{% load static %}
+
+{% block title %}Partners &amp; Reviews | Al Bahaa Dashboard{% endblock %}
+{% block page_title %}Partners &amp; Client Testimonials{% endblock %}
+
+{% block content %}
+<div class="dash-tabs">
+  <button type="button" class="dash-tab-btn {% if active_tab == 'logos' %}is-active{% endif %}" data-tab="tab-logos">1. Partner &amp; Authority Logos</button>
+  <button type="button" class="dash-tab-btn {% if active_tab == 'testimonials' %}is-active{% endif %}" data-tab="tab-testimonials">2. Client Testimonials &amp; Quotes</button>
+</div>
+
+<!-- Tab 1: Client Logos -->
+<div id="tab-logos" class="dash-tab-panel {% if active_tab == 'logos' %}is-active{% endif %}">
+  <div class="dash-card">
+    <div class="dash-card__header">
+      <div>
+        <h2 class="dash-card__title">Partner &amp; Client Logos</h2>
+        <p class="dash-card__subtitle">Government ministries, engineering authorities, and major developers.</p>
+      </div>
+      <button type="button" class="dash-btn dash-btn--secondary dash-btn--sm" onclick="openDashModal('logoModal')">+ Add Partner Logo</button>
+    </div>
+    <div class="dash-card__body">
+      {% if logos %}
+        <div class="dash-table-wrap">
+          <table class="dash-table">
+            <thead>
+              <tr>
+                <th style="width: 60px;">Order</th>
+                <th style="width: 100px;">Logo</th>
+                <th>Partner Name</th>
+                <th>Placement</th>
+                <th style="width: 80px;">Status</th>
+                <th style="width: 120px; text-align: right;">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for l in logos %}
+                <tr data-href="?tab=logos&edit_logo={{ l.id }}">
+                  <td><code>{{ l.order }}</code></td>
+                  <td>
+                    {% if l.logo_image %}
+                      <img src="{{ l.logo_image.url }}" alt="{{ l.name }}" style="max-height: 36px; max-width: 80px; object-fit: contain; background: rgba(255,255,255,0.05); padding: 4px; border-radius: var(--radius-sm);">
+                    {% else %}
+                      <span style="color: var(--color-text-muted); font-size: var(--text-xs);">No Image</span>
+                    {% endif %}
+                  </td>
+                  <td><strong>{{ l.name }}</strong></td>
+                  <td>
+                    <div style="display: flex; gap: 4px; flex-wrap: wrap;">
+                      {% if l.show_on_home %}<span class="dash-badge dash-badge--sm">Home</span>{% endif %}
+                      {% if l.show_on_about %}<span class="dash-badge dash-badge--sm">About</span>{% endif %}
+                    </div>
+                  </td>
+                  <td>
+                    {% if l.is_active %}<span class="dash-badge dash-badge--success">Active</span>{% else %}<span class="dash-badge">Hidden</span>{% endif %}
+                  </td>
+                  <td style="text-align: center;">
+                    <div style="display: inline-flex; gap: 6px; align-items: center;">
+                      <a href="?tab=logos&edit_logo={{ l.id }}" class="dash-btn dash-btn--secondary dash-btn--sm dash-btn--icon-only" title="Edit Partner Logo" aria-label="Edit Partner Logo">
+                        <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                      </a>
+                      <form method="post" style="display: inline; margin: 0;" onsubmit="return confirm('Remove partner logo \'{{ l.name }}\'?');">
+                        {% csrf_token %}
+                        <input type="hidden" name="action" value="delete_logo">
+                        <input type="hidden" name="logo_id" value="{{ l.id }}">
+                        <input type="hidden" name="active_tab" value="logos">
+                        <button type="submit" class="dash-btn dash-btn--danger dash-btn--sm dash-btn--icon-only" title="Delete Partner Logo" aria-label="Delete Partner Logo">
+                          <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
+                        </button>
+                      </form>
+                    </div>
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% else %}
+        <div class="dash-empty-state"><p>No partner logos registered.</p></div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<!-- Tab 2: Testimonials -->
+<div id="tab-testimonials" class="dash-tab-panel {% if active_tab == 'testimonials' %}is-active{% endif %}">
+  <div class="dash-card">
+    <div class="dash-card__header">
+      <div>
+        <h2 class="dash-card__title">Client Testimonials &amp; Endorsements</h2>
+        <p class="dash-card__subtitle">Quotes and official praise from project directors and consultants.</p>
+      </div>
+      <button type="button" class="dash-btn dash-btn--secondary dash-btn--sm" onclick="openDashModal('testimonialModal')">+ Add Testimonial</button>
+    </div>
+    <div class="dash-card__body">
+      {% if testimonials %}
+        <div class="dash-table-wrap">
+          <table class="dash-table">
+            <thead>
+              <tr>
+                <th style="width: 60px;">Order</th>
+                <th style="width: 60px;">Photo</th>
+                <th>Client Name &amp; Role</th>
+                <th>Company / Authority</th>
+                <th>Quote Excerpt</th>
+                <th style="width: 120px; text-align: right;">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for t in testimonials %}
+                <tr data-href="?tab=testimonials&edit_testimonial={{ t.id }}">
+                  <td><code>{{ t.order }}</code></td>
+                  <td>
+                    {% if t.avatar %}
+                      <img src="{{ t.avatar.url }}" alt="{{ t.client_name }}" style="width: 36px; height: 36px; border-radius: 50%; object-fit: cover;">
+                    {% else %}
+                      <div style="width: 36px; height: 36px; border-radius: 50%; background: var(--color-surface-hover); display: flex; align-items: center; justify-content: center; font-size: var(--text-xs); color: var(--color-text-muted);">
+                        {{ t.client_name|slice:":1" }}
+                      </div>
+                    {% endif %}
+                  </td>
+                  <td>
+                    <strong>{{ t.client_name }}</strong>
+                    <div style="font-size: var(--text-xs); color: var(--color-text-muted);">{{ t.position }}</div>
+                  </td>
+                  <td>{{ t.company }}</td>
+                  <td>
+                    <div style="font-size: var(--text-xs); color: var(--color-text-muted); font-style: italic;">
+                      "{{ t.quote|truncatewords:15 }}"
+                    </div>
+                  </td>
+                  <td style="text-align: center;">
+                    <div style="display: inline-flex; gap: 6px; align-items: center;">
+                      <a href="?tab=testimonials&edit_testimonial={{ t.id }}" class="dash-btn dash-btn--secondary dash-btn--sm dash-btn--icon-only" title="Edit Testimonial" aria-label="Edit Testimonial">
+                        <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                      </a>
+                      <form method="post" style="display: inline; margin: 0;" onsubmit="return confirm('Remove testimonial from \'{{ t.client_name }}\'?');">
+                        {% csrf_token %}
+                        <input type="hidden" name="action" value="delete_testimonial">
+                        <input type="hidden" name="testimonial_id" value="{{ t.id }}">
+                        <input type="hidden" name="active_tab" value="testimonials">
+                        <button type="submit" class="dash-btn dash-btn--danger dash-btn--sm dash-btn--icon-only" title="Delete Testimonial" aria-label="Delete Testimonial">
+                          <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
+                        </button>
+                      </form>
+                    </div>
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% else %}
+        <div class="dash-empty-state"><p>No client testimonials recorded.</p></div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Logo -->
+<div id="logoModal" class="dash-modal {% if editing_logo %}is-open{% endif %}">
+  <div class="dash-modal__dialog">
+    <div class="dash-modal__header">
+      <h3 class="dash-modal__title">{% if editing_logo %}Edit Partner Logo{% else %}Add Partner Logo{% endif %}</h3>
+      <button type="button" class="dash-modal__close" onclick="closeDashModal('logoModal')">&times;</button>
+    </div>
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      {% if editing_logo %}
+        <input type="hidden" name="action" value="update_logo">
+        <input type="hidden" name="logo_id" value="{{ editing_logo.id }}">
+      {% else %}
+        <input type="hidden" name="action" value="create_logo">
+      {% endif %}
+      <input type="hidden" name="active_tab" value="logos">
+      <div class="dash-modal__body">
+        <div class="dash-form-group">
+          <label class="dash-label">Partner / Client Name</label>
+          {{ logo_form.name }}
+        </div>
+        <div class="dash-form-group">
+          <label class="dash-label">Logo File (SVG, PNG, WebP)</label>
+          {% if editing_logo and editing_logo.logo_image %}
+            <div style="margin-bottom: var(--space-2); display: flex; align-items: center; gap: var(--space-3);">
+              <img src="{{ editing_logo.logo_image.url }}" alt="Preview" style="max-height: 40px; max-width: 100px;">
+              <label class="dash-checkbox-label" style="font-size: var(--text-xs); color: var(--color-danger);">
+                <input type="checkbox" name="logo-logo_image-clear" value="1"> Clear Logo
+              </label>
+            </div>
+          {% endif %}
+          {{ logo_form.logo_image }}
+        </div>
+        <div class="dash-form-row">
+          <div class="dash-form-group">
+            <label class="dash-label">Display Order</label>
+            {{ logo_form.order }}
+          </div>
+          <div class="dash-form-group" style="display: flex; flex-direction: column; gap: var(--space-2); margin-top: 18px;">
+            <label class="dash-checkbox-label">{{ logo_form.show_on_home }} Show on Home Page</label>
+            <label class="dash-checkbox-label">{{ logo_form.show_on_about }} Show on About Page</label>
+            <label class="dash-checkbox-label">{{ logo_form.is_active }} Active &amp; Visible</label>
+          </div>
+        </div>
+      </div>
+      <div class="dash-modal__footer">
+        <button type="button" class="dash-btn dash-btn--secondary" onclick="closeDashModal('logoModal')">Cancel</button>
+        <button type="submit" class="dash-btn dash-btn--primary">Save Logo</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Modal: Testimonial -->
+<div id="testimonialModal" class="dash-modal {% if editing_testimonial %}is-open{% endif %}">
+  <div class="dash-modal__dialog">
+    <div class="dash-modal__header">
+      <h3 class="dash-modal__title">{% if editing_testimonial %}Edit Testimonial{% else %}Add Testimonial{% endif %}</h3>
+      <button type="button" class="dash-modal__close" onclick="closeDashModal('testimonialModal')">&times;</button>
+    </div>
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      {% if editing_testimonial %}
+        <input type="hidden" name="action" value="update_testimonial">
+        <input type="hidden" name="testimonial_id" value="{{ editing_testimonial.id }}">
+      {% else %}
+        <input type="hidden" name="action" value="create_testimonial">
+      {% endif %}
+      <input type="hidden" name="active_tab" value="testimonials">
+      <div class="dash-modal__body">
+        <div class="dash-form-row">
+          <div class="dash-form-group">
+            <label class="dash-label">Client Name</label>
+            {{ testimonial_form.client_name }}
+          </div>
+          <div class="dash-form-group">
+            <label class="dash-label">Job Position / Title</label>
+            {{ testimonial_form.position }}
+          </div>
+        </div>
+        <div class="dash-form-group">
+          <label class="dash-label">Company / Authority</label>
+          {{ testimonial_form.company }}
+        </div>
+        <div class="dash-form-group">
+          <label class="dash-label">Testimonial Quote</label>
+          {{ testimonial_form.quote }}
+        </div>
+        <div class="dash-form-group">
+          <label class="dash-label">Avatar Photo</label>
+          {% if editing_testimonial and editing_testimonial.avatar %}
+            <div style="margin-bottom: var(--space-2); display: flex; align-items: center; gap: var(--space-3);">
+              <img src="{{ editing_testimonial.avatar.url }}" alt="Avatar" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">
+              <label class="dash-checkbox-label" style="font-size: var(--text-xs); color: var(--color-danger);">
+                <input type="checkbox" name="testim-avatar-clear" value="1"> Clear Avatar
+              </label>
+            </div>
+          {% endif %}
+          {{ testimonial_form.avatar }}
+        </div>
+        <div class="dash-form-row">
+          <div class="dash-form-group">
+            <label class="dash-label">Display Order</label>
+            {{ testimonial_form.order }}
+          </div>
+          <div class="dash-form-group" style="display: flex; flex-direction: column; gap: var(--space-2); margin-top: 18px;">
+            <label class="dash-checkbox-label">{{ testimonial_form.is_featured }} Featured (Hero Accent)</label>
+            <label class="dash-checkbox-label">{{ testimonial_form.show_on_home }} Show on Home</label>
+            <label class="dash-checkbox-label">{{ testimonial_form.show_on_about }} Show on About</label>
+          </div>
+        </div>
+      </div>
+      <div class="dash-modal__footer">
+        <button type="button" class="dash-btn dash-btn--secondary" onclick="closeDashModal('testimonialModal')">Cancel</button>
+        <button type="submit" class="dash-btn dash-btn--primary">Save Testimonial</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
