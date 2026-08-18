@@ -18,6 +18,63 @@ from .models import (
 )
 
 
+from io import BytesIO
+from PIL import Image, ImageOps
+from django.core.files.base import ContentFile
+from django.db.backends.signals import connection_created
+
+
+@receiver(connection_created)
+def set_sqlite_pragmas(sender, connection, **kwargs):
+    """Enable WAL mode, fast synchronization and in-memory cache for SQLite."""
+    if connection.vendor == "sqlite":
+        try:
+            cursor = connection.cursor()
+            cursor.execute("PRAGMA journal_mode = WAL;")
+            cursor.execute("PRAGMA synchronous = NORMAL;")
+            cursor.execute("PRAGMA cache_size = -64000;")
+            cursor.execute("PRAGMA temp_store = MEMORY;")
+        except Exception:
+            pass
+
+
+def auto_optimize_image_field(field_file, max_dim=1920, quality=82):
+    """Automatically resize and compress newly uploaded images to WebP."""
+    if not field_file or not hasattr(field_file, "file"):
+        return
+    try:
+        # Avoid re-processing if already a webp file
+        if field_file.name.lower().endswith(".webp"):
+            return
+
+        with Image.open(field_file) as img:
+            try:
+                img = ImageOps.exif_transpose(img)
+            except Exception:
+                pass
+
+            w, h = img.size
+            if max(w, h) > max_dim:
+                ratio = max_dim / max(w, h)
+                new_size = (max(1, int(w * ratio)), max(1, int(h * ratio)))
+                img = img.resize(new_size, Image.Resampling.LANCZOS)
+
+            output = BytesIO()
+            if img.mode in ("RGBA", "LA") or (img.mode == "P" and "transparency" in img.info):
+                img = img.convert("RGBA")
+                img.save(output, format="WEBP", quality=quality, method=6)
+            else:
+                img = img.convert("RGB")
+                img.save(output, format="WEBP", quality=quality, method=6)
+
+            output.seek(0)
+            base_name = os.path.splitext(field_file.name)[0]
+            new_name = f"{base_name}.webp"
+            field_file.save(new_name, ContentFile(output.read()), save=False)
+    except Exception:
+        pass
+
+
 @receiver([post_save, post_delete], sender=SiteSettings)
 @receiver([post_save, post_delete], sender=PageHero)
 @receiver([post_save, post_delete], sender=HomeContent)
@@ -88,10 +145,17 @@ def auto_delete_job_application_resume(sender, instance, **kwargs):
 
 
 # ==========================================
-# Pre-Save File Cleaners (Delete Replaced Files)
+# Pre-Save File Cleaners & Auto-WebP Compression
 # ==========================================
 @receiver(pre_save, sender=SiteSettings)
 def cleanup_sitesettings_on_update(sender, instance, **kwargs):
+    if instance.header_logo:
+        auto_optimize_image_field(instance.header_logo, max_dim=600, quality=85)
+    if instance.footer_logo:
+        auto_optimize_image_field(instance.footer_logo, max_dim=600, quality=85)
+    if instance.favicon:
+        auto_optimize_image_field(instance.favicon, max_dim=128, quality=90)
+
     if not instance.pk:
         return
     try:
@@ -108,6 +172,9 @@ def cleanup_sitesettings_on_update(sender, instance, **kwargs):
 
 @receiver(pre_save, sender=PageHero)
 def cleanup_hero_on_update(sender, instance, **kwargs):
+    if instance.hero_image:
+        auto_optimize_image_field(instance.hero_image, max_dim=1920, quality=82)
+
     if not instance.pk:
         return
     try:
@@ -118,8 +185,56 @@ def cleanup_hero_on_update(sender, instance, **kwargs):
         pass
 
 
+@receiver(pre_save, sender=HomeContent)
+def cleanup_home_content_on_update(sender, instance, **kwargs):
+    if instance.blueprints_image:
+        auto_optimize_image_field(instance.blueprints_image, max_dim=1200, quality=82)
+
+    if not instance.pk:
+        return
+    try:
+        old_obj = HomeContent.objects.get(pk=instance.pk)
+        if old_obj.blueprints_image and old_obj.blueprints_image != instance.blueprints_image:
+            delete_file_safely(old_obj.blueprints_image)
+    except HomeContent.DoesNotExist:
+        pass
+
+
+@receiver(pre_save, sender=TeamMember)
+def cleanup_team_on_update(sender, instance, **kwargs):
+    if instance.photo:
+        auto_optimize_image_field(instance.photo, max_dim=800, quality=82)
+
+    if not instance.pk:
+        return
+    try:
+        old_obj = TeamMember.objects.get(pk=instance.pk)
+        if old_obj.photo and old_obj.photo != instance.photo:
+            delete_file_safely(old_obj.photo)
+    except TeamMember.DoesNotExist:
+        pass
+
+
+@receiver(pre_save, sender=ClientLogo)
+def cleanup_client_logo_on_update(sender, instance, **kwargs):
+    if instance.logo_image:
+        auto_optimize_image_field(instance.logo_image, max_dim=600, quality=85)
+
+    if not instance.pk:
+        return
+    try:
+        old_obj = ClientLogo.objects.get(pk=instance.pk)
+        if old_obj.logo_image and old_obj.logo_image != instance.logo_image:
+            delete_file_safely(old_obj.logo_image)
+    except ClientLogo.DoesNotExist:
+        pass
+
+
 @receiver(pre_save, sender=Project)
 def cleanup_project_on_update(sender, instance, **kwargs):
+    if instance.cover_image:
+        auto_optimize_image_field(instance.cover_image, max_dim=1920, quality=82)
+
     if not instance.pk:
         return
     try:
@@ -130,8 +245,26 @@ def cleanup_project_on_update(sender, instance, **kwargs):
         pass
 
 
+@receiver(pre_save, sender=ProjectImage)
+def cleanup_project_image_on_update(sender, instance, **kwargs):
+    if instance.image:
+        auto_optimize_image_field(instance.image, max_dim=1200, quality=82)
+
+    if not instance.pk:
+        return
+    try:
+        old_obj = ProjectImage.objects.get(pk=instance.pk)
+        if old_obj.image and old_obj.image != instance.image:
+            delete_file_safely(old_obj.image)
+    except ProjectImage.DoesNotExist:
+        pass
+
+
 @receiver(pre_save, sender=Post)
 def cleanup_post_on_update(sender, instance, **kwargs):
+    if instance.cover_image:
+        auto_optimize_image_field(instance.cover_image, max_dim=1600, quality=82)
+
     if not instance.pk:
         return
     try:

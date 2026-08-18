@@ -42,7 +42,7 @@
   <!-- Large Featured Cover Image -->
   <section class="page-section page-section--wide news-detail-media">
     <div class="news-detail-media__wrapper">
-      <img src="{{ article.image_url }}" alt="{{ article.title }}">
+      <img src="{{ article.image_url }}" alt="{{ article.title }}" fetchpriority="high" decoding="async">
     </div>
   </section>
 
@@ -93,7 +93,7 @@
             {% for item in recent_articles %}
               <a href="{% url 'news:detail' slug=item.slug %}" class="news-sidebar-recent-item">
                 <div class="news-sidebar-recent-thumb">
-                  <img src="{{ item.image_url }}" alt="{{ item.title }}">
+                  <img src="{{ item.image_url }}" alt="{{ item.title }}" loading="lazy" decoding="async">
                 </div>
                 <div class="news-sidebar-recent-info">
                   <time class="news-sidebar-recent-date">

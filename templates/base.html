@@ -21,6 +21,10 @@
     <link rel="icon" href="{% static 'img/branding/AlBahaa logo.svg' %}">
     {% endif %}
 
+    <!-- Preload Core Fonts -->
+    <link rel="preload" href="{% static 'fonts/RidleyGrotesk-Regular.woff2' %}" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="{% static 'fonts/inter-latin.woff2' %}" as="font" type="font/woff2" crossorigin>
+
     <!-- Stylesheets -->
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
     <link rel="stylesheet" href="{% static 'css/layout.css' %}">

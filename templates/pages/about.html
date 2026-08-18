@@ -152,11 +152,11 @@
             <article class="about-exec-card">
               <div class="about-exec-card__image">
                 {% if bm.photo %}
-                  <img src="{{ bm.photo.url }}" alt="{{ bm.name }}">
+                  <img src="{{ bm.photo.url }}" alt="{{ bm.name }}" loading="lazy" decoding="async">
                 {% elif forloop.first %}
-                  <img src="{% static 'img/team/ahmed-bahaa.jpg' %}" alt="{{ bm.name }}">
+                  <img src="{% static 'img/team/ahmed_bahaa.webp' %}" alt="{{ bm.name }}" loading="lazy" decoding="async">
                 {% else %}
-                  <img src="{% static 'img/team/mahmoud-bahaa.jpg' %}" alt="{{ bm.name }}">
+                  <img src="{% static 'img/team/mahmoud_bahaa.webp' %}" alt="{{ bm.name }}" loading="lazy" decoding="async">
                 {% endif %}
               </div>
               <div class="about-exec-card__info">
@@ -171,7 +171,7 @@
         {% else %}
           <article class="about-exec-card">
             <div class="about-exec-card__image">
-              <img src="{% static 'img/team/ahmed-bahaa.jpg' %}" alt="Engineer Ahmed Bahaa">
+              <img src="{% static 'img/team/ahmed_bahaa.webp' %}" alt="Engineer Ahmed Bahaa" loading="lazy" decoding="async">
             </div>
             <div class="about-exec-card__info">
               <h3>Eng. Ahmed Bahaa</h3>
@@ -182,7 +182,7 @@
 
           <article class="about-exec-card">
             <div class="about-exec-card__image">
-              <img src="{% static 'img/team/mahmoud-bahaa.jpg' %}" alt="Mr Mahmoud Bahaa">
+              <img src="{% static 'img/team/mahmoud_bahaa.webp' %}" alt="Mr Mahmoud Bahaa" loading="lazy" decoding="async">
             </div>
             <div class="about-exec-card__info">
               <h3>Mr. Mahmoud Bahaa</h3>

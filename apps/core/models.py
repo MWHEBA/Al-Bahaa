@@ -113,12 +113,12 @@ class PageHero(models.Model):
     )
 
     FALLBACK_HERO_IMAGES = {
-        "home": "img/home/Rectangle 3.png",
-        "about": "img/about/Rectangle 21.png",
-        "projects": "img/projects/projects-hero-banner.jpg",
-        "news": "img/news/news-hero-banner.jpg",
-        "careers": "img/careers/careers-hero-banner.jpg",
-        "contact": "img/contact/contact-hero-recovered.png",
+        "home": "img/home/Rectangle 3.webp",
+        "about": "img/about/Rectangle 21.webp",
+        "projects": "img/projects/projects-hero-banner.webp",
+        "news": "img/news/news-hero-banner.webp",
+        "careers": "img/careers/careers-hero-banner.webp",
+        "contact": "img/contact/contact-hero-recovered.webp",
     }
 
     page = models.CharField(max_length=30, choices=PAGE_CHOICES, unique=True)
@@ -279,7 +279,7 @@ class TeamMember(models.Model):
                 return self.photo.url
             except ValueError:
                 pass
-        return "/static/img/team/Rectangle 24.png"
+        return "/static/img/team/Rectangle 24.webp"
 
 
 class ServiceItem(models.Model):
@@ -354,18 +354,18 @@ class Testimonial(models.Model):
 
 class ClientLogo(models.Model):
     FALLBACK_LOGOS = [
-        "img/clients/Layer 1.png",
-        "img/clients/Layer 2.png",
-        "img/clients/Layer 3.png",
-        "img/clients/Layer 4.png",
-        "img/clients/Layer 5.png",
-        "img/clients/Layer 6.png",
-        "img/clients/l3.png",
-        "img/clients/logo_partner-3.png",
-        "img/clients/11.png",
-        "img/clients/logo_partner-8.png",
-        "img/clients/l4.png",
-        "img/clients/Layer 1 copy.png",
+        "img/clients/Layer 1.webp",
+        "img/clients/Layer 2.webp",
+        "img/clients/Layer 3.webp",
+        "img/clients/Layer 4.webp",
+        "img/clients/Layer 5.webp",
+        "img/clients/Layer 6.webp",
+        "img/clients/l3.webp",
+        "img/clients/logo_partner-3.webp",
+        "img/clients/11.webp",
+        "img/clients/logo_partner-8.webp",
+        "img/clients/l4.webp",
+        "img/clients/Layer 1 copy.webp",
     ]
 
     name = models.CharField(max_length=120)

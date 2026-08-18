@@ -1,8 +1,32 @@
 .env
+.env.*
+.env.production
+.env.local
+
+# Database & Storage
 db.sqlite3
+db.sqlite3-journal
 staticfiles/
-validation/
 media/*
 !media/.gitkeep
+validation/
+
+# Python cache
 __pycache__/
 *.py[cod]
+*.pyo
+*.pyd
+
+# SSH Keys and Security Files
+id_rsa
+id_rsa2
+id_rsa.pub
+*.pem
+*.key
+
+# Deployment & Logs
+deploy_logs/
+.deploy_hashes.json
+.temp_deploy/
+logs/
+*.log

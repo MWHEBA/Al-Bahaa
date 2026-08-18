@@ -204,7 +204,7 @@
       <div class="gallery-grid">
         {% for img_obj in project.images.all %}
           <figure class="gallery-item">
-            <img src="{{ img_obj.image.url }}" alt="{{ img_obj.caption|default:project.title }}">
+            <img src="{{ img_obj.image.url }}" alt="{{ img_obj.caption|default:project.title }}" loading="lazy" decoding="async">
             {% if img_obj.caption %}
               <figcaption>{{ img_obj.caption }}</figcaption>
             {% endif %}
@@ -225,7 +225,7 @@
         {% for rel in related_projects %}
           <a href="{% url 'projects:detail' slug=rel.slug %}" class="related-card-thumb">
             <div class="related-thumb-media">
-              <img src="{{ rel.image_url }}" alt="{{ rel.title }}">
+              <img src="{{ rel.image_url }}" alt="{{ rel.title }}" loading="lazy" decoding="async">
             </div>
             <div class="related-thumb-info">
               <span class="related-thumb-sector">{{ rel.category.name|default:"Civil" }}{% if rel.location %} &bull; {{ rel.location }}{% endif %}</span>

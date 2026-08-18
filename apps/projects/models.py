@@ -24,10 +24,10 @@ class Project(models.Model):
     )
 
     FALLBACK_IMAGES = [
-        "img/projects/projects-band-1-recovered.png",
-        "img/projects/projects-band-2-recovered.png",
-        "img/projects/projects-band-3-recovered.png",
-        "img/projects/projects-band-4-recovered.png",
+        "img/projects/projects-band-1-recovered.webp",
+        "img/projects/projects-band-2-recovered.webp",
+        "img/projects/projects-band-3-recovered.webp",
+        "img/projects/projects-band-4-recovered.webp",
     ]
 
     title = models.CharField(max_length=180)

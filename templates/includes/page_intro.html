@@ -19,12 +19,12 @@
   </div>
   {% if image_url %}
     <div class="page-intro__media">
-      <img src="{{ image_url }}" alt="">
+      <img src="{{ image_url }}" alt="" fetchpriority="high" decoding="async">
       <span class="page-intro__scroll-cue" aria-hidden="true"></span>
     </div>
   {% elif image %}
     <div class="page-intro__media">
-      <img src="{% static image %}" alt="">
+      <img src="{% static image %}" alt="" fetchpriority="high" decoding="async">
       <span class="page-intro__scroll-cue" aria-hidden="true"></span>
     </div>
   {% endif %}

@@ -43,4 +43,4 @@ class Post(models.Model):
                 return self.cover_image.url
             except ValueError:
                 pass
-        return "/static/img/news/news-article1-recovered.png"
+        return "/static/img/news/news-article1-recovered.webp"

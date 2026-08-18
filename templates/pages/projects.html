@@ -37,7 +37,7 @@
     <div class="projects-list">
       {% for project in projects %}
         <article class="project-band {% if forloop.counter|divisibleby:4 %}project-band--tower{% endif %}">
-          <img class="project-band__image" src="{{ project.image_url }}" alt="{{ project.title }}">
+          <img class="project-band__image" src="{{ project.image_url }}" alt="{{ project.title }}" loading="lazy" decoding="async">
 
           <div class="project-band__controls" aria-label="Project info">
             <span class="project-band__category-tag">{{ project.category.name|default:"Civil Contracting" }}</span>

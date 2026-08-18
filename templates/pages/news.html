@@ -37,7 +37,7 @@
       {% for article in articles %}
         <article class="news-row {% if article.reverse %}news-row--reverse{% endif %}" data-url="{% url 'news:detail' slug=article.slug %}">
           <a class="news-row__media" href="{% url 'news:detail' slug=article.slug %}" tabindex="-1" aria-hidden="true">
-            <img class="news-row__image" src="{{ article.image_url }}" alt="{{ article.title }}">
+            <img class="news-row__image" src="{{ article.image_url }}" alt="{{ article.title }}" loading="lazy" decoding="async">
           </a>
           <div class="news-row__content">
             <div class="news-row__meta">
