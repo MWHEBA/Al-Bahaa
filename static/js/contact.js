@@ -13,16 +13,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const originalBtnText = submitBtn ? submitBtn.innerHTML : 'Submit Inquiry';
 
   function clearErrors() {
-    // Remove inline field error messages
     form.querySelectorAll('.form-error-msg').forEach((el) => el.remove());
-    // Remove global error banner
     form.querySelectorAll('.contact-form__errors').forEach((el) => el.remove());
   }
 
   function displayErrors(errors, generalMessage) {
     clearErrors();
 
-    // Show top alert banner
     if (generalMessage) {
       const errorBanner = document.createElement('div');
       errorBanner.className = 'contact-form__errors';
@@ -31,7 +28,6 @@ document.addEventListener('DOMContentLoaded', () => {
       form.insertBefore(errorBanner, form.querySelector('.contact-form__row'));
     }
 
-    // Attach errors under corresponding fields
     if (errors && typeof errors === 'object') {
       Object.keys(errors).forEach((fieldName) => {
         const input = form.querySelector(`[name="${fieldName}"]`);
@@ -64,7 +60,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     formContainer.innerHTML = successHtml;
 
-    // Smooth scroll to success box
     const rect = formContainer.getBoundingClientRect();
     if (rect.top < 80 || rect.bottom > window.innerHeight) {
       window.scrollTo({
@@ -88,6 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const formData = new FormData(form);
     const actionUrl = form.getAttribute('action') || window.location.href;
+    const csrfToken = form.querySelector('[name=csrfmiddlewaretoken]')?.value || '';
 
     try {
       const response = await fetch(actionUrl, {
@@ -96,6 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
         headers: {
           'X-Requested-With': 'XMLHttpRequest',
           'Accept': 'application/json',
+          'X-CSRFToken': csrfToken,
         },
       });
 

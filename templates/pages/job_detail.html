@@ -137,6 +137,7 @@
           {% else %}
             <form method="post" enctype="multipart/form-data" class="job-apply-form" novalidate>
               {% csrf_token %}
+              {{ form.website_source_check }}
               
               {% if form.errors %}
                 <div class="apply-error-box" role="alert">

@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}Al Bahaa Contracting (S.A.E) | Architecture, Infrastructure &amp; Engineering Landmarks{% endblock %}
+{% block title %}{{ site_settings.company_name|default:"Al Bahaa Contracting (S.A.E)" }} | Architecture, Infrastructure &amp; Engineering Landmarks{% endblock %}
 {% block body_class %}home-page{% endblock %}
 
 {% block extra_css %}
@@ -10,39 +10,66 @@
 
 {% block content %}
   <!-- Hero Section: Architectural Monograph Editorial Banner -->
-  <section class="home-hero page-section page-section--wide" aria-label="Al Bahaa Contracting">
+  {% with hero=page_heroes.home %}
+  <section class="home-hero page-section page-section--wide" aria-label="{{ site_settings.company_name|default:'Al Bahaa Contracting' }}">
     <div class="home-hero__media">
-      <img class="home-hero__image" src="{% static 'img/home/Rectangle 3.png' %}" alt="Al Bahaa Architectural Engineering Landmark">
+      {% if hero and hero.hero_image %}
+        <img class="home-hero__image" src="{{ hero.hero_image.url }}" alt="{{ site_settings.company_name|default:'Al Bahaa' }} Architectural Engineering Landmark">
+      {% else %}
+        <img class="home-hero__image" src="{% static 'img/home/Rectangle 3.png' %}" alt="{{ site_settings.company_name|default:'Al Bahaa' }} Architectural Engineering Landmark">
+      {% endif %}
     </div>
     <div class="home-hero__card">
-      <span class="home-hero__eyebrow">AL BAHAA CONTRACTING (S.A.E)</span>
-      <h1 class="home-hero__title">ENGINEERING EXCELLENCE &amp;<br>CIVIL INFRASTRUCTURE</h1>
-      <p class="home-hero__desc">Established in 1986, Al Bahaa delivers Grade A water networks, turnkey civil construction, and enduring architectural landmarks across Egypt with disciplined execution.</p>
+      <span class="home-hero__eyebrow">{{ hero.eyebrow|default:site_settings.company_name|default:"AL BAHAA CONTRACTING (S.A.E)"|upper }}</span>
+      <h1 class="home-hero__title">
+        {% if hero and hero.title_html %}
+          {{ hero.title_html|safe }}
+        {% else %}
+          ENGINEERING EXCELLENCE &amp;<br>CIVIL INFRASTRUCTURE
+        {% endif %}
+      </h1>
+      <p class="home-hero__desc">{{ hero.description|default:"Established in 1986, Al Bahaa delivers Grade A water networks, turnkey civil construction, and enduring architectural landmarks across Egypt with disciplined execution." }}</p>
       <div class="home-hero__actions">
         <a class="button button--solid" href="{% url 'projects:list' %}">Explore Projects</a>
         <a class="button" href="{% url 'core:about' %}">About Al Bahaa</a>
       </div>
     </div>
   </section>
+  {% endwith %}
 
   <!-- Specialization & Capabilities Section -->
   <section class="page-section page-section--wide home-intro" aria-label="Our Specialization and Engineering Craftsmanship">
     <div class="home-specialization">
       <h2>OUR<br>SPECIALIZATION.</h2>
-      <h3 class="home-specialization__discipline">GRADE A INFRASTRUCTURE</h3>
-      <p class="home-specialization__desc">Specialized in municipal water transmission pipelines, sewage collector networks, pumping stations, and stormwater drainage systems engineered to exacting standards.</p>
+      {% if specializations and specializations.0 %}
+        <h3 class="home-specialization__discipline">{{ specializations.0.discipline }}</h3>
+        <p class="home-specialization__desc">{{ specializations.0.description }}</p>
+      {% else %}
+        <h3 class="home-specialization__discipline">GRADE A INFRASTRUCTURE</h3>
+        <p class="home-specialization__desc">Specialized in municipal water transmission pipelines, sewage collector networks, pumping stations, and stormwater drainage systems engineered to exacting standards.</p>
+      {% endif %}
       <div class="home-specialization__nav">
         <button type="button" class="button button--solid button--split-previous home-specialization__previous" aria-label="Previous Specialization">Previous</button>
         <button type="button" class="button button--split-next home-specialization__next" aria-label="Next Specialization">Next</button>
       </div>
     </div>
     <div class="home-intro__media">
-      <img class="home-intro__image" src="{% static 'img/home/Rectangle 8.png' %}" alt="Engineering Execution Rigor">
+      {% if home_content and home_content.blueprints_image %}
+        <img class="home-intro__image" src="{{ home_content.blueprints_image.url }}" alt="Engineering Execution Rigor">
+      {% else %}
+        <img class="home-intro__image" src="{% static 'img/home/Rectangle 8.png' %}" alt="Engineering Execution Rigor">
+      {% endif %}
     </div>
     <div class="home-works">
-      <h2>WE TURN BLUEPRINTS INTO<br>ENDURING REALITY.</h2>
-      <p>With more than three decades of engineering leadership and active membership in the Egyptian Federation for Construction, Al Bahaa delivers turnkey civil, residential, and infrastructure landmarks on schedule, within budget, and to the highest QA/QC standards.</p>
-      <a class="button home-works__button" href="{% url 'core:about' %}">View More</a>
+      <h2>
+        {% if home_content and home_content.blueprints_title_line1 and home_content.blueprints_title_line2 %}
+          {{ home_content.blueprints_title_line1 }}<br>{{ home_content.blueprints_title_line2 }}
+        {% else %}
+          WE TURN BLUEPRINTS INTO<br>ENDURING REALITY.
+        {% endif %}
+      </h2>
+      <p>{{ home_content.blueprints_description|default:"With more than three decades of engineering leadership and active membership in the Egyptian Federation for Construction, Al Bahaa delivers turnkey civil, residential, and infrastructure landmarks on schedule, within budget, and to the highest QA/QC standards." }}</p>
+      <a class="button home-works__button" href="{{ home_content.blueprints_btn_url|default:'/about/' }}">{{ home_content.blueprints_btn_text|default:"View More" }}</a>
     </div>
   </section>
 
@@ -51,8 +78,17 @@
     {% include "includes/section_heading.html" with eyebrow="OUR PROJECTS." title="We like to build<br>things people use." %}
 
     <div class="home-projects__mosaic">
-      <img class="home-projects__drawing" src="{% static 'img/home/Rectangle 9.png' %}" alt="Architectural Blueprint and Master Plan">
-      <img class="home-projects__tower-white" src="{% static 'img/home/Rectangle 9 copy.png' %}" alt="Prime Administrative Tower Development">
+      {% if featured_projects.0 and featured_projects.0.cover_image %}
+        <img class="home-projects__drawing" src="{{ featured_projects.0.cover_image.url }}" alt="{{ featured_projects.0.title }}">
+      {% else %}
+        <img class="home-projects__drawing" src="{% static 'img/home/Rectangle 9.png' %}" alt="Architectural Blueprint and Master Plan">
+      {% endif %}
+
+      {% if featured_projects.1 and featured_projects.1.cover_image %}
+        <img class="home-projects__tower-white" src="{{ featured_projects.1.cover_image.url }}" alt="{{ featured_projects.1.title }}">
+      {% else %}
+        <img class="home-projects__tower-white" src="{% static 'img/home/Rectangle 9 copy.png' %}" alt="Prime Administrative Tower Development">
+      {% endif %}
       
       <article class="home-projects__card">
         {% if featured_project %}
@@ -66,10 +102,29 @@
         {% endif %}
       </article>
 
-      <img class="home-projects__pipes" src="{% static 'img/home/Rectangle 9 copy 11.png' %}" alt="Municipal Water and Sewage Infrastructure Networks">
-      <img class="home-projects__column" src="{% static 'img/home/Rectangle 9 copy 2.png' %}" alt="Reinforced Concrete and Heavy Civil Works">
-      <img class="home-projects__glass" src="{% static 'img/home/Rectangle 9 copy 3.png' %}" alt="Modern Architectural Glass Facade Construction">
-      <img class="home-projects__water" src="{% static 'img/home/Rectangle 9 copy 4.png' %}" alt="Water Treatment and Pumping Station Engineering">
+      {% if featured_projects.2 and featured_projects.2.cover_image %}
+        <img class="home-projects__pipes" src="{{ featured_projects.2.cover_image.url }}" alt="{{ featured_projects.2.title }}">
+      {% else %}
+        <img class="home-projects__pipes" src="{% static 'img/home/Rectangle 9 copy 11.png' %}" alt="Municipal Water and Sewage Infrastructure Networks">
+      {% endif %}
+
+      {% if featured_projects.3 and featured_projects.3.cover_image %}
+        <img class="home-projects__column" src="{{ featured_projects.3.cover_image.url }}" alt="{{ featured_projects.3.title }}">
+      {% else %}
+        <img class="home-projects__column" src="{% static 'img/home/Rectangle 9 copy 2.png' %}" alt="Reinforced Concrete and Heavy Civil Works">
+      {% endif %}
+
+      {% if featured_projects.4 and featured_projects.4.cover_image %}
+        <img class="home-projects__glass" src="{{ featured_projects.4.cover_image.url }}" alt="{{ featured_projects.4.title }}">
+      {% else %}
+        <img class="home-projects__glass" src="{% static 'img/home/Rectangle 9 copy 3.png' %}" alt="Modern Architectural Glass Facade Construction">
+      {% endif %}
+
+      {% if featured_projects.0 and featured_projects.0.cover_image %}
+        <img class="home-projects__water" src="{{ featured_projects.0.cover_image.url }}" alt="{{ featured_projects.0.title }}">
+      {% else %}
+        <img class="home-projects__water" src="{% static 'img/home/Rectangle 9 copy 4.png' %}" alt="Water Treatment and Pumping Station Engineering">
+      {% endif %}
     </div>
 
     <div class="home-projects__footer">
@@ -82,36 +137,49 @@
     {% include "includes/section_heading.html" with eyebrow="OUR CLIENT." title="What others say<br>about our work." %}
 
     <div class="home-testimonials__cards">
-      <article class="home-testimonial">
-        <blockquote>"Al Bahaa's execution on major municipal infrastructure works demonstrated impeccable technical rigor, Grade A compliance, and flawless coordination."</blockquote>
-        <span class="home-testimonial__mark" aria-hidden="true">”</span>
-        <footer class="home-testimonial__footer">
-          <strong>Consulting Engineers Group (CEG)</strong>
-          <span class="home-testimonial__role">Project Supervision</span>
-        </footer>
-      </article>
+      {% if testimonials %}
+        {% for t in testimonials %}
+          <article class="home-testimonial {% if t.is_accent or forloop.counter == 3 %}home-testimonial--accent{% endif %}">
+            <blockquote>"{{ t.quote }}"</blockquote>
+            <span class="home-testimonial__mark" aria-hidden="true">”</span>
+            <footer class="home-testimonial__footer">
+              <strong>{{ t.client_name }}</strong>
+              <span class="home-testimonial__role">{{ t.position|default:t.company }}</span>
+            </footer>
+          </article>
+        {% endfor %}
+      {% else %}
+        <article class="home-testimonial">
+          <blockquote>"Al Bahaa's execution on major municipal infrastructure works demonstrated impeccable technical rigor, Grade A compliance, and flawless coordination."</blockquote>
+          <span class="home-testimonial__mark" aria-hidden="true">”</span>
+          <footer class="home-testimonial__footer">
+            <strong>Consulting Engineers Group (CEG)</strong>
+            <span class="home-testimonial__role">Project Supervision</span>
+          </footer>
+        </article>
 
-      <article class="home-testimonial">
-        <blockquote>"Their adherence to structural milestones, safety protocols, and quality control sets a benchmark for joint-stock contractors in Egypt."</blockquote>
-        <span class="home-testimonial__mark" aria-hidden="true">”</span>
-        <footer class="home-testimonial__footer">
-          <strong>Urban Communities Authority</strong>
-          <span class="home-testimonial__role">Infrastructure Division</span>
-        </footer>
-      </article>
+        <article class="home-testimonial">
+          <blockquote>"Their adherence to structural milestones, safety protocols, and quality control sets a benchmark for joint-stock contractors in Egypt."</blockquote>
+          <span class="home-testimonial__mark" aria-hidden="true">”</span>
+          <footer class="home-testimonial__footer">
+            <strong>Urban Communities Authority</strong>
+            <span class="home-testimonial__role">Infrastructure Division</span>
+          </footer>
+        </article>
 
-      <article class="home-testimonial home-testimonial--accent">
-        <blockquote>"Turnkey project delivery executed with superior craftsmanship, delivered on schedule with outstanding attention to engineering QA/QC."</blockquote>
-        <span class="home-testimonial__mark" aria-hidden="true">”</span>
-        <footer class="home-testimonial__footer">
-          <strong>Prime Developments</strong>
-          <span class="home-testimonial__role">Executive Management</span>
-        </footer>
-      </article>
+        <article class="home-testimonial home-testimonial--accent">
+          <blockquote>"Turnkey project delivery executed with superior craftsmanship, delivered on schedule with outstanding attention to engineering QA/QC."</blockquote>
+          <span class="home-testimonial__mark" aria-hidden="true">”</span>
+          <footer class="home-testimonial__footer">
+            <strong>Prime Developments</strong>
+            <span class="home-testimonial__role">Executive Management</span>
+          </footer>
+        </article>
+      {% endif %}
     </div>
   </section>
 
-  <!-- Client Logos Section -->
+  <!-- Client Logos Section (Contained to Content Max-Width) -->
   <section class="page-section page-section--wide home-clients" aria-label="Institutional Partners and Client Logos">
     {% include "includes/client_logos.html" %}
   </section>
@@ -126,17 +194,17 @@
         {% with p0=latest_posts.0 %}
           <article class="home-news__featured-card">
             <div class="home-news__featured-image">
-              <img src="{{ p0.cover_image.url }}" alt="{{ p0.title }}">
+              <img src="{{ p0.image_url }}" alt="{{ p0.title }}">
             </div>
             <div class="home-news__featured-body">
               <div class="home-news__meta">
-                <span class="home-news__category-tag">{{ p0.category.name|default:"INFRASTRUCTURE" }}</span>
+                <span class="home-news__category-tag">{{ p0.category.name|default:"INFRASTRUCTURE"|upper }}</span>
                 <span>•</span>
-                <time datetime="{{ p0.published_at|date:'Y-m-d' }}">{{ p0.published_at|date:"M d, Y"|default:"OCT 2026" }}</time>
+                <time datetime="{{ p0.published_at|date:'Y-m-d' }}">{{ p0.published_at|date:"M d, Y"|default:"OCT 2026"|upper }}</time>
               </div>
               <h3>{{ p0.title }}</h3>
               <p>{{ p0.excerpt|default:p0.content|truncatewords:24 }}</p>
-              <a class="button button--text button--arrow home-news__link" href="{% url 'news:list' %}">Read Full Report</a>
+              <a class="button button--text button--arrow home-news__link" href="{% url 'news:detail' slug=p0.slug %}">Read Full Report</a>
             </div>
           </article>
         {% endwith %}
@@ -164,17 +232,17 @@
           {% for post in latest_posts|slice:"1:3" %}
             <article class="home-news__secondary-card">
               <div class="home-news__secondary-image">
-                <img src="{{ post.cover_image.url }}" alt="{{ post.title }}">
+                <img src="{{ post.image_url }}" alt="{{ post.title }}">
               </div>
               <div class="home-news__secondary-body">
                 <div class="home-news__meta">
-                  <span class="home-news__category-tag">{{ post.category.name|default:"CIVIL WORKS" }}</span>
+                  <span class="home-news__category-tag">{{ post.category.name|default:"CIVIL WORKS"|upper }}</span>
                   <span>•</span>
-                  <time datetime="{{ post.published_at|date:'Y-m-d' }}">{{ post.published_at|date:"M d, Y"|default:"OCT 2026" }}</time>
+                  <time datetime="{{ post.published_at|date:'Y-m-d' }}">{{ post.published_at|date:"M d, Y"|default:"OCT 2026"|upper }}</time>
                 </div>
                 <h3>{{ post.title }}</h3>
                 <p>{{ post.excerpt|default:post.content|truncatewords:14 }}</p>
-                <a class="button button--text button--arrow home-news__link" href="{% url 'news:list' %}">Read Article</a>
+                <a class="button button--text button--arrow home-news__link" href="{% url 'news:detail' slug=post.slug %}">Read Article</a>
               </div>
             </article>
           {% endfor %}
@@ -221,5 +289,6 @@
 {% endblock %}
 
 {% block extra_js %}
+  {{ specializations_json|json_script:"specializations-data" }}
   <script src="{% static 'js/home.js' %}"></script>
 {% endblock %}

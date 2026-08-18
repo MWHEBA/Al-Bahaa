@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}Projects | Al Bahaa Contracting{% endblock %}
+{% block title %}Projects | {{ site_settings.company_name|default:"Al Bahaa Contracting" }}{% endblock %}
 {% block body_class %}projects-page{% endblock %}
 
 {% block extra_css %}
@@ -9,7 +9,9 @@
 {% endblock %}
 
 {% block content %}
-  {% include "includes/page_intro.html" with eyebrow="Featured Projects" title_html="Built work<br>with lasting value." description="A focused collection of civil, administrative, and commercial infrastructure shaped with precision and engineered for long-term use." image="img/projects/Rectangle 9 copy.png" %}
+  {% with hero=page_heroes.projects %}
+    {% include "includes/page_intro.html" with eyebrow=hero.eyebrow|default:"Featured Projects" title_html=hero.title_html|default:"Built work<br>with lasting value." description=hero.description|default:"A focused collection of civil, administrative, and commercial infrastructure shaped with precision and engineered for long-term use." image_url=hero.image_url %}
+  {% endwith %}
 
   <section class="page-content page-content--wide projects-container" id="projects-ajax-container" aria-label="Projects">
     
@@ -35,13 +37,7 @@
     <div class="projects-list">
       {% for project in projects %}
         <article class="project-band {% if forloop.counter|divisibleby:4 %}project-band--tower{% endif %}">
-          {% with img_info=project.display_image %}
-            {% if img_info.is_static %}
-              <img class="project-band__image" src="{% static img_info.url %}" alt="{{ project.title }}">
-            {% else %}
-              <img class="project-band__image" src="{{ img_info.url }}" alt="{{ project.title }}">
-            {% endif %}
-          {% endwith %}
+          <img class="project-band__image" src="{{ project.image_url }}" alt="{{ project.title }}">
 
           <div class="project-band__controls" aria-label="Project info">
             <span class="project-band__category-tag">{{ project.category.name|default:"Civil Contracting" }}</span>

@@ -5,9 +5,10 @@ from django.urls import reverse
 class ProjectCategory(models.Model):
     name = models.CharField(max_length=120)
     slug = models.SlugField(unique=True)
+    order = models.PositiveIntegerField(default=0)
 
     class Meta:
-        ordering = ["name"]
+        ordering = ["order", "name"]
         verbose_name_plural = "project categories"
 
     def __str__(self):
@@ -42,7 +43,7 @@ class Project(models.Model):
     built_up_area = models.CharField(max_length=100, blank=True)
     scope_of_work = models.CharField(max_length=220, blank=True)
     architect_consultant = models.CharField(max_length=160, blank=True)
-    engineering_highlights = models.TextField(blank=True)
+    engineering_highlights = models.TextField(blank=True, help_text="One highlight bullet per line")
     sustainability = models.CharField(max_length=220, blank=True)
     is_featured = models.BooleanField(default=False)
     order = models.PositiveIntegerField(default=0)
@@ -55,6 +56,17 @@ class Project(models.Model):
 
     def get_absolute_url(self):
         return reverse("projects:detail", kwargs={"slug": self.slug})
+
+    @property
+    def image_url(self):
+        """Unified property that returns valid URL for template rendering."""
+        if self.cover_image:
+            try:
+                return self.cover_image.url
+            except ValueError:
+                pass
+        fallback_idx = (self.pk or 1) % len(self.FALLBACK_IMAGES)
+        return f"/static/{self.FALLBACK_IMAGES[fallback_idx]}"
 
     @property
     def cover_image_url(self):
@@ -90,7 +102,7 @@ class Project(models.Model):
     @property
     def highlights_list(self):
         if self.engineering_highlights:
-            lines = [line.strip().lstrip("-•* ") for line in self.engineering_highlights.split("\n") if line.strip()]
+            lines = [line.strip().lstrip("-•* ") for line in self.engineering_highlights.splitlines() if line.strip()]
             if lines:
                 return lines
         return [

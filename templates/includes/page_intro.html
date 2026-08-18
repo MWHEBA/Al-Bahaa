@@ -6,7 +6,7 @@
     <h1>
       {% if title_html %}
         {{ title_html|safe }}
-      {% else %}
+      {% elif title %}
         {{ title|linebreaksbr }}
       {% endif %}
     </h1>
@@ -17,7 +17,12 @@
       {% endif %}
     </div>
   </div>
-  {% if image %}
+  {% if image_url %}
+    <div class="page-intro__media">
+      <img src="{{ image_url }}" alt="">
+      <span class="page-intro__scroll-cue" aria-hidden="true"></span>
+    </div>
+  {% elif image %}
     <div class="page-intro__media">
       <img src="{% static image %}" alt="">
       <span class="page-intro__scroll-cue" aria-hidden="true"></span>

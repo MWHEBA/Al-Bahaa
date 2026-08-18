@@ -89,6 +89,8 @@ html {
   min-height: 100%;
   font-size: var(--font-size-root);
   text-size-adjust: 100%;
+  overflow-x: hidden;
+  max-width: 100%;
 }
 
 body {
@@ -99,6 +101,9 @@ body {
   font-family: var(--font-body);
   font-size: 1rem;
   line-height: 1.65;
+  overflow-x: hidden;
+  max-width: 100%;
+  width: 100%;
 }
 
 body[class$="-page"] {

@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}Company &amp; About Us | Al Bahaa Contracting (S.A.E){% endblock %}
+{% block title %}Company &amp; About Us | {{ site_settings.company_name|default:"Al Bahaa Contracting (S.A.E)" }}{% endblock %}
 {% block body_class %}about-page{% endblock %}
 
 {% block extra_css %}
@@ -9,56 +9,76 @@
 {% endblock %}
 
 {% block content %}
-  {% include "includes/page_intro.html" with eyebrow="About Al Bahaa" title_html="We like to build<br>things people use." description="An Egyptian joint stock company with more than 30 years of engineering leadership, Grade A infrastructure classification, and turnkey project delivery." image="img/about/Rectangle 21.png" %}
+  {% with hero=page_heroes.about %}
+    {% include "includes/page_intro.html" with eyebrow=hero.eyebrow|default:"About Al Bahaa" title_html=hero.title_html|default:"We like to build<br>things people use." description=hero.description|default:"An Egyptian joint stock company with more than 30 years of engineering leadership, Grade A infrastructure classification, and turnkey project delivery." image_url=hero.image_url %}
+  {% endwith %}
 
   <!-- Overview Section: Editorial Card overlapping Page Intro -->
   <section class="page-section page-section--wide about-overview" aria-label="Who we are and what we do">
     <div class="about-who">
-      <h2>WHO<br>WE ARE</h2>
+      <h2>{{ about_content.who_we_are_title|default:"WHO WE ARE"|linebreaksbr }}</h2>
       <span class="about-who__divider" aria-hidden="true"></span>
-      <p>Albahaa Contracting is an Egyptian joint stock company (S.A.E) with more than 30 years of engineering and contracting experience. Established in 1986, Albahaa began its initial projects under the ownership of Engineer Mohamed Bahaa El Din Abdalla before formally transitioning into a joint stock company on December 14, 2000.</p>
-      <p>As an active member of the Egyptian Federation for Construction and Building Contractors since 1994, Albahaa holds the prestigious <strong>Grade A</strong> classification in water and sewage infrastructure networks, delivering turnkey civil, residential, and infrastructure landmarks on schedule and within budget.</p>
+      <p>{{ about_content.who_we_are_p1|default:"Albahaa Contracting is an Egyptian joint stock company (S.A.E) with more than 30 years of engineering and contracting experience. Established in 1986, Albahaa began its initial projects under the ownership of Engineer Mohamed Bahaa El Din Abdalla before formally transitioning into a joint stock company on December 14, 2000." }}</p>
+      <p>{{ about_content.who_we_are_p2|default:"As an active member of the Egyptian Federation for Construction and Building Contractors since 1994, Albahaa holds the prestigious Grade A classification in water and sewage infrastructure networks, delivering turnkey civil, residential, and infrastructure landmarks on schedule and within budget." }}</p>
     </div>
 
     <!-- Corporate Credentials & Trust Stats -->
     <div class="about-credentials" aria-label="Company Key Credentials">
-      <div class="about-credential">
-        <span class="about-credential__value">30+</span>
-        <span class="about-credential__label">Years of Industry Experience (Est. 1986)</span>
-      </div>
-      <div class="about-credential">
-        <span class="about-credential__value">Grade A</span>
-        <span class="about-credential__label">Water &amp; Sewage Infrastructure Classification</span>
-      </div>
-      <div class="about-credential">
-        <span class="about-credential__value">1994</span>
-        <span class="about-credential__label">Active Member, Egyptian Federation of Contractors</span>
-      </div>
-      <div class="about-credential">
-        <span class="about-credential__value">S.A.E</span>
-        <span class="about-credential__label">Egyptian Joint Stock Enterprise (Inc. 2000)</span>
-      </div>
+      {% if statistics %}
+        {% for st in statistics %}
+          <div class="about-credential">
+            <span class="about-credential__value">{{ st.value }}</span>
+            <span class="about-credential__label">{{ st.label }}</span>
+          </div>
+        {% endfor %}
+      {% else %}
+        <div class="about-credential">
+          <span class="about-credential__value">30+</span>
+          <span class="about-credential__label">Years of Industry Experience (Est. 1986)</span>
+        </div>
+        <div class="about-credential">
+          <span class="about-credential__value">Grade A</span>
+          <span class="about-credential__label">Water &amp; Sewage Infrastructure Classification</span>
+        </div>
+        <div class="about-credential">
+          <span class="about-credential__value">1994</span>
+          <span class="about-credential__label">Active Member, Egyptian Federation of Contractors</span>
+        </div>
+        <div class="about-credential">
+          <span class="about-credential__value">S.A.E</span>
+          <span class="about-credential__label">Egyptian Joint Stock Enterprise (Inc. 2000)</span>
+        </div>
+      {% endif %}
     </div>
 
     <div class="about-what">
       <h2>WHAT WE DO</h2>
       <ul class="about-what__list">
-        <li>
-          <strong>Water &amp; Sewage Infrastructure (Grade A)</strong>
-          <span>Extensive municipal water transmission mains, sewage collector networks, pumping stations, and stormwater drainage systems engineered to exacting standards.</span>
-        </li>
-        <li>
-          <strong>Residential &amp; Commercial Developments</strong>
-          <span>Integrated residential communities, commercial hubs, and institutional headquarters delivered with disciplined execution and refined architectural finishes.</span>
-        </li>
-        <li>
-          <strong>Turnkey Civil &amp; General Contracting</strong>
-          <span>Heavy civil works, deep foundation earthworks, structural concrete, and logistical infrastructure built for enduring durability.</span>
-        </li>
-        <li>
-          <strong>Specialized MEP &amp; Value Engineering</strong>
-          <span>Advanced electro-mechanical installations, BIM coordination, stringent QA/QC protocols, and lifecycle cost optimization.</span>
-        </li>
+        {% if services %}
+          {% for s in services %}
+            <li>
+              <strong>{{ s.title }}</strong>
+              <span>{{ s.description }}</span>
+            </li>
+          {% endfor %}
+        {% else %}
+          <li>
+            <strong>Water &amp; Sewage Infrastructure (Grade A)</strong>
+            <span>Extensive municipal water transmission mains, sewage collector networks, pumping stations, and stormwater drainage systems engineered to exacting standards.</span>
+          </li>
+          <li>
+            <strong>Residential &amp; Commercial Developments</strong>
+            <span>Integrated residential communities, commercial hubs, and institutional headquarters delivered with disciplined execution and refined architectural finishes.</span>
+          </li>
+          <li>
+            <strong>Turnkey Civil &amp; General Contracting</strong>
+            <span>Heavy civil works, deep foundation earthworks, structural concrete, and logistical infrastructure built for enduring durability.</span>
+          </li>
+          <li>
+            <strong>Specialized MEP &amp; Value Engineering</strong>
+            <span>Advanced electro-mechanical installations, BIM coordination, stringent QA/QC protocols, and lifecycle cost optimization.</span>
+          </li>
+        {% endif %}
       </ul>
     </div>
   </section>
@@ -74,23 +94,31 @@
     </div>
 
     <div class="about-pillars__grid">
-      <article class="about-pillar">
-        <span class="about-pillar__num">01</span>
-        <h3>Technical Rigor &amp; QA/QC</h3>
-        <p>Leveraging state-of-the-art BIM modeling, advanced construction methods, and comprehensive QA/QC processes for flawless structural integrity.</p>
-      </article>
-
-      <article class="about-pillar">
-        <span class="about-pillar__num">02</span>
-        <h3>Safety &amp; Zero-Harm Protocol</h3>
-        <p>Enforcing uncompromising occupational health and safety protocols across all active job sites, safeguarding our workforce and communities.</p>
-      </article>
-
-      <article class="about-pillar">
-        <span class="about-pillar__num">03</span>
-        <h3>Sustainable Value Delivery</h3>
-        <p>Integrating resource-efficient materials, lifecycle value engineering, and resilient construction practices built to endure for generations.</p>
-      </article>
+      {% if pillars %}
+        {% for p in pillars %}
+          <article class="about-pillar">
+            <span class="about-pillar__num">{{ p.number }}</span>
+            <h3>{{ p.title }}</h3>
+            <p>{{ p.description }}</p>
+          </article>
+        {% endfor %}
+      {% else %}
+        <article class="about-pillar">
+          <span class="about-pillar__num">01</span>
+          <h3>Technical Rigor &amp; QA/QC</h3>
+          <p>Leveraging state-of-the-art BIM modeling, advanced construction methods, and comprehensive QA/QC processes for flawless structural integrity.</p>
+        </article>
+        <article class="about-pillar">
+          <span class="about-pillar__num">02</span>
+          <h3>Safety &amp; Zero-Harm Protocol</h3>
+          <p>Enforcing uncompromising occupational health and safety protocols across all active job sites, safeguarding our workforce and communities.</p>
+        </article>
+        <article class="about-pillar">
+          <span class="about-pillar__num">03</span>
+          <h3>Sustainable Value Delivery</h3>
+          <p>Integrating resource-efficient materials, lifecycle value engineering, and resilient construction practices built to endure for generations.</p>
+        </article>
+      {% endif %}
     </div>
   </section>
 
@@ -104,43 +132,43 @@
       </div>
     </div>
 
-    {% if team_members %}
-      <div class="about-team__dynamic-grid">
-        {% for member in team_members %}
-          <article class="about-team__member-card {% if forloop.first %}about-team__member-card--featured{% endif %}">
-            <div class="about-team__member-photo">
-              {% if member.photo %}
-                <img src="{{ member.photo.url }}" alt="{{ member.name }}">
-              {% else %}
-                <img src="{% static 'img/team/Rectangle 24.png' %}" alt="{{ member.name }}">
-              {% endif %}
-            </div>
-            <div class="about-team__member-info">
-              <h3>{{ member.name }}</h3>
-              <p class="about-team__member-role">{{ member.position }}</p>
-              {% if member.quote %}
-                <blockquote>"{{ member.quote }}"</blockquote>
-              {% endif %}
-            </div>
-          </article>
-        {% endfor %}
-      </div>
-    {% else %}
-      <div class="about-team__showcase">
-        <!-- Founder Heritage Card -->
-        <article class="about-founder-card">
-          <div class="about-founder-card__content">
-            <p class="about-founder-card__eyebrow">FOUNDING HERITAGE</p>
-            <h3>Eng. Mohamed Bahaa El Din Abdalla</h3>
-            <p class="about-founder-card__role">Founder &amp; Chairman</p>
-            <p class="about-founder-card__bio">
-              Beginning his career at Arab Contractors until 1978, he subsequently led regional operations as Regional Director in Medina at Aziz Company for Contracting and Industrial Investment. In 1986, he co-founded Albahaa Contracting, dedicating full executive leadership to establishing the company as one of Egypt's premier Grade A engineering and infrastructure enterprises.
-            </p>
-          </div>
-        </article>
+    <div class="about-team__showcase">
+      <!-- Founder Heritage Card -->
+      <article class="about-founder-card">
+        <div class="about-founder-card__content">
+          <p class="about-founder-card__eyebrow">FOUNDING HERITAGE</p>
+          <h3>{{ founder.name|default:"Eng. Mohamed Bahaa El Din Abdalla" }}</h3>
+          <p class="about-founder-card__role">{{ founder.position|default:"Founder & Chairman" }}</p>
+          <p class="about-founder-card__bio">
+            {{ founder.bio|default:"Beginning his career at Arab Contractors until 1978, he subsequently led regional operations as Regional Director in Medina at Aziz Company for Contracting and Industrial Investment. In 1986, he co-founded Albahaa Contracting, dedicating full executive leadership to establishing the company as one of Egypt's premier Grade A engineering and infrastructure enterprises." }}
+          </p>
+        </div>
+      </article>
 
-        <!-- Executive Board Members Grid -->
-        <div class="about-executives-grid">
+      <!-- Executive Board Members Grid -->
+      <div class="about-executives-grid">
+        {% if board_members %}
+          {% for bm in board_members %}
+            <article class="about-exec-card">
+              <div class="about-exec-card__image">
+                {% if bm.photo %}
+                  <img src="{{ bm.photo.url }}" alt="{{ bm.name }}">
+                {% elif forloop.first %}
+                  <img src="{% static 'img/team/ahmed-bahaa.jpg' %}" alt="{{ bm.name }}">
+                {% else %}
+                  <img src="{% static 'img/team/mahmoud-bahaa.jpg' %}" alt="{{ bm.name }}">
+                {% endif %}
+              </div>
+              <div class="about-exec-card__info">
+                <h3>{{ bm.name }}</h3>
+                <p class="about-exec-card__role">{{ bm.position }}</p>
+                {% if bm.quote %}
+                  <blockquote>"{{ bm.quote }}"</blockquote>
+                {% endif %}
+              </div>
+            </article>
+          {% endfor %}
+        {% else %}
           <article class="about-exec-card">
             <div class="about-exec-card__image">
               <img src="{% static 'img/team/ahmed-bahaa.jpg' %}" alt="Engineer Ahmed Bahaa">
@@ -162,9 +190,29 @@
               <blockquote>"Building enduring partnerships through operational precision and transparent corporate governance.”</blockquote>
             </div>
           </article>
-        </div>
+        {% endif %}
       </div>
-    {% endif %}
+
+      <!-- Additional General Team Members (if any) -->
+      {% if team_members %}
+        <div class="about-team__dynamic-grid" style="margin-top: 32px;">
+          {% for member in team_members %}
+            <article class="about-team__member-card">
+              <div class="about-team__member-photo">
+                <img src="{{ member.image_url }}" alt="{{ member.name }}">
+              </div>
+              <div class="about-team__member-info">
+                <h3>{{ member.name }}</h3>
+                <p class="about-team__member-role">{{ member.position }}</p>
+                {% if member.quote %}
+                  <blockquote>"{{ member.quote }}"</blockquote>
+                {% endif %}
+              </div>
+            </article>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
   </section>
 
   <!-- Testimonials Section -->
@@ -180,7 +228,7 @@
     <div class="about-testimonials__cards">
       {% if testimonials %}
         {% for item in testimonials %}
-          <article class="about-testimonial {% if forloop.counter == 3 %}about-testimonial--accent{% endif %}">
+          <article class="about-testimonial {% if item.is_accent or forloop.counter == 3 %}about-testimonial--accent{% endif %}">
             <blockquote>"{{ item.quote }}"</blockquote>
             <span class="about-testimonial__quote-mark" aria-hidden="true">”</span>
             <footer class="about-testimonial__author">
@@ -220,8 +268,8 @@
     </div>
   </section>
 
-  <!-- Client Logos Infinite Carousel Section -->
-  <section class="page-section page-section--wide about-clients" aria-label="Trusted Partners and Clients">
+    <!-- Client Logos Section (Unified Infinite Showcase) -->
+  <section class="page-section page-section--wide about-clients" aria-label="Institutional Partners and Client Logos">
     {% include "includes/client_logos.html" %}
   </section>
 
@@ -229,15 +277,14 @@
   <section class="page-section page-section--wide about-cta" aria-label="Work With Us">
     <div class="about-cta__inner">
       <div class="about-cta__content">
-        <p class="about-cta__eyebrow">START A PROJECT</p>
-        <h2>Ready to build something iconic?</h2>
-        <p class="about-cta__text">Consult with our multidisciplinary engineering teams to bring technical precision and turnkey execution to your next landmark development.</p>
+        <p class="about-cta__eyebrow">{{ about_content.cta_eyebrow|default:"START A PROJECT" }}</p>
+        <h2>{{ about_content.cta_title|default:"Ready to build something iconic?" }}</h2>
+        <p class="about-cta__text">{{ about_content.cta_description|default:"Consult with our multidisciplinary engineering teams to bring technical precision and turnkey execution to your next landmark development." }}</p>
       </div>
       <div class="about-cta__actions">
-        <a href="{% url 'core:contact' %}" class="button button--solid">Contact Our Team</a>
-        <a href="{% url 'projects:list' %}" class="button button--inverse">Explore Projects</a>
+        <a href="{{ about_content.cta_primary_btn_url|default:'/contact/' }}" class="button button--solid">{{ about_content.cta_primary_btn_text|default:"Contact Our Team" }}</a>
+        <a href="{{ about_content.cta_secondary_btn_url|default:'/projects/' }}" class="button button--inverse">{{ about_content.cta_secondary_btn_text|default:"Explore Projects" }}</a>
       </div>
     </div>
   </section>
 {% endblock %}
-

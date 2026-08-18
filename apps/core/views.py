@@ -1,5 +1,7 @@
+from django.core.mail import send_mail
+from django.db.models import Count, Q
 from django.http import JsonResponse
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import get_object_or_404, render
 from django.views import View
 from django.views.generic import TemplateView
 
@@ -7,13 +9,20 @@ from apps.news.models import Post
 from apps.projects.models import Project
 from .forms import ContactForm, JobApplicationForm
 from .models import (
+    AboutContent,
+    AboutStatistic,
+    CareerPillar,
+    CareerSettings,
     ClientLogo,
+    CompanyPillar,
     ContactMessage,
+    HomeContent,
     JobApplication,
     JobDepartment,
     JobOpening,
     ServiceItem,
     SiteSettings,
+    SpecializationItem,
     TeamMember,
     Testimonial,
 )
@@ -25,12 +34,25 @@ class HomeView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         featured_projects = list(Project.objects.select_related("category").all()[:6])
-        context["settings"] = SiteSettings.load()
+
+        specializations = list(SpecializationItem.objects.filter(is_active=True))
+        # Format for JS consumption
+        specializations_json = [
+            {
+                "discipline": s.discipline,
+                "title": s.title,
+                "description": s.description,
+            }
+            for s in specializations
+        ]
+
+        context["home_content"] = HomeContent.load()
+        context["specializations"] = specializations
+        context["specializations_json"] = specializations_json
         context["featured_projects"] = featured_projects
         context["featured_project"] = featured_projects[0] if featured_projects else None
-        context["testimonials"] = Testimonial.objects.filter(is_featured=True)[:3]
-        context["clients"] = ClientLogo.objects.all()[:12]
-        context["services"] = ServiceItem.objects.all()[:4]
+        context["testimonials"] = Testimonial.objects.filter(show_on_home=True)[:3]
+        context["clients"] = ClientLogo.objects.filter(show_on_home=True, is_active=True)[:12]
         context["latest_posts"] = list(Post.objects.select_related("category").filter(is_published=True)[:3])
         return context
 
@@ -40,10 +62,20 @@ class AboutView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["team_members"] = TeamMember.objects.all()
-        context["testimonials"] = Testimonial.objects.filter(is_featured=True)[:3]
-        context["clients"] = ClientLogo.objects.all()[:12]
-        context["settings"] = SiteSettings.load()
+        context["about_content"] = AboutContent.load()
+        context["statistics"] = AboutStatistic.objects.filter(is_active=True)
+        context["pillars"] = CompanyPillar.objects.filter(is_active=True)
+        context["services"] = ServiceItem.objects.filter(is_active=True)
+
+        founder = TeamMember.objects.filter(member_type="founder", is_active=True).first()
+        board_members = TeamMember.objects.filter(member_type="executive", is_active=True)
+        general_members = TeamMember.objects.filter(member_type="general", is_active=True)
+
+        context["founder"] = founder
+        context["board_members"] = board_members
+        context["team_members"] = general_members
+        context["testimonials"] = Testimonial.objects.filter(show_on_about=True)[:3]
+        context["clients"] = ClientLogo.objects.filter(show_on_about=True, is_active=True)[:12]
         return context
 
 
@@ -52,18 +84,11 @@ class CareersView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        departments = list(JobDepartment.objects.all())
-        all_active_jobs = JobOpening.objects.filter(is_active=True).select_related("department")
+        departments_qs = JobDepartment.objects.annotate(
+            active_jobs_count=Count("jobs", filter=Q(jobs__is_active=True))
+        )
 
-        # Calculate counts per department
-        departments_with_counts = []
-        for dept in departments:
-            count = all_active_jobs.filter(department=dept).count()
-            departments_with_counts.append({
-                "name": dept.name,
-                "slug": dept.slug,
-                "count": count,
-            })
+        all_active_jobs = JobOpening.objects.filter(is_active=True).select_related("department")
 
         selected_dept_slug = self.request.GET.get("department", "all")
         if selected_dept_slug and selected_dept_slug != "all":
@@ -72,6 +97,17 @@ class CareersView(TemplateView):
             selected_dept_slug = "all"
             jobs = all_active_jobs
 
+        departments_with_counts = [
+            {
+                "name": dept.name,
+                "slug": dept.slug,
+                "count": dept.active_jobs_count,
+            }
+            for dept in departments_qs
+        ]
+
+        context["career_settings"] = CareerSettings.load()
+        context["pillars"] = CareerPillar.objects.filter(is_active=True)
         context["total_all_jobs_count"] = all_active_jobs.count()
         context["selected_department"] = selected_dept_slug
         context["departments_with_counts"] = departments_with_counts
@@ -90,7 +126,6 @@ class JobDetailView(View):
         )
 
     def get_context_data(self, job, form=None, application_success=False):
-        # Previous and Next job navigation
         prev_job = (
             JobOpening.objects.filter(is_active=True, order__lt=job.order).order_by("-order", "-id").first()
             or JobOpening.objects.filter(is_active=True, id__lt=job.id).order_by("-id").first()
@@ -100,7 +135,6 @@ class JobDetailView(View):
             or JobOpening.objects.filter(is_active=True, id__gt=job.id).order_by("id").first()
         )
 
-        # Related jobs in the same department (or other departments)
         related_qs = JobOpening.objects.filter(is_active=True).exclude(id=job.id).select_related("department")
         if job.department:
             same_dept = list(related_qs.filter(department=job.department)[:3])
@@ -132,6 +166,21 @@ class JobDetailView(View):
             app_instance = form.save(commit=False)
             app_instance.job = job
             app_instance.save()
+
+            # Optional Notification Email
+            settings_obj = SiteSettings.load()
+            dest_email = settings_obj.email_careers or "careers@albahaacontracting.com"
+            try:
+                send_mail(
+                    subject=f"[New Application] {app_instance.full_name} - {job.title}",
+                    message=f"New candidate applied for {job.title}.\nName: {app_instance.full_name}\nEmail: {app_instance.email}\nPhone: {app_instance.phone}\nCover Note: {app_instance.cover_note}",
+                    from_email=None,
+                    recipient_list=[dest_email],
+                    fail_silently=True,
+                )
+            except Exception:
+                pass
+
             return render(
                 request,
                 self.template_name,
@@ -159,10 +208,28 @@ class ContactView(View):
 
     def post(self, request):
         form = ContactForm(request.POST)
-        is_ajax = request.headers.get("x-requested-with") == "XMLHttpRequest" or "application/json" in request.headers.get("accept", "")
+        is_ajax = (
+            request.headers.get("x-requested-with") == "XMLHttpRequest"
+            or "application/json" in request.headers.get("accept", "")
+        )
 
         if form.is_valid():
-            form.save()
+            msg_instance = form.save()
+
+            # Optional Notification Email
+            settings_obj = SiteSettings.load()
+            dest_email = settings_obj.email_tenders if msg_instance.inquiry_type == "tenders" else settings_obj.email_general
+            try:
+                send_mail(
+                    subject=f"[New Inquiry] {msg_instance.name} ({msg_instance.get_inquiry_type_display()})",
+                    message=f"New contact inquiry received:\nFrom: {msg_instance.name}\nCompany: {msg_instance.company}\nEmail: {msg_instance.email}\nPhone: {msg_instance.phone}\nType: {msg_instance.get_inquiry_type_display()}\n\nMessage:\n{msg_instance.message}",
+                    from_email=None,
+                    recipient_list=[dest_email or "info@albahaacontracting.com"],
+                    fail_silently=True,
+                )
+            except Exception:
+                pass
+
             if is_ajax:
                 return JsonResponse({
                     "success": True,

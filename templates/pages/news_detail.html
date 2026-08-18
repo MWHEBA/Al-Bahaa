@@ -1,14 +1,12 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}
-  {% if is_demo %}
-    {{ article.title }} | Al Bahaa Engineering News
-  {% else %}
-    {{ article.title }} | Al Bahaa Engineering News
-  {% endif %}
-{% endblock %}
-
+{% block title %}{{ article.title }} | News | {{ site_settings.company_name|default:"Al Bahaa Contracting" }}{% endblock %}
+{% block meta_description %}{{ article.excerpt|default:article.title|truncatewords:25 }}{% endblock %}
+{% block og_title %}{{ article.title }} | Al Bahaa Contracting{% endblock %}
+{% block og_description %}{{ article.excerpt|default:article.title|truncatewords:25 }}{% endblock %}
+{% block og_image %}{% if article.cover_image %}{{ request.scheme }}://{{ request.get_host }}{{ article.cover_image.url }}{% endif %}{% endblock %}
+{% block og_type %}article{% endblock %}
 {% block body_class %}news-detail-page{% endblock %}
 
 {% block extra_css %}
@@ -24,17 +22,17 @@
       <a href="{% url 'news:list' %}">News</a>
       <span class="news-detail-breadcrumb__sep">/</span>
       <span class="news-detail-breadcrumb__current">
-        {% if is_demo %}{{ article.category_name }}{% else %}{{ article.category.name|default:"Report" }}{% endif %}
+        {{ article.category.name|default:"Report" }}
       </span>
     </nav>
 
     <div class="news-detail-header__meta">
       <span class="news-detail-header__category">
-        {% if is_demo %}{{ article.category_name }}{% else %}{{ article.category.name|default:"Infrastructure" }}{% endif %}
+        {{ article.category.name|default:"Infrastructure" }}
       </span>
       <span class="news-detail-header__dot">•</span>
-      <time datetime="{% if not is_demo %}{{ article.published_at|date:'Y-m-d' }}{% else %}2026-10-15{% endif %}">
-        {% if is_demo %}{{ article.published_at }}{% else %}{{ article.published_at|date:"F d, Y" }}{% endif %}
+      <time datetime="{{ article.published_at|date:'Y-m-d' }}">
+        {{ article.published_at|date:"F d, Y" }}
       </time>
     </div>
 
@@ -44,48 +42,26 @@
   <!-- Large Featured Cover Image -->
   <section class="page-section page-section--wide news-detail-media">
     <div class="news-detail-media__wrapper">
-      {% if is_demo %}
-        <img src="{% static article.cover_image %}" alt="{{ article.title }}">
-      {% else %}
-        {% if article.cover_image %}
-          <img src="{{ article.cover_image.url }}" alt="{{ article.title }}">
-        {% else %}
-          <img src="{% static 'img/news/news-article1-recovered.png' %}" alt="{{ article.title }}">
-        {% endif %}
-      {% endif %}
+      <img src="{{ article.image_url }}" alt="{{ article.title }}">
     </div>
   </section>
 
   <!-- Main Article Body & Technical Sidebar -->
   <section class="page-section page-section--wide news-detail-layout">
     <article class="news-detail-content">
-      <p class="news-detail-content__lead">
-        {% if is_demo %}
+      {% if article.excerpt %}
+        <p class="news-detail-content__lead">
           {{ article.excerpt }}
-        {% else %}
-          {{ article.excerpt|default:article.content|truncatewords:40 }}
-        {% endif %}
-      </p>
+        </p>
+      {% endif %}
 
       <div class="news-detail-content__body">
-        {% if is_demo %}
-          <p>{{ article.content|linebreaks }}</p>
-          
-          <blockquote class="news-detail-quote">
-            <p>"Our engineering benchmark is zero-defect execution. From high-salinity geotechnical works to complex electromechanical coordination, Al Bahaa delivers enduring infrastructure landmarks on schedule and within budget."</p>
-            <footer>— Al Bahaa Technical Office &amp; Engineering Supervision</footer>
-          </blockquote>
-
-          <h2>Engineering Methodology &amp; Execution</h2>
-          <p>The project execution strictly follows the Quality Assurance and Quality Control (QA/QC) framework accredited by the Egyptian Federation for Construction. All structural pours, material submittals, and pressure testing cycles undergo multi-tier inspection protocols before commissioning.</p>
-        {% else %}
-          {{ article.content|linebreaks }}
-        {% endif %}
+        {{ article.content|linebreaks }}
       </div>
 
       <!-- Article Action & Back to News -->
       <div class="news-detail-content__footer">
-        <a href="{% url 'news:list' %}" class="button button--solid">← Back to All News</a>
+        <a href="{% url 'news:list' %}" class="button button--solid">&larr; Back to All News</a>
         <a href="{% url 'projects:list' %}" class="button">Explore Our Projects</a>
       </div>
     </article>
@@ -117,19 +93,11 @@
             {% for item in recent_articles %}
               <a href="{% url 'news:detail' slug=item.slug %}" class="news-sidebar-recent-item">
                 <div class="news-sidebar-recent-thumb">
-                  {% if is_demo %}
-                    <img src="{% static item.cover_image %}" alt="{{ item.title }}">
-                  {% else %}
-                    {% if item.cover_image %}
-                      <img src="{{ item.cover_image.url }}" alt="{{ item.title }}">
-                    {% else %}
-                      <img src="{% static 'img/news/news-article1-recovered.png' %}" alt="{{ item.title }}">
-                    {% endif %}
-                  {% endif %}
+                  <img src="{{ item.image_url }}" alt="{{ item.title }}">
                 </div>
                 <div class="news-sidebar-recent-info">
                   <time class="news-sidebar-recent-date">
-                    {% if is_demo %}{{ item.published_at }}{% else %}{{ item.published_at|date:"M d, Y" }}{% endif %}
+                    {{ item.published_at|date:"M d, Y" }}
                   </time>
                   <h4 class="news-sidebar-recent-title">{{ item.title }}</h4>
                 </div>
@@ -169,35 +137,29 @@
   </section>
 
   <!-- Related News Section -->
-  <section class="page-section page-section--wide news-detail-related" aria-label="Related Updates">
-    {% include "includes/section_heading.html" with eyebrow="MORE STORIES." title="Related news." %}
+  {% if related_articles %}
+    <section class="page-section page-section--wide news-detail-related" aria-label="Related Updates">
+      {% include "includes/section_heading.html" with eyebrow="MORE STORIES." title="Related news." %}
 
-    <div class="news-related-grid">
-      {% for item in related_articles %}
-        <article class="news-related-card" data-url="{% url 'news:detail' slug=item.slug %}">
-          <a class="news-related-card__image" href="{% url 'news:detail' slug=item.slug %}" tabindex="-1" aria-hidden="true">
-            {% if is_demo %}
-              <img src="{% static item.cover_image %}" alt="{{ item.title }}">
-            {% else %}
-              {% if item.cover_image %}
-                <img src="{{ item.cover_image.url }}" alt="{{ item.title }}">
-              {% else %}
-                <img src="{% static 'img/news/news-article2-recovered.png' %}" alt="{{ item.title }}">
-              {% endif %}
-            {% endif %}
-          </a>
-          <div class="news-related-card__body">
-            <div class="news-related-card__meta">
-              <span>{% if is_demo %}{{ item.category_name }}{% else %}{{ item.category.name|default:"News" }}{% endif %}</span>
+      <div class="news-related-grid">
+        {% for item in related_articles %}
+          <article class="news-related-card" data-url="{% url 'news:detail' slug=item.slug %}">
+            <a class="news-related-card__image" href="{% url 'news:detail' slug=item.slug %}" tabindex="-1" aria-hidden="true">
+              <img src="{{ item.image_url }}" alt="{{ item.title }}">
+            </a>
+            <div class="news-related-card__body">
+              <div class="news-related-card__meta">
+                <span>{{ item.category.name|default:"News" }}</span>
+              </div>
+              <h3 class="news-related-card__title"><a class="news-related-card__title-link" href="{% url 'news:detail' slug=item.slug %}">{{ item.title }}</a></h3>
+              <p>{{ item.excerpt|default:item.content|truncatewords:16 }}</p>
+              <a href="{% url 'news:detail' slug=item.slug %}" class="button button--text button--arrow news-related-card__link">Read Article</a>
             </div>
-            <h3 class="news-related-card__title"><a class="news-related-card__title-link" href="{% url 'news:detail' slug=item.slug %}">{{ item.title }}</a></h3>
-            <p>{{ item.excerpt|truncatewords:16 }}</p>
-            <a href="{% url 'news:detail' slug=item.slug %}" class="button button--text button--arrow news-related-card__link">Read Article</a>
-          </div>
-        </article>
-      {% endfor %}
-    </div>
-  </section>
+          </article>
+        {% endfor %}
+      </div>
+    </section>
+  {% endif %}
 {% endblock %}
 
 {% block extra_js %}

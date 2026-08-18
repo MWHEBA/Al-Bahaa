@@ -1,6 +1,10 @@
 {% load static %}
 <aside class="quote-box">
   <span class="quote-box__mark" aria-hidden="true">&rdquo;</span>
-  <img class="quote-box__logo" src="{% static 'img/branding/AlBahaa logo - square.svg' %}" alt="">
-  <p>Established in 1986, AlBahaa delivers integrated contracting, finishing, and construction solutions across Egypt.</p>
+  {% if site_settings.footer_logo %}
+  <img class="quote-box__logo" src="{{ site_settings.footer_logo.url }}" alt="{{ site_settings.company_name|default:'Al Bahaa Contracting' }}">
+  {% else %}
+  <img class="quote-box__logo" src="{% static 'img/branding/AlBahaa logo - square.svg' %}" alt="{{ site_settings.company_name|default:'Al Bahaa Contracting' }}">
+  {% endif %}
+  <p>{{ site_settings.footer_quote|default:'Established in 1986, AlBahaa delivers integrated contracting, finishing, and construction solutions across Egypt.' }}</p>
 </aside>

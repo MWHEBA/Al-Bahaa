@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}News & Engineering Insights | Al Bahaa Contracting (S.A.E){% endblock %}
+{% block title %}News &amp; Engineering Insights | {{ site_settings.company_name|default:"Al Bahaa Contracting (S.A.E)" }}{% endblock %}
 {% block body_class %}news-page{% endblock %}
 
 {% block extra_css %}
@@ -9,7 +9,9 @@
 {% endblock %}
 
 {% block content %}
-  {% include "includes/page_intro.html" with eyebrow="NEWS &amp; INSIGHTS" title_html="Updated news." description="Engineering milestones and technical updates across landmark projects." image="img/news/Rectangle 24 copy 5.png" %}
+  {% with hero=page_heroes.news %}
+    {% include "includes/page_intro.html" with eyebrow=hero.eyebrow|default:"NEWS &amp; INSIGHTS" title_html=hero.title_html|default:"Updated news." description=hero.description|default:"Engineering milestones and technical updates across landmark projects." image_url=hero.image_url %}
+  {% endwith %}
 
   <section class="page-content page-content--wide news-container" id="news-ajax-container" aria-label="News">
     <!-- Category Filter Navigation (100% Identical to Projects) -->
@@ -18,66 +20,35 @@
         href="{% url 'news:list' %}"
         class="projects-filter-btn {% if selected_category == 'all' or not selected_category %}is-active{% endif %}"
       >
-        All News <span class="projects-filter-count">({{ total_posts_count|default:4 }})</span>
+        All News <span class="projects-filter-count">({{ total_posts_count|default:0 }})</span>
       </a>
-      {% if is_demo %}
-        {% for cat in demo_categories %}
-          <a
-            href="{% url 'news:list' %}?category={{ cat.slug }}"
-            class="projects-filter-btn {% if selected_category == cat.slug %}is-active{% endif %}"
-          >
-            {{ cat.name }} <span class="projects-filter-count">({{ cat.posts_count }})</span>
-          </a>
-        {% endfor %}
-      {% else %}
-        {% for cat in categories %}
-          <a
-            href="{% url 'news:list' %}?category={{ cat.slug }}"
-            class="projects-filter-btn {% if selected_category == cat.slug %}is-active{% endif %}"
-          >
-            {{ cat.name }} <span class="projects-filter-count">({{ cat.posts_count }})</span>
-          </a>
-        {% endfor %}
-      {% endif %}
+      {% for cat in categories %}
+        <a
+          href="{% url 'news:list' %}?category={{ cat.slug }}"
+          class="projects-filter-btn {% if selected_category == cat.slug %}is-active{% endif %}"
+        >
+          {{ cat.name }} <span class="projects-filter-count">({{ cat.posts_count }})</span>
+        </a>
+      {% endfor %}
     </nav>
 
     <!-- News Articles List -->
     <div class="news-listing__articles">
       {% for article in articles %}
         <article class="news-row {% if article.reverse %}news-row--reverse{% endif %}" data-url="{% url 'news:detail' slug=article.slug %}">
-          {% if is_demo %}
-            <a class="news-row__media" href="{% url 'news:detail' slug=article.slug %}" tabindex="-1" aria-hidden="true">
-              <img class="news-row__image" src="{% static article.cover_image %}" alt="{{ article.title }}">
-            </a>
-            <div class="news-row__content">
-              <div class="news-row__meta">
-                <span class="news-row__category">{{ article.category_name }}</span>
-                <span class="news-row__divider">•</span>
-                <time datetime="2026">{{ article.published_at }}</time>
-              </div>
-              <h2 class="news-row__title"><a class="news-row__title-link" href="{% url 'news:detail' slug=article.slug %}">{{ article.title }}</a></h2>
-              <p>{{ article.excerpt }}</p>
-              <a href="{% url 'news:detail' slug=article.slug %}" class="button button--text button--arrow news-row__button">Read Article</a>
+          <a class="news-row__media" href="{% url 'news:detail' slug=article.slug %}" tabindex="-1" aria-hidden="true">
+            <img class="news-row__image" src="{{ article.image_url }}" alt="{{ article.title }}">
+          </a>
+          <div class="news-row__content">
+            <div class="news-row__meta">
+              <span class="news-row__category">{{ article.category.name|default:"General" }}</span>
+              <span class="news-row__divider">•</span>
+              <time datetime="{{ article.published_at|date:'Y-m-d' }}">{{ article.published_at|date:"M d, Y" }}</time>
             </div>
-          {% else %}
-            <a class="news-row__media" href="{% url 'news:detail' slug=article.slug %}" tabindex="-1" aria-hidden="true">
-              {% if article.cover_image %}
-                <img class="news-row__image" src="{{ article.cover_image.url }}" alt="{{ article.title }}">
-              {% else %}
-                <img class="news-row__image" src="{% static 'img/news/news-article1-recovered.png' %}" alt="{{ article.title }}">
-              {% endif %}
-            </a>
-            <div class="news-row__content">
-              <div class="news-row__meta">
-                <span class="news-row__category">{{ article.category.name|default:"General" }}</span>
-                <span class="news-row__divider">•</span>
-                <time datetime="{{ article.published_at|date:'Y-m-d' }}">{{ article.published_at|date:"M d, Y" }}</time>
-              </div>
-              <h2 class="news-row__title"><a class="news-row__title-link" href="{% url 'news:detail' slug=article.slug %}">{{ article.title }}</a></h2>
-              <p>{{ article.excerpt|default:article.content|truncatewords:32 }}</p>
-              <a href="{% url 'news:detail' slug=article.slug %}" class="button button--text button--arrow news-row__button">Read Article</a>
-            </div>
-          {% endif %}
+            <h2 class="news-row__title"><a class="news-row__title-link" href="{% url 'news:detail' slug=article.slug %}">{{ article.title }}</a></h2>
+            <p>{{ article.excerpt|default:article.content|truncatewords:32 }}</p>
+            <a href="{% url 'news:detail' slug=article.slug %}" class="button button--text button--arrow news-row__button">Read Article</a>
+          </div>
         </article>
       {% empty %}
         <div class="news-empty">

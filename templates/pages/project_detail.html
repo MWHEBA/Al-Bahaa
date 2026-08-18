@@ -1,7 +1,11 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}{{ project.title }} | Case Study | Al Bahaa Contracting{% endblock %}
+{% block title %}{{ project.title }} | Case Study | {{ site_settings.company_name|default:"Al Bahaa Contracting" }}{% endblock %}
+{% block meta_description %}{{ project.short_description|default:project.title|truncatewords:25 }}{% endblock %}
+{% block og_title %}{{ project.title }} | Al Bahaa Contracting{% endblock %}
+{% block og_description %}{{ project.short_description|default:project.title|truncatewords:25 }}{% endblock %}
+{% block og_image %}{% if project.cover_image %}{{ request.scheme }}://{{ request.get_host }}{{ project.cover_image.url }}{% endif %}{% endblock %}
 {% block body_class %}project-detail-page{% endblock %}
 
 {% block extra_css %}
@@ -30,13 +34,7 @@
     </div>
 
     <div class="page-intro__media">
-      {% with img_info=project.display_image %}
-        {% if img_info.is_static %}
-          <img src="{% static img_info.url %}" alt="{{ project.title }}">
-        {% else %}
-          <img src="{{ img_info.url }}" alt="{{ project.title }}">
-        {% endif %}
-      {% endwith %}
+      <img src="{{ project.image_url }}" alt="{{ project.title }}">
       <span class="page-intro__scroll-cue" aria-hidden="true"></span>
     </div>
   </section>
@@ -85,7 +83,7 @@
         <!-- Section 1: Overview & Vision -->
         <article class="narrative-block">
           <p class="section-kicker">01. PROJECT OVERVIEW</p>
-          <h2 class="narrative-heading">Architectural Concept & Delivery Scope</h2>
+          <h2 class="narrative-heading">Architectural Concept &amp; Delivery Scope</h2>
           <div class="narrative-content">
             {% for paragraph in project.description_paragraphs %}
               <p>{{ paragraph }}</p>
@@ -96,43 +94,43 @@
         <!-- Section 2: Technical Highlights -->
         <article class="narrative-block">
           <p class="section-kicker">02. ENGINEERING HIGHLIGHTS</p>
-          <h2 class="narrative-heading">Key Technical Disciplines & Innovations</h2>
+          <h2 class="narrative-heading">Key Technical Disciplines &amp; Innovations</h2>
           
-          <div class="highlights-card-grid">
-            {% for highlight in project.highlights_list %}
-              <div class="highlight-card">
-                <div class="highlight-card__header">
-                  <span class="highlight-card__num">{{ forloop.counter|stringformat:"02d" }}</span>
-                  <span class="highlight-card__line" aria-hidden="true"></span>
-                </div>
-                <p class="highlight-card__text">{{ highlight }}</p>
-              </div>
+          <ul class="highlight-bullet-list">
+            {% for hl in project.highlights_list %}
+              <li>
+                <span class="highlight-bullet-icon" aria-hidden="true">■</span>
+                <span>{{ hl }}</span>
+              </li>
             {% endfor %}
-          </div>
+          </ul>
         </article>
 
-        <!-- Section 3: Sustainability & Environment -->
+        <!-- Section 3: Sustainability -->
         {% if project.sustainability %}
           <article class="narrative-block">
-            <p class="section-kicker">03. SUSTAINABILITY & PERFORMANCE</p>
-            <div class="sustainability-box">
-              <h3 class="sustainability-heading">Environmental & Energy Standards</h3>
-              <p class="sustainability-text">{{ project.sustainability }}</p>
+            <p class="section-kicker">03. SUSTAINABILITY &amp; IMPACT</p>
+            <h2 class="narrative-heading">Environmental &amp; Community Value</h2>
+            <div class="narrative-content">
+              <p>{{ project.sustainability }}</p>
             </div>
           </article>
         {% endif %}
+
       </div>
 
-      <!-- Right Column: Sticky Project Data Sheet Card -->
+      <!-- Right Column: Case Study Data Sheet Sidebar -->
       <aside class="project-sidebar">
         <div class="project-spec-card">
-          <h3 class="spec-card-title">Project Data Sheet</h3>
-          <span class="spec-card-divider" aria-hidden="true"></span>
-          
+          <div class="spec-card-header">
+            <span class="spec-kicker">PROJECT DATA SHEET</span>
+            <h3 class="spec-title">Executive Specifications</h3>
+          </div>
+
           <dl class="spec-list">
             {% if project.client_name %}
               <div class="spec-row">
-                <dt>Client</dt>
+                <dt>Client / Developer</dt>
                 <dd>{{ project.client_name }}</dd>
               </div>
             {% endif %}
@@ -201,7 +199,7 @@
     <section class="page-content page-content--wide project-gallery-section" aria-label="Visual Gallery">
       <div class="gallery-header">
         <p class="section-kicker">SITE DOCUMENTATION</p>
-        <h2>Project Gallery & Execution Details</h2>
+        <h2>Project Gallery &amp; Execution Details</h2>
       </div>
       <div class="gallery-grid">
         {% for img_obj in project.images.all %}
@@ -221,20 +219,14 @@
     <section class="page-content page-content--wide project-related-section" aria-label="Related Projects">
       <div class="related-header">
         <p class="section-kicker">RELATED WORK</p>
-        <h2>Related Projects & Developments</h2>
+        <h2>Related Projects &amp; Developments</h2>
       </div>
       <div class="related-grid">
         {% for rel in related_projects %}
           <a href="{% url 'projects:detail' slug=rel.slug %}" class="related-card-thumb">
-            {% with rel_img=rel.display_image %}
-              <div class="related-thumb-media">
-                {% if rel_img.is_static %}
-                  <img src="{% static rel_img.url %}" alt="{{ rel.title }}">
-                {% else %}
-                  <img src="{{ rel_img.url }}" alt="{{ rel.title }}">
-                {% endif %}
-              </div>
-            {% endwith %}
+            <div class="related-thumb-media">
+              <img src="{{ rel.image_url }}" alt="{{ rel.title }}">
+            </div>
             <div class="related-thumb-info">
               <span class="related-thumb-sector">{{ rel.category.name|default:"Civil" }}{% if rel.location %} &bull; {{ rel.location }}{% endif %}</span>
               <h3 class="related-thumb-title">{{ rel.title }}</h3>

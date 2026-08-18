@@ -9,7 +9,7 @@
         {% if clients %}
           {% for client in clients %}
             <div class="client-showcase__item">
-              <img src="{{ client.logo_image.url }}" alt="{{ client.name }}">
+              <img src="{{ client.image_url }}" alt="{{ client.name }}">
             </div>
           {% endfor %}
         {% else %}
@@ -31,7 +31,7 @@
         {% if clients %}
           {% for client in clients %}
             <div class="client-showcase__item">
-              <img src="{{ client.logo_image.url }}" alt="{{ client.name }}">
+              <img src="{{ client.image_url }}" alt="{{ client.name }}">
             </div>
           {% endfor %}
         {% else %}

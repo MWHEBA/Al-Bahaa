@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}Careers | Al Bahaa Contracting{% endblock %}
+{% block title %}Careers | {{ site_settings.company_name|default:"Al Bahaa Contracting" }}{% endblock %}
 {% block body_class %}careers-page{% endblock %}
 
 {% block extra_css %}
@@ -9,11 +9,13 @@
 {% endblock %}
 
 {% block content %}
-  {% include "includes/page_intro.html" with eyebrow="Careers" title_html="Build what matters." image="img/projects/projects-band-1-recovered.png" %}
+  {% with hero=page_heroes.careers %}
+    {% include "includes/page_intro.html" with eyebrow=hero.eyebrow|default:"Careers" title_html=hero.title_html|default:"Build what matters." description=hero.description|default:"Join our multidisciplinary engineering teams to build landmark infrastructure projects across Egypt." image_url=hero.image_url %}
+  {% endwith %}
 
   <section class="page-section page-section--wide careers-intro" aria-label="Why Join Us">
     <div class="section-heading careers-intro__header">
-      <p class="section-heading__eyebrow">OUR CULTURE & VALUES.</p>
+      <p class="section-heading__eyebrow">OUR CULTURE &amp; VALUES.</p>
       <div class="section-heading__row">
         <h2>A workplace built on integrity, safety, and engineering excellence.</h2>
         <span class="section-heading__rule" aria-hidden="true"></span>
@@ -21,23 +23,31 @@
     </div>
 
     <div class="careers-pillars">
-      <article class="careers-pillar">
-        <span class="careers-pillar__num">01</span>
-        <h3>Engineering Precision</h3>
-        <p>We take pride in executing complex engineering and construction challenges with uncompromising standards, modern methodologies, and meticulous attention to detail.</p>
-      </article>
-
-      <article class="careers-pillar">
-        <span class="careers-pillar__num">02</span>
-        <h3>Safety & Culture</h3>
-        <p>People come first. We maintain strict occupational health and safety protocols across all job sites while fostering an inclusive, collaborative team culture.</p>
-      </article>
-
-      <article class="careers-pillar">
-        <span class="careers-pillar__num">03</span>
-        <h3>Career Growth</h3>
-        <p>We invest in continuous learning, digital workflows, and leadership pathways to empower our professionals to build long-term, fulfilling careers.</p>
-      </article>
+      {% if pillars %}
+        {% for p in pillars %}
+          <article class="careers-pillar">
+            <span class="careers-pillar__num">{{ p.number }}</span>
+            <h3>{{ p.title }}</h3>
+            <p>{{ p.description }}</p>
+          </article>
+        {% endfor %}
+      {% else %}
+        <article class="careers-pillar">
+          <span class="careers-pillar__num">01</span>
+          <h3>Engineering Precision</h3>
+          <p>We take pride in executing complex engineering and construction challenges with uncompromising standards, modern methodologies, and meticulous attention to detail.</p>
+        </article>
+        <article class="careers-pillar">
+          <span class="careers-pillar__num">02</span>
+          <h3>Safety &amp; Culture</h3>
+          <p>People come first. We maintain strict occupational health and safety protocols across all job sites while fostering an inclusive, collaborative team culture.</p>
+        </article>
+        <article class="careers-pillar">
+          <span class="careers-pillar__num">03</span>
+          <h3>Career Growth</h3>
+          <p>We invest in continuous learning, digital workflows, and leadership pathways to empower our professionals to build long-term, fulfilling careers.</p>
+        </article>
+      {% endif %}
     </div>
   </section>
 
@@ -121,13 +131,13 @@
   <section class="page-section page-section--wide careers-spontaneous" aria-label="General Application">
     <div class="careers-spontaneous__card">
       <div class="careers-spontaneous__content">
-        <p class="careers-spontaneous__eyebrow">SPONTANEOUS APPLICATION</p>
-        <h2>Didn't find the right role for you?</h2>
-        <p>We are constantly seeking passionate engineers, BIM coordinators, and construction managers. Send your CV and portfolio directly to our recruitment team, and we will contact you when a fitting opportunity opens.</p>
+        <p class="careers-spontaneous__eyebrow">{{ career_settings.spontaneous_eyebrow|default:"SPONTANEOUS APPLICATION" }}</p>
+        <h2>{{ career_settings.spontaneous_title|default:"Didn't find the right role for you?" }}</h2>
+        <p>{{ career_settings.spontaneous_description|default:"We are constantly seeking passionate engineers, BIM coordinators, and construction managers. Send your CV and portfolio directly to our recruitment team, and we will contact you when a fitting opportunity opens." }}</p>
       </div>
       <div class="careers-spontaneous__action">
-        <a href="mailto:careers@albahaacontracting.com?subject=Spontaneous%20Application%20-%20Al%20Bahaa" class="button button--inverse">
-          Send Your CV
+        <a href="mailto:{{ career_settings.spontaneous_email|default:'careers@albahaacontracting.com' }}?subject=Spontaneous%20Application%20-%20Al%20Bahaa" class="button button--inverse">
+          {{ career_settings.spontaneous_btn_text|default:"Send Your CV" }}
         </a>
       </div>
     </div>

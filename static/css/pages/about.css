@@ -256,61 +256,31 @@
 }
 
 /* --------------------------------------------------------------------------
-   6. Institutional Client Logos
+   6. Institutional Client Logos Grid (Original Static Layout)
    -------------------------------------------------------------------------- */
 .about-clients {
-  margin-top: clamp(80px, 9vw, 120px);
+  margin-top: clamp(80px, 9vw, 130px);
 }
 
-.about-clients__header {
-  text-align: center;
-  margin-bottom: var(--space-4);
-}
-
-.about-clients__label {
-  font-family: var(--font-heading);
-  font-size: 1.077rem;
-  letter-spacing: 0.08em;
-  color: var(--color-muted);
-  text-transform: uppercase;
-}
-
-.about-clients__marquee {
-  width: 100%;
-  overflow: hidden;
-  position: relative;
-  padding: clamp(24px, 3.5vw, 42px) 0;
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
-  mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
-}
-
-.about-clients__track {
-  display: flex;
-  width: max-content;
-  will-change: transform;
-  animation: about-marquee 32s linear infinite;
-}
-
-.about-clients__marquee:hover .about-clients__track {
-  animation-play-state: paused;
-}
-
-.about-clients__group {
-  display: flex;
+.about-clients__grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  column-gap: clamp(28px, 4vw, 56px);
+  row-gap: clamp(28px, 4vw, 48px);
   align-items: center;
-  gap: clamp(48px, 6vw, 84px);
-  padding-right: clamp(48px, 6vw, 84px);
-  flex-shrink: 0;
+  justify-items: center;
+  padding: 0 4%;
 }
 
 .about-clients__item {
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;
+  width: 100%;
 }
 
-.about-clients__item img {
+.about-clients__item img,
+.about-clients__grid img {
   max-width: 130px;
   max-height: 60px;
   width: auto;
@@ -321,19 +291,11 @@
   transition: opacity 200ms ease, filter 200ms ease, transform 200ms ease;
 }
 
-.about-clients__item img:hover {
+.about-clients__item img:hover,
+.about-clients__grid img:hover {
   filter: grayscale(0%);
   opacity: 1;
   transform: translateY(-2px);
-}
-
-@keyframes about-marquee {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
 }
 
 /* --------------------------------------------------------------------------
@@ -563,6 +525,11 @@
    9. Responsive Breakpoints
    -------------------------------------------------------------------------- */
 @media (max-width: 1100px) {
+  .about-clients__grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+  }
+
   .about-who {
     width: min(100% - 48px, 540px);
     margin: -160px 4% 0 auto;
@@ -605,6 +572,12 @@
 }
 
 @media (max-width: 620px) {
+  .about-clients__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    padding: 0;
+  }
+
   .about-overview {
     margin-top: 0;
   }
