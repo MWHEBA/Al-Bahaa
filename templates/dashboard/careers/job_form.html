@@ -1,0 +1,100 @@
+{% extends "dashboard/base.html" %}
+
+{% block title %}{% if object %}Edit Vacancy: {{ object.title }}{% else %}Post New Vacancy{% endif %} | Al Bahaa Dashboard{% endblock %}
+{% block page_title %}{% if object %}Edit Vacancy: {{ object.title }}{% else %}Post New Vacancy{% endif %}{% endblock %}
+
+{% block topbar_actions %}
+  <a href="{% url 'dashboard:careers_jobs' %}" class="dash-btn dash-btn--secondary dash-btn--sm">Back to Vacancies</a>
+{% endblock %}
+
+{% block content %}
+<form method="post">
+  {% csrf_token %}
+
+  <div class="dash-grid-2">
+    <!-- Role Details -->
+    <div class="dash-card">
+      <div class="dash-card__header">
+        <h2 class="dash-card__title">Vacancy Information</h2>
+      </div>
+      <div class="dash-card__body">
+        <div class="dash-form-group">
+          <label class="dash-label">Job Title *</label>
+          {{ form.title }}
+        </div>
+
+        <div class="dash-form-group">
+          <label class="dash-label">URL Slug (Auto-generated if empty)</label>
+          {{ form.slug }}
+        </div>
+
+        <div class="dash-grid-2">
+          <div class="dash-form-group">
+            <label class="dash-label">Department</label>
+            {{ form.department }}
+          </div>
+          <div class="dash-form-group">
+            <label class="dash-label">Job Type</label>
+            {{ form.job_type }}
+          </div>
+        </div>
+
+        <div class="dash-grid-2">
+          <div class="dash-form-group">
+            <label class="dash-label">Location</label>
+            {{ form.location }}
+          </div>
+          <div class="dash-form-group">
+            <label class="dash-label">Experience Required</label>
+            {{ form.experience }}
+          </div>
+        </div>
+
+        <div class="dash-form-group">
+          <label class="dash-label">Executive Role Summary *</label>
+          {{ form.summary }}
+        </div>
+
+        <div class="dash-grid-2">
+          <div class="dash-form-group">
+            <label class="dash-label">Display Order</label>
+            {{ form.order }}
+          </div>
+          <div class="dash-form-group" style="display: flex; align-items: center; gap: 10px; margin-top: 28px;">
+            {{ form.is_active }}
+            <label class="dash-label" style="margin: 0;">Open for Applications</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Requirements & Responsibilities -->
+    <div class="dash-card">
+      <div class="dash-card__header">
+        <h2 class="dash-card__title">Specifications &amp; Benefits</h2>
+      </div>
+      <div class="dash-card__body">
+        <div class="dash-form-group">
+          <label class="dash-label">Key Responsibilities (One bullet per line)</label>
+          {{ form.responsibilities }}
+        </div>
+
+        <div class="dash-form-group">
+          <label class="dash-label">Candidate Requirements * (One bullet per line)</label>
+          {{ form.requirements }}
+        </div>
+
+        <div class="dash-form-group">
+          <label class="dash-label">Benefits &amp; Perks (One bullet per line)</label>
+          {{ form.benefits }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-bottom: 40px; display: flex; gap: 12px;">
+    <button type="submit" class="dash-btn dash-btn--primary" style="padding: 12px 32px; font-size: 13px;">Save Vacancy Specifications</button>
+    <a href="{% url 'dashboard:careers_jobs' %}" class="dash-btn dash-btn--secondary" style="padding: 12px 24px;">Cancel</a>
+  </div>
+</form>
+{% endblock %}

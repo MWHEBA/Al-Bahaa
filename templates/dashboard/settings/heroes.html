@@ -1,0 +1,51 @@
+{% extends "dashboard/base.html" %}
+
+{% block title %}Page Hero Banners | Al Bahaa Dashboard{% endblock %}
+{% block page_title %}Page Hero Banners &amp; Visual Identity{% endblock %}
+
+{% block content %}
+<div class="dash-card">
+  <div class="dash-card__header">
+    <h2 class="dash-card__title">Configured Page Heroes ({{ heroes.count }})</h2>
+  </div>
+
+  <div class="dash-table-wrap">
+    <table class="dash-table">
+      <thead>
+        <tr>
+          <th style="width: 100px;">Banner</th>
+          <th>Page Target</th>
+          <th>Headline Line 1</th>
+          <th>Eyebrow Kicker</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for hero in heroes %}
+          <tr>
+            <td>
+              <div style="width: 90px; height: 50px; border-radius: 3px; overflow: hidden; background: var(--color-primary); border: 1px solid var(--color-border);">
+                {% if hero.hero_image %}
+                  <img src="{{ hero.hero_image.url }}" style="width: 100%; height: 100%; object-fit: cover;">
+                {% endif %}
+              </div>
+            </td>
+            <td>
+              <strong style="font-size: 15px; color: var(--color-primary);">{{ hero.get_page_display }}</strong>
+            </td>
+            <td>{{ hero.title_line1 }}</td>
+            <td><span class="dash-badge dash-badge--reviewed">{{ hero.eyebrow|default:"-" }}</span></td>
+            <td>
+              <a href="{% url 'dashboard:settings_hero_edit' pk=hero.pk %}" class="dash-btn dash-btn--primary dash-btn--sm">Edit Banner</a>
+            </td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="5" style="text-align: center; color: var(--color-muted); padding: 30px;">No hero banners configured.</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

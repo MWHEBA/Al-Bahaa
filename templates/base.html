@@ -28,6 +28,21 @@
     {% block extra_css %}{% endblock %}
   </head>
   <body class="{% block body_class %}{% endblock %}">
+    {% if request.user.is_authenticated and request.user.is_staff %}
+      <div class="executive-quick-bar" aria-label="Staff Quick Actions">
+        <div>
+          <span>Al Bahaa Staff &bull; <strong>{{ request.user.get_full_name|default:request.user.username }}</strong></span>
+        </div>
+        <div class="executive-quick-bar__links">
+          <a href="{% url 'dashboard:overview' %}">
+            <svg viewBox="0 0 24 24" style="width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 2;"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+            Executive Dashboard
+          </a>
+          {% block contextual_edit_btn %}{% endblock %}
+          <a href="{% url 'dashboard:logout' %}" style="color: var(--color-border); font-size: 11px;">Sign Out</a>
+        </div>
+      </div>
+    {% endif %}
     {% include "includes/header.html" %}
     <main id="main-content">
       {% block content %}{% endblock %}

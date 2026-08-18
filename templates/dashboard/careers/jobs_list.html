@@ -1,0 +1,69 @@
+{% extends "dashboard/base.html" %}
+
+{% block title %}Job Openings | Al Bahaa Dashboard{% endblock %}
+{% block page_title %}Careers &amp; Job Openings{% endblock %}
+
+{% block topbar_actions %}
+  <a href="{% url 'dashboard:careers_applications' %}" class="dash-btn dash-btn--secondary dash-btn--sm">View Candidates Inbox</a>
+  <a href="{% url 'dashboard:careers_jobs_create' %}" class="dash-btn dash-btn--primary dash-btn--sm">+ Post New Vacancy</a>
+{% endblock %}
+
+{% block content %}
+<div class="dash-card">
+  <div class="dash-card__header">
+    <h2 class="dash-card__title">Active &amp; Archived Vacancies</h2>
+  </div>
+
+  <div class="dash-table-wrap">
+    <table class="dash-table">
+      <thead>
+        <tr>
+          <th>Job Title</th>
+          <th>Department</th>
+          <th>Type</th>
+          <th>Experience</th>
+          <th>Applicants</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for job in jobs %}
+          <tr>
+            <td>
+              <strong>{{ job.title }}</strong><br>
+              <span style="font-size: 12px; color: var(--color-muted);">{{ job.location }}</span>
+            </td>
+            <td>{{ job.department.name|default:"General" }}</td>
+            <td>{{ job.job_type }}</td>
+            <td>{{ job.experience }}</td>
+            <td>
+              <a href="{% url 'dashboard:careers_applications' %}?job={{ job.pk }}" style="font-weight: 700; color: var(--color-primary); text-decoration: none;">
+                {{ job.applicants_count }} Candidates
+              </a>
+            </td>
+            <td>
+              {% if job.is_active %}
+                <span class="dash-badge dash-badge--active">Active</span>
+              {% else %}
+                <span class="dash-badge dash-badge--draft">Closed</span>
+              {% endif %}
+            </td>
+            <td>
+              <div style="display: flex; gap: 6px;">
+                <a href="{% url 'dashboard:careers_jobs_edit' pk=job.pk %}" class="dash-btn dash-btn--secondary dash-btn--sm">Edit</a>
+                <a href="{% url 'core:job_detail' slug=job.slug %}" target="_blank" class="dash-btn dash-btn--secondary dash-btn--sm" title="Preview on live site">&#8599;</a>
+                <a href="{% url 'dashboard:careers_jobs_delete' pk=job.pk %}" class="dash-btn dash-btn--danger dash-btn--sm" title="Delete">&times;</a>
+              </div>
+            </td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="7" style="text-align: center; color: var(--color-muted); padding: 40px;">No job vacancies posted yet.</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

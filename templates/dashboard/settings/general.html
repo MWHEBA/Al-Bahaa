@@ -1,0 +1,191 @@
+{% extends "dashboard/base.html" %}
+
+{% block title %}Site Settings &amp; Identity | Al Bahaa Dashboard{% endblock %}
+{% block page_title %}Site Settings &amp; Corporate Identity{% endblock %}
+
+{% block content %}
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+
+  <div class="dash-card">
+    <div class="dash-tabs-nav">
+      <button type="button" class="dash-tab-btn is-active" data-tab="tab-identity">Corporate Identity</button>
+      <button type="button" class="dash-tab-btn" data-tab="tab-contacts">Official Contacts</button>
+      <button type="button" class="dash-tab-btn" data-tab="tab-location">Headquarters &amp; Hours</button>
+      <button type="button" class="dash-tab-btn" data-tab="tab-social">Social Channels</button>
+    </div>
+
+    <!-- Tab 1: Identity -->
+    <div id="tab-identity" class="dash-tab-panel is-active">
+      <div class="dash-form-group">
+        <label class="dash-label">Corporate Company Name</label>
+        {{ form.company_name }}
+      </div>
+
+      <div class="dash-grid-3">
+        <div class="dash-form-group">
+          <label class="dash-label">Header Logo (Light / Inverted)</label>
+          {% if settings.header_logo %}
+            <div style="margin-bottom: 8px; height: 40px; padding: 4px 8px; background: var(--color-primary); border-radius: 4px; display: inline-block;">
+              <img src="{{ settings.header_logo.url }}" style="height: 100%; width: auto;">
+            </div>
+          {% endif %}
+          {{ form.header_logo }}
+        </div>
+
+        <div class="dash-form-group">
+          <label class="dash-label">Footer Logo</label>
+          {% if settings.footer_logo %}
+            <div style="margin-bottom: 8px; height: 40px; padding: 4px 8px; background: var(--color-primary); border-radius: 4px; display: inline-block;">
+              <img src="{{ settings.footer_logo.url }}" style="height: 100%; width: auto;">
+            </div>
+          {% endif %}
+          {{ form.footer_logo }}
+        </div>
+
+        <div class="dash-form-group">
+          <label class="dash-label">Favicon (.ico or .svg)</label>
+          {% if settings.favicon %}
+            <div style="margin-bottom: 8px; height: 32px; width: 32px; border-radius: 4px; overflow: hidden; border: 1px solid var(--color-border);">
+              <img src="{{ settings.favicon.url }}" style="width: 100%; height: 100%;">
+            </div>
+          {% endif %}
+          {{ form.favicon }}
+        </div>
+      </div>
+
+      <div class="dash-form-group">
+        <label class="dash-label">Copyright Notice</label>
+        {{ form.copyright_text }}
+      </div>
+
+      <div class="dash-grid-2">
+        <div class="dash-form-group">
+          <label class="dash-label">Footer Architectural Quote</label>
+          {{ form.footer_quote }}
+        </div>
+        <div class="dash-form-group">
+          <label class="dash-label">Footer Quote Attribution</label>
+          {{ form.footer_quote_author }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab 2: Contacts -->
+    <div id="tab-contacts" class="dash-tab-panel">
+      <div class="dash-grid-2">
+        <div class="dash-form-group">
+          <label class="dash-label">Main Headquarters Phone</label>
+          {{ form.phone_main }}
+        </div>
+        <div class="dash-form-group">
+          <label class="dash-label">Tenders &amp; Estimations Phone</label>
+          {{ form.phone_tenders }}
+        </div>
+      </div>
+
+      <div class="dash-grid-2">
+        <div class="dash-form-group">
+          <label class="dash-label">Sales / Commercial Phone</label>
+          {{ form.phone_sale }}
+        </div>
+        <div class="dash-form-group">
+          <label class="dash-label">Customer Support Phone</label>
+          {{ form.phone_support }}
+        </div>
+      </div>
+
+      <div class="dash-grid-3">
+        <div class="dash-form-group">
+          <label class="dash-label">General Info Email</label>
+          {{ form.email_general }}
+        </div>
+        <div class="dash-form-group">
+          <label class="dash-label">Tenders &amp; Bids Email</label>
+          {{ form.email_tenders }}
+        </div>
+        <div class="dash-form-group">
+          <label class="dash-label">Careers &amp; HR Email</label>
+          {{ form.email_careers }}
+        </div>
+      </div>
+
+      <div class="dash-grid-2">
+        <div class="dash-form-group">
+          <label class="dash-label">Commercial Sales Email</label>
+          {{ form.email_sale }}
+        </div>
+        <div class="dash-form-group">
+          <label class="dash-label">Support Email</label>
+          {{ form.email_support }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab 3: Location -->
+    <div id="tab-location" class="dash-tab-panel">
+      <div class="dash-grid-2">
+        <div class="dash-form-group">
+          <label class="dash-label">Address Line 1</label>
+          {{ form.address_line1 }}
+        </div>
+        <div class="dash-form-group">
+          <label class="dash-label">Address Line 2</label>
+          {{ form.address_line2 }}
+        </div>
+      </div>
+
+      <div class="dash-form-group">
+        <label class="dash-label">Google Maps Embed URL</label>
+        {{ form.map_embed_url }}
+        <span class="dash-help">Safe Google Maps iframe embed URL.</span>
+      </div>
+
+      <div class="dash-form-group">
+        <label class="dash-label">Direct Google Maps Directions Link</label>
+        {{ form.map_directions_url }}
+      </div>
+
+      <div class="dash-grid-2">
+        <div class="dash-form-group">
+          <label class="dash-label">Standard Working Hours</label>
+          {{ form.working_hours_weekdays }}
+        </div>
+        <div class="dash-form-group">
+          <label class="dash-label">Emergency &amp; Support Hours</label>
+          {{ form.working_hours_emergencies }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab 4: Social Channels -->
+    <div id="tab-social" class="dash-tab-panel">
+      <div class="dash-grid-2">
+        <div class="dash-form-group">
+          <label class="dash-label">LinkedIn Corporate URL</label>
+          {{ form.linkedin_url }}
+        </div>
+        <div class="dash-form-group">
+          <label class="dash-label">Facebook URL</label>
+          {{ form.facebook_url }}
+        </div>
+      </div>
+
+      <div class="dash-grid-2">
+        <div class="dash-form-group">
+          <label class="dash-label">Instagram URL</label>
+          {{ form.instagram_url }}
+        </div>
+        <div class="dash-form-group">
+          <label class="dash-label">YouTube URL</label>
+          {{ form.youtube_url }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-bottom: 40px;">
+    <button type="submit" class="dash-btn dash-btn--primary" style="padding: 12px 32px; font-size: 13px;">Save Corporate Settings</button>
+  </div>
+</form>
+{% endblock %}

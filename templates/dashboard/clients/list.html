@@ -1,0 +1,103 @@
+{% extends "dashboard/base.html" %}
+
+{% block title %}Client &amp; Partner Logos | Al Bahaa Dashboard{% endblock %}
+{% block page_title %}Institutional Partners &amp; Client Logos{% endblock %}
+
+{% block content %}
+<div class="dash-grid-2">
+  <!-- Existing Logos Grid -->
+  <div class="dash-card">
+    <div class="dash-card__header">
+      <h2 class="dash-card__title">Partner Logos ({{ logos.count }})</h2>
+    </div>
+    <div class="dash-table-wrap">
+      <table class="dash-table">
+        <thead>
+          <tr>
+            <th style="width: 80px;">Logo</th>
+            <th>Partner Name</th>
+            <th>Show On</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for logo in logos %}
+            <tr>
+              <td>
+                <div style="width: 60px; height: 40px; padding: 4px; border: 1px solid var(--color-border); border-radius: 3px; background: var(--color-white); display: flex; align-items: center; justify-content: center;">
+                  {% if logo.logo_image %}
+                    <img src="{{ logo.logo_image.url }}" style="max-height: 100%; max-width: 100%; object-fit: contain;">
+                  {% endif %}
+                </div>
+              </td>
+              <td><strong>{{ logo.name }}</strong></td>
+              <td>
+                {% if logo.show_on_home %}<span class="dash-badge dash-badge--reviewed" style="margin-right: 4px;">Home</span>{% endif %}
+                {% if logo.show_on_about %}<span class="dash-badge dash-badge--reviewed">About</span>{% endif %}
+              </td>
+              <td>
+                <form method="post" onsubmit="return confirm('Remove logo {{ logo.name }}?');">
+                  {% csrf_token %}
+                  <input type="hidden" name="action" value="delete">
+                  <input type="hidden" name="logo_id" value="{{ logo.pk }}">
+                  <button type="submit" class="dash-btn dash-btn--danger dash-btn--sm">Delete</button>
+                </form>
+              </td>
+            </tr>
+          {% empty %}
+            <tr>
+              <td colspan="4" style="text-align: center; color: var(--color-muted); padding: 30px;">No partner logos configured.</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Add Logo Form -->
+  <div class="dash-card">
+    <div class="dash-card__header">
+      <h2 class="dash-card__title">+ Add Institutional Partner Logo</h2>
+    </div>
+    <div class="dash-card__body">
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="create">
+
+        <div class="dash-form-group">
+          <label class="dash-label">Partner / Authority Name *</label>
+          {{ form.name }}
+        </div>
+
+        <div class="dash-form-group">
+          <label class="dash-label">Partner Vector / SVG / PNG Logo *</label>
+          {{ form.logo_image }}
+        </div>
+
+        <div class="dash-grid-2">
+          <div class="dash-form-group">
+            <label class="dash-label">Display Order</label>
+            {{ form.order }}
+          </div>
+          <div class="dash-form-group" style="margin-top: 28px;">
+            <label style="display: flex; align-items: center; gap: 8px;">
+              {{ form.is_active }} <strong>Active in Marquee</strong>
+            </label>
+          </div>
+        </div>
+
+        <div class="dash-grid-2" style="margin-bottom: 24px;">
+          <label style="display: flex; align-items: center; gap: 8px;">
+            {{ form.show_on_home }} <span>Display on Home Page</span>
+          </label>
+          <label style="display: flex; align-items: center; gap: 8px;">
+            {{ form.show_on_about }} <span>Display on About Page</span>
+          </label>
+        </div>
+
+        <button type="submit" class="dash-btn dash-btn--primary">Save Partner Logo</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,136 @@
+{% extends "dashboard/base.html" %}
+
+{% block title %}Tenders &amp; Inquiries | Al Bahaa Dashboard{% endblock %}
+{% block page_title %}Tenders &amp; Contact Inquiries{% endblock %}
+
+{% block topbar_actions %}
+  <a href="{% url 'dashboard:inquiries_export' %}" class="dash-btn dash-btn--secondary dash-btn--sm">
+    <svg viewBox="0 0 24 24" style="width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+    Export CSV
+  </a>
+{% endblock %}
+
+{% block content %}
+<div class="dash-card">
+  <div class="dash-card__header">
+    <form method="get" style="display: flex; gap: 12px; flex-wrap: wrap; width: 100%;">
+      <input type="text" name="q" value="{{ search_query }}" class="dash-input" placeholder="Search by name, company, email, phone..." style="max-width: 320px;">
+      
+      <select name="type" class="dash-select" style="max-width: 240px;" onchange="this.form.submit()">
+        <option value="">All Inquiry Types</option>
+        <option value="tenders" {% if selected_type == 'tenders' %}selected{% endif %}>Tenders &amp; Estimations</option>
+        <option value="procurement" {% if selected_type == 'procurement' %}selected{% endif %}>Procurement &amp; Suppliers</option>
+        <option value="general" {% if selected_type == 'general' %}selected{% endif %}>General Inquiries</option>
+        <option value="careers" {% if selected_type == 'careers' %}selected{% endif %}>Careers</option>
+      </select>
+
+      <select name="status" class="dash-select" style="max-width: 180px;" onchange="this.form.submit()">
+        <option value="">All Statuses</option>
+        <option value="unread" {% if selected_status == 'unread' %}selected{% endif %}>Unread</option>
+        <option value="read" {% if selected_status == 'read' %}selected{% endif %}>Reviewed</option>
+        <option value="resolved" {% if selected_status == 'resolved' %}selected{% endif %}>Resolved</option>
+      </select>
+
+      <button type="submit" class="dash-btn dash-btn--secondary dash-btn--sm">Filter</button>
+      {% if search_query or selected_type or selected_status %}
+        <a href="{% url 'dashboard:inquiries_list' %}" class="dash-btn dash-btn--danger dash-btn--sm">Clear</a>
+      {% endif %}
+    </form>
+  </div>
+
+  <div class="dash-table-wrap">
+    <table class="dash-table">
+      <thead>
+        <tr>
+          <th>Client Name</th>
+          <th>Company / Entity</th>
+          <th>Type</th>
+          <th>Contact Coordinates</th>
+          <th>Received Date</th>
+          <th>Status Triage</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for inq in inquiries %}
+          <tr id="inq-row-{{ inq.pk }}">
+            <td>
+              <strong>{{ inq.name }}</strong>
+            </td>
+            <td>{{ inq.company|default:"-" }}</td>
+            <td>
+              <span style="font-weight: 600; color: var(--color-primary);">{{ inq.get_inquiry_type_display }}</span>
+            </td>
+            <td>
+              <a href="mailto:{{ inq.email }}" style="color: var(--color-primary); text-decoration: none;">{{ inq.email }}</a><br>
+              <span style="font-size: 12px; color: var(--color-muted);">{{ inq.phone }}</span>
+            </td>
+            <td>{{ inq.created_at|date:"M d, Y H:i" }}</td>
+            <td>
+              <select class="dash-select js-inq-status-select" data-inq-id="{{ inq.pk }}" style="padding: 4px 8px; font-size: 12px; width: 130px;">
+                <option value="unread" {% if inq.status == 'unread' %}selected{% endif %}>Unread</option>
+                <option value="read" {% if inq.status == 'read' %}selected{% endif %}>Reviewed</option>
+                <option value="resolved" {% if inq.status == 'resolved' %}selected{% endif %}>Resolved</option>
+              </select>
+            </td>
+            <td>
+              <a href="{% url 'dashboard:inquiry_detail' pk=inq.pk %}" class="dash-btn dash-btn--secondary dash-btn--sm">Open Message</a>
+            </td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="7" style="text-align: center; color: var(--color-muted); padding: 40px;">No contact inquiries found.</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Pagination -->
+  {% if is_paginated %}
+    <div style="padding: 20px 24px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--color-border);">
+      <span style="font-size: 12px; color: var(--color-muted);">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+      <div style="display: flex; gap: 6px;">
+        {% if page_obj.has_previous %}
+          <a href="?page={{ page_obj.previous_page_number }}{% if search_query %}&q={{ search_query }}{% endif %}{% if selected_type %}&type={{ selected_type }}{% endif %}{% if selected_status %}&status={{ selected_status }}{% endif %}" class="dash-btn dash-btn--secondary dash-btn--sm">&larr; Prev</a>
+        {% endif %}
+        {% if page_obj.has_next %}
+          <a href="?page={{ page_obj.next_page_number }}{% if search_query %}&q={{ search_query }}{% endif %}{% if selected_type %}&type={{ selected_type }}{% endif %}{% if selected_status %}&status={{ selected_status }}{% endif %}" class="dash-btn dash-btn--secondary dash-btn--sm">Next &rarr;</a>
+        {% endif %}
+      </div>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll(".js-inq-status-select").forEach(select => {
+      select.addEventListener("change", function() {
+        const inqId = this.getAttribute("data-inq-id");
+        const newStatus = this.value;
+        const csrftoken = getCookie('csrftoken');
+        const formData = new FormData();
+        formData.append('status', newStatus);
+
+        fetch(`/dashboard/inquiries/${inqId}/status/`, {
+          method: 'POST',
+          headers: {
+            'X-CSRFToken': csrftoken
+          },
+          body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            select.style.borderColor = "var(--color-primary)";
+            setTimeout(() => { select.style.borderColor = "var(--color-border)"; }, 1200);
+          }
+        })
+        .catch(err => alert("Failed to update status. Please try again."));
+      });
+    });
+  });
+</script>
+{% endblock %}

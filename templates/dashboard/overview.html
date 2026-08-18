@@ -1,0 +1,117 @@
+{% extends "dashboard/base.html" %}
+
+{% block title %}Overview &amp; KPIs | Al Bahaa Dashboard{% endblock %}
+{% block page_title %}Executive Operations Overview{% endblock %}
+
+{% block content %}
+<!-- KPI Cards -->
+<div class="dash-kpi-grid">
+  <div class="dash-kpi-card">
+    <span class="dash-kpi-card__label">Landmark Projects</span>
+    <span class="dash-kpi-card__val">{{ kpis.projects_count }}</span>
+    <span class="dash-kpi-card__sub"><a href="{% url 'dashboard:projects_list' %}" style="color: var(--color-primary); font-weight: 600; text-decoration: none;">Manage Portfolio &rarr;</a></span>
+  </div>
+
+  <div class="dash-kpi-card">
+    <span class="dash-kpi-card__label">New Applications</span>
+    <span class="dash-kpi-card__val">{{ kpis.new_applications_count }}</span>
+    <span class="dash-kpi-card__sub">{{ kpis.total_applications_count }} Total candidates</span>
+  </div>
+
+  <div class="dash-kpi-card">
+    <span class="dash-kpi-card__label">Unread Inquiries</span>
+    <span class="dash-kpi-card__val">{{ kpis.unread_inquiries_count }}</span>
+    <span class="dash-kpi-card__sub">{{ kpis.tender_inquiries_count }} Pending tender estimations</span>
+  </div>
+
+  <div class="dash-kpi-card">
+    <span class="dash-kpi-card__label">Published Insights</span>
+    <span class="dash-kpi-card__val">{{ kpis.published_articles_count }}</span>
+    <span class="dash-kpi-card__sub">{{ kpis.partners_count }} Institutional partners</span>
+  </div>
+</div>
+
+<div class="dash-grid-2">
+  <!-- Recent Applications -->
+  <div class="dash-card">
+    <div class="dash-card__header">
+      <h2 class="dash-card__title">Recent Candidate Applications</h2>
+      <a href="{% url 'dashboard:careers_applications' %}" class="dash-btn dash-btn--secondary dash-btn--sm">View All</a>
+    </div>
+    <div class="dash-table-wrap">
+      <table class="dash-table">
+        <thead>
+          <tr>
+            <th>Candidate</th>
+            <th>Role</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for app in recent_applications %}
+            <tr>
+              <td>
+                <strong>{{ app.full_name }}</strong><br>
+                <span style="font-size: 12px; color: var(--color-muted);">{{ app.phone }}</span>
+              </td>
+              <td>{{ app.job.title }}</td>
+              <td>
+                <span class="dash-badge dash-badge--{{ app.status }}">{{ app.get_status_display }}</span>
+              </td>
+              <td>
+                <a href="{% url 'dashboard:careers_application_detail' pk=app.pk %}" class="dash-btn dash-btn--secondary dash-btn--sm">Review</a>
+              </td>
+            </tr>
+          {% empty %}
+            <tr>
+              <td colspan="4" style="text-align: center; color: var(--color-muted); padding: 30px;">No job applications submitted yet.</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Recent Inquiries -->
+  <div class="dash-card">
+    <div class="dash-card__header">
+      <h2 class="dash-card__title">Recent Contact &amp; Tender Inquiries</h2>
+      <a href="{% url 'dashboard:inquiries_list' %}" class="dash-btn dash-btn--secondary dash-btn--sm">View All</a>
+    </div>
+    <div class="dash-table-wrap">
+      <table class="dash-table">
+        <thead>
+          <tr>
+            <th>Client</th>
+            <th>Type</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for inq in recent_inquiries %}
+            <tr>
+              <td>
+                <strong>{{ inq.name }}</strong><br>
+                <span style="font-size: 12px; color: var(--color-muted);">{{ inq.company|default:inq.email }}</span>
+              </td>
+              <td>{{ inq.get_inquiry_type_display }}</td>
+              <td>
+                <span class="dash-badge dash-badge--{{ inq.status }}">{{ inq.get_status_display }}</span>
+              </td>
+              <td>
+                <a href="{% url 'dashboard:inquiry_detail' pk=inq.pk %}" class="dash-btn dash-btn--secondary dash-btn--sm">Open</a>
+              </td>
+            </tr>
+          {% empty %}
+            <tr>
+              <td colspan="4" style="text-align: center; color: var(--color-muted); padding: 30px;">No contact inquiries in inbox.</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

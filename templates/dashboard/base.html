@@ -1,0 +1,160 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Dashboard | Al Bahaa Contracting (S.A.E){% endblock %}</title>
+  
+  <link rel="stylesheet" href="{% static 'css/base.css' %}">
+  <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+  {% block extra_css %}{% endblock %}
+</head>
+<body class="dash-body">
+
+  <!-- Executive Sidebar -->
+  <aside class="dash-sidebar" aria-label="Executive Portal Navigation">
+    <div class="dash-sidebar__brand">
+      <a href="{% url 'dashboard:overview' %}" class="dash-sidebar__logo-link">
+        <img class="dash-sidebar__logo" src="{% static 'img/branding/AlBahaa logo.svg' %}" alt="Al Bahaa Contracting">
+      </a>
+      <span class="dash-sidebar__badge">Executive Control Panel</span>
+    </div>
+
+    <nav class="dash-sidebar__nav">
+      <a href="{% url 'dashboard:overview' %}" class="dash-nav-link {% if request.resolver_match.url_name == 'overview' %}is-active{% endif %}">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        Overview &amp; KPIs
+      </a>
+
+      <div class="dash-sidebar__group-title">Portfolio &amp; Media</div>
+      <a href="{% url 'dashboard:projects_list' %}" class="dash-nav-link {% if 'projects' in request.path %}is-active{% endif %}">
+        <svg viewBox="0 0 24 24"><path d="M3 21h18M3 7l9-4 9 4M4 7v14M20 7v14M9 21v-8a3 3 0 0 1 6 0v8"/></svg>
+        Projects &amp; Galleries
+      </a>
+      <a href="{% url 'dashboard:news_list' %}" class="dash-nav-link {% if 'news' in request.path %}is-active{% endif %}">
+        <svg viewBox="0 0 24 24"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2M18 14h-8M15 18h-5M10 6h8v4h-8z"/></svg>
+        News &amp; Articles
+      </a>
+
+      <div class="dash-sidebar__group-title">Talent &amp; Tenders</div>
+      <a href="{% url 'dashboard:careers_applications' %}" class="dash-nav-link {% if 'applications' in request.path %}is-active{% endif %}">
+        <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Job Applications
+      </a>
+      <a href="{% url 'dashboard:careers_jobs' %}" class="dash-nav-link {% if 'careers/openings' in request.path %}is-active{% endif %}">
+        <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+        Job Openings
+      </a>
+      <a href="{% url 'dashboard:inquiries_list' %}" class="dash-nav-link {% if 'inquiries' in request.path %}is-active{% endif %}">
+        <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        Tenders &amp; Inquiries
+      </a>
+
+      <div class="dash-sidebar__group-title">Corporate Settings</div>
+      <a href="{% url 'dashboard:settings_general' %}" class="dash-nav-link {% if 'settings/general' in request.path %}is-active{% endif %}">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        Site Identity &amp; Info
+      </a>
+      <a href="{% url 'dashboard:settings_heroes' %}" class="dash-nav-link {% if 'settings/heroes' in request.path %}is-active{% endif %}">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        Page Hero Banners
+      </a>
+      <a href="{% url 'dashboard:clients_manage' %}" class="dash-nav-link {% if 'clients' in request.path %}is-active{% endif %}">
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        Client &amp; Partner Logos
+      </a>
+      <a href="{% url 'dashboard:team_manage' %}" class="dash-nav-link {% if 'team' in request.path %}is-active{% endif %}">
+        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Leadership &amp; Team
+      </a>
+    </nav>
+
+    <div class="dash-sidebar__footer">
+      <a href="{% url 'dashboard:profile' %}" style="text-decoration: none;" class="dash-sidebar__user">
+        <span class="dash-sidebar__user-name">{{ request.user.get_full_name|default:request.user.username }}</span>
+        <span class="dash-sidebar__user-role">Executive Administrator</span>
+      </a>
+      <a href="{% url 'dashboard:logout' %}" class="dash-logout-btn" title="Sign Out">
+        <svg viewBox="0 0 24 24" style="width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2;"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+      </a>
+    </div>
+  </aside>
+
+  <!-- Workspace Shell -->
+  <div class="dash-main">
+    <header class="dash-topbar">
+      <div class="dash-topbar__title-wrap">
+        <h1 class="dash-topbar__title">{% block page_title %}Executive Dashboard{% endblock %}</h1>
+      </div>
+      <div class="dash-topbar__actions">
+        <a href="{% url 'core:home' %}" target="_blank" class="dash-btn dash-btn--secondary dash-btn--sm">
+          <svg viewBox="0 0 24 24" style="width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+          View Live Site
+        </a>
+        {% block topbar_actions %}{% endblock %}
+      </div>
+    </header>
+
+    <main class="dash-container">
+      {% if messages %}
+        <div class="dash-alerts">
+          {% for message in messages %}
+            <div class="dash-alert {% if message.tags == 'error' %}dash-alert--error{% else %}dash-alert--success{% endif %}">
+              <span>{{ message }}</span>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      {% block content %}{% endblock %}
+    </main>
+  </div>
+
+  <!-- Global Dashboard Helpers -->
+  <script>
+    // CSRF Cookie extraction helper
+    function getCookie(name) {
+      let cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+          const cookie = cookies[i].trim();
+          if (cookie.substring(0, name.length + 1) === (name + '=')) {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+            break;
+          }
+        }
+      }
+      return cookieValue;
+    }
+
+    // Double-Click Prevention on Forms
+    document.addEventListener("DOMContentLoaded", () => {
+      document.querySelectorAll("form").forEach(form => {
+        form.addEventListener("submit", (e) => {
+          const submitBtn = form.querySelector("button[type='submit']");
+          if (submitBtn && !submitBtn.disabled) {
+            submitBtn.disabled = true;
+            submitBtn.style.opacity = "0.7";
+            submitBtn.textContent = "Processing...";
+          }
+        });
+      });
+
+      // Tab switching helper
+      document.querySelectorAll(".dash-tab-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const target = btn.dataset.tab;
+          document.querySelectorAll(".dash-tab-btn").forEach(b => b.classList.remove("is-active"));
+          document.querySelectorAll(".dash-tab-panel").forEach(p => p.classList.remove("is-active"));
+          btn.classList.add("is-active");
+          const panel = document.getElementById(target);
+          if (panel) panel.classList.add("is-active");
+        });
+      });
+    });
+  </script>
+  {% block extra_js %}{% endblock %}
+</body>
+</html>

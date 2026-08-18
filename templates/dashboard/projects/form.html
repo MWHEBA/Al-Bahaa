@@ -1,0 +1,219 @@
+{% extends "dashboard/base.html" %}
+
+{% block title %}{% if object %}Edit Project: {{ object.title }}{% else %}Add Landmark Project{% endif %} | Al Bahaa Dashboard{% endblock %}
+{% block page_title %}{% if object %}Edit Project: {{ object.title }}{% else %}Add Landmark Project{% endif %}{% endblock %}
+
+{% block topbar_actions %}
+  {% if object %}
+    <a href="{% url 'projects:detail' slug=object.slug %}" target="_blank" class="dash-btn dash-btn--secondary dash-btn--sm">&#8599; View on Live Site</a>
+  {% endif %}
+  <a href="{% url 'dashboard:projects_list' %}" class="dash-btn dash-btn--secondary dash-btn--sm">Back to Projects</a>
+{% endblock %}
+
+{% block content %}
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+
+  <div class="dash-grid-2">
+    <!-- Main Info -->
+    <div class="dash-card">
+      <div class="dash-card__header">
+        <h2 class="dash-card__title">Project Specifications</h2>
+      </div>
+      <div class="dash-card__body">
+        <div class="dash-form-group">
+          <label class="dash-label">Project Title *</label>
+          {{ form.title }}
+        </div>
+
+        <div class="dash-form-group">
+          <label class="dash-label">URL Slug (Auto-generated if empty)</label>
+          {{ form.slug }}
+        </div>
+
+        <div class="dash-grid-2">
+          <div class="dash-form-group">
+            <label class="dash-label">Engineering Sector</label>
+            {{ form.category }}
+          </div>
+          <div class="dash-form-group">
+            <label class="dash-label">Status</label>
+            {{ form.status }}
+          </div>
+        </div>
+
+        <div class="dash-grid-2">
+          <div class="dash-form-group">
+            <label class="dash-label">Location</label>
+            {{ form.location }}
+          </div>
+          <div class="dash-form-group">
+            <label class="dash-label">Completion / Milestone Date</label>
+            {{ form.date }}
+          </div>
+        </div>
+
+        <div class="dash-grid-2">
+          <div class="dash-form-group">
+            <label class="dash-label">Client Authority</label>
+            {{ form.client_name }}
+          </div>
+          <div class="dash-form-group">
+            <label class="dash-label">Lead Engineering Consultant</label>
+            {{ form.architect_consultant }}
+          </div>
+        </div>
+
+        <div class="dash-grid-2">
+          <div class="dash-form-group">
+            <label class="dash-label">Scope of Work</label>
+            {{ form.scope_of_work }}
+          </div>
+          <div class="dash-form-group">
+            <label class="dash-label">Scale / Built-Up Area</label>
+            {{ form.built_up_area }}
+          </div>
+        </div>
+
+        <div class="dash-form-group">
+          <label class="dash-label">Sustainability Benchmark</label>
+          {{ form.sustainability }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Media & Descriptions -->
+    <div class="dash-card">
+      <div class="dash-card__header">
+        <h2 class="dash-card__title">Media &amp; Narrative</h2>
+      </div>
+      <div class="dash-card__body">
+        <div class="dash-form-group">
+          <label class="dash-label">Cover Image</label>
+          {% if object.cover_image %}
+            <div style="margin-bottom: 10px; width: 140px; height: 90px; border-radius: 4px; overflow: hidden; border: 1px solid var(--color-border);">
+              <img src="{{ object.cover_image.url }}" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+          {% endif %}
+          {{ form.cover_image }}
+          <div id="cover-preview" class="dash-thumb-preview"></div>
+        </div>
+
+        <div class="dash-form-group">
+          <label class="dash-label">Short Summary (1-2 sentences)</label>
+          {{ form.short_description }}
+        </div>
+
+        <div class="dash-form-group">
+          <label class="dash-label">Full Case Study Description</label>
+          {{ form.full_description }}
+        </div>
+
+        <div class="dash-form-group">
+          <label class="dash-label">Engineering Highlights (One bullet per line)</label>
+          {{ form.engineering_highlights }}
+        </div>
+
+        <div class="dash-grid-2">
+          <div class="dash-form-group">
+            <label class="dash-label">Display Order</label>
+            {{ form.order }}
+          </div>
+          <div class="dash-form-group" style="display: flex; align-items: center; gap: 10px; margin-top: 28px;">
+            {{ form.is_featured }}
+            <label class="dash-label" style="margin: 0;">Feature on Home Page</label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gallery Batch Upload Card -->
+  <div class="dash-card">
+    <div class="dash-card__header">
+      <h2 class="dash-card__title">Project Execution Gallery</h2>
+      <span style="font-size: 12px; color: var(--color-muted);">Select multiple images to batch upload to this project's gallery.</span>
+    </div>
+    <div class="dash-card__body">
+      <div class="dash-form-group">
+        <label class="dash-label">Batch Upload Gallery Photos (Hold Ctrl/Cmd to select multiple)</label>
+        {{ form.gallery_images }}
+        <div id="gallery-preview" class="dash-thumb-preview"></div>
+      </div>
+
+      {% if object and object.images.all %}
+        <h3 style="font-family: var(--font-heading); font-size: 14px; text-transform: uppercase; margin: 24px 0 14px 0;">Existing Gallery Photos ({{ object.images.count }})</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px;">
+          {% for img in object.images.all %}
+            <div style="border: 1px solid var(--color-border); border-radius: 4px; overflow: hidden; background: var(--color-background-soft); padding: 8px;">
+              <div style="width: 100%; height: 120px; border-radius: 3px; overflow: hidden; margin-bottom: 8px;">
+                <img src="{{ img.image.url }}" style="width: 100%; height: 100%; object-fit: cover;">
+              </div>
+              <p style="font-size: 11px; color: var(--color-muted); margin: 0 0 8px 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ img.caption|default:"Site Photo" }}</p>
+              
+              <!-- Individual image delete form -->
+              <button type="button" class="dash-btn dash-btn--danger dash-btn--sm js-delete-gallery-btn" data-image-id="{{ img.pk }}" style="width: 100%;">Delete Photo</button>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+
+  <div style="margin-bottom: 40px; display: flex; gap: 12px;">
+    <button type="submit" class="dash-btn dash-btn--primary" style="padding: 12px 32px; font-size: 13px;">Save Project Specifications</button>
+    <a href="{% url 'dashboard:projects_list' %}" class="dash-btn dash-btn--secondary" style="padding: 12px 24px;">Cancel</a>
+  </div>
+</form>
+
+<!-- Hidden form for deleting single gallery image -->
+<form id="delete-gallery-form" method="post" style="display: none;">
+  {% csrf_token %}
+</form>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  // Live Client-Side Image Previews
+  document.getElementById("id_cover_image")?.addEventListener("change", function(e) {
+    const preview = document.getElementById("cover-preview");
+    preview.innerHTML = "";
+    if (this.files && this.files[0]) {
+      const img = document.createElement("img");
+      img.src = URL.createObjectURL(this.files[0]);
+      const wrap = document.createElement("div");
+      wrap.className = "dash-thumb-item";
+      wrap.appendChild(img);
+      preview.appendChild(wrap);
+    }
+  });
+
+  document.getElementById("id_gallery_images")?.addEventListener("change", function(e) {
+    const preview = document.getElementById("gallery-preview");
+    preview.innerHTML = "";
+    if (this.files) {
+      Array.from(this.files).forEach(file => {
+        const img = document.createElement("img");
+        img.src = URL.createObjectURL(file);
+        const wrap = document.createElement("div");
+        wrap.className = "dash-thumb-item";
+        wrap.appendChild(img);
+        preview.appendChild(wrap);
+      });
+    }
+  });
+
+  document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll(".js-delete-gallery-btn").forEach(btn => {
+      btn.addEventListener("click", function() {
+        const imageId = this.getAttribute("data-image-id");
+        if (confirm("Are you sure you want to permanently remove this photo from the project gallery?")) {
+          const f = document.getElementById("delete-gallery-form");
+          f.action = `/dashboard/projects/gallery/${imageId}/delete/`;
+          f.submit();
+        }
+      });
+    });
+  });
+</script>
+{% endblock %}

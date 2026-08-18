@@ -1,0 +1,81 @@
+{% extends "dashboard/base.html" %}
+
+{% block title %}Executive Profile &amp; Security | Al Bahaa{% endblock %}
+{% block page_title %}Executive Profile &amp; Security{% endblock %}
+
+{% block content %}
+<div class="dash-grid-2">
+  <!-- Profile Info Card -->
+  <div class="dash-card">
+    <div class="dash-card__header">
+      <h2 class="dash-card__title">Profile Information</h2>
+    </div>
+    <div class="dash-card__body">
+      <form method="post">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="update_profile">
+        
+        <div class="dash-form-group">
+          <label class="dash-label">Username</label>
+          <input type="text" class="dash-input" value="{{ request.user.username }}" disabled style="background-color: var(--color-background-soft);">
+          <span class="dash-help">Username cannot be altered.</span>
+        </div>
+
+        <div class="dash-form-group">
+          <label class="dash-label">First Name</label>
+          {{ user_form.first_name }}
+        </div>
+
+        <div class="dash-form-group">
+          <label class="dash-label">Last Name</label>
+          {{ user_form.last_name }}
+        </div>
+
+        <div class="dash-form-group">
+          <label class="dash-label">Official Email</label>
+          {{ user_form.email }}
+        </div>
+
+        <button type="submit" class="dash-btn dash-btn--primary">Save Profile Details</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Password Security Card -->
+  <div class="dash-card">
+    <div class="dash-card__header">
+      <h2 class="dash-card__title">Change Password</h2>
+    </div>
+    <div class="dash-card__body">
+      <form method="post">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="change_password">
+
+        {% if pw_form.errors %}
+          <div class="dash-alert dash-alert--error">
+            <span>{{ pw_form.errors.as_text }}</span>
+          </div>
+        {% endif %}
+
+        <div class="dash-form-group">
+          <label class="dash-label">Current Password</label>
+          <input type="password" name="old_password" required class="dash-input" placeholder="••••••••">
+        </div>
+
+        <div class="dash-form-group">
+          <label class="dash-label">New Password</label>
+          <input type="password" name="new_password1" required class="dash-input" placeholder="••••••••">
+          <span class="dash-help">Must be at least 8 characters.</span>
+        </div>
+
+        <div class="dash-form-group">
+          <label class="dash-label">Confirm New Password</label>
+          <input type="password" name="new_password2" required class="dash-input" placeholder="••••••••">
+        </div>
+
+        <button type="submit" class="dash-btn dash-btn--primary">Update Password</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -8,6 +8,7 @@ urlpatterns = [
     path("", include("apps.core.urls")),
     path("projects/", include("apps.projects.urls")),
     path("news/", include("apps.news.urls")),
+    path("dashboard/", include("apps.dashboard.urls", namespace="dashboard")),
 ]
 
 if settings.DEBUG:

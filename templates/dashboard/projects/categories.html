@@ -1,0 +1,82 @@
+{% extends "dashboard/base.html" %}
+
+{% block title %}Project Sectors &amp; Categories | Al Bahaa Dashboard{% endblock %}
+{% block page_title %}Project Sectors &amp; Categories{% endblock %}
+
+{% block topbar_actions %}
+  <a href="{% url 'dashboard:projects_list' %}" class="dash-btn dash-btn--secondary dash-btn--sm">&larr; Back to Projects</a>
+{% endblock %}
+
+{% block content %}
+<div class="dash-grid-2">
+  <!-- Categories List -->
+  <div class="dash-card">
+    <div class="dash-card__header">
+      <h2 class="dash-card__title">Existing Sectors ({{ categories.count }})</h2>
+    </div>
+    <div class="dash-table-wrap">
+      <table class="dash-table">
+        <thead>
+          <tr>
+            <th>Sector Name</th>
+            <th>Slug</th>
+            <th>Projects Count</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for cat in categories %}
+            <tr>
+              <td><strong>{{ cat.name }}</strong></td>
+              <td><code>{{ cat.slug }}</code></td>
+              <td>{{ cat.proj_count }} projects</td>
+              <td>
+                <form method="post" onsubmit="return confirm('Delete category {{ cat.name }}?');">
+                  {% csrf_token %}
+                  <input type="hidden" name="action" value="delete">
+                  <input type="hidden" name="category_id" value="{{ cat.pk }}">
+                  <button type="submit" class="dash-btn dash-btn--danger dash-btn--sm">Delete</button>
+                </form>
+              </td>
+            </tr>
+          {% empty %}
+            <tr>
+              <td colspan="4" style="text-align: center; color: var(--color-muted); padding: 30px;">No categories configured.</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Add Category Form -->
+  <div class="dash-card">
+    <div class="dash-card__header">
+      <h2 class="dash-card__title">+ Add New Project Sector</h2>
+    </div>
+    <div class="dash-card__body">
+      <form method="post">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="create">
+
+        <div class="dash-form-group">
+          <label class="dash-label">Sector Name *</label>
+          {{ form.name }}
+        </div>
+
+        <div class="dash-form-group">
+          <label class="dash-label">URL Slug (Auto-generated if empty)</label>
+          {{ form.slug }}
+        </div>
+
+        <div class="dash-form-group">
+          <label class="dash-label">Display Order</label>
+          {{ form.order }}
+        </div>
+
+        <button type="submit" class="dash-btn dash-btn--primary">Create Project Sector</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

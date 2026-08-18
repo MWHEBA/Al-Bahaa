@@ -1,0 +1,144 @@
+{% extends "dashboard/base.html" %}
+
+{% block title %}Candidate Applications | Al Bahaa Dashboard{% endblock %}
+{% block page_title %}Recruitment &amp; Candidate Applications{% endblock %}
+
+{% block topbar_actions %}
+  <a href="{% url 'dashboard:careers_applications_export' %}" class="dash-btn dash-btn--secondary dash-btn--sm">
+    <svg viewBox="0 0 24 24" style="width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+    Export CSV
+  </a>
+{% endblock %}
+
+{% block content %}
+<div class="dash-card">
+  <div class="dash-card__header">
+    <form method="get" style="display: flex; gap: 12px; flex-wrap: wrap; width: 100%;">
+      <input type="text" name="q" value="{{ search_query }}" class="dash-input" placeholder="Search by candidate name, email, phone..." style="max-width: 320px;">
+      
+      <select name="job" class="dash-select" style="max-width: 260px;" onchange="this.form.submit()">
+        <option value="">All Job Openings</option>
+        {% for j in jobs %}
+          <option value="{{ j.pk }}" {% if selected_job == j.pk|stringformat:"s" %}selected{% endif %}>{{ j.title }}</option>
+        {% endfor %}
+      </select>
+
+      <select name="status" class="dash-select" style="max-width: 180px;" onchange="this.form.submit()">
+        <option value="">All Statuses</option>
+        <option value="new" {% if selected_status == 'new' %}selected{% endif %}>New</option>
+        <option value="reviewed" {% if selected_status == 'reviewed' %}selected{% endif %}>Reviewed</option>
+        <option value="shortlisted" {% if selected_status == 'shortlisted' %}selected{% endif %}>Shortlisted</option>
+        <option value="rejected" {% if selected_status == 'rejected' %}selected{% endif %}>Rejected</option>
+      </select>
+
+      <button type="submit" class="dash-btn dash-btn--secondary dash-btn--sm">Filter</button>
+      {% if search_query or selected_job or selected_status %}
+        <a href="{% url 'dashboard:careers_applications' %}" class="dash-btn dash-btn--danger dash-btn--sm">Clear</a>
+      {% endif %}
+    </form>
+  </div>
+
+  <div class="dash-table-wrap">
+    <table class="dash-table">
+      <thead>
+        <tr>
+          <th>Candidate</th>
+          <th>Applied Vacancy</th>
+          <th>Contact Info</th>
+          <th>Applied Date</th>
+          <th>Quick Status Triage</th>
+          <th>Resume CV</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for app in applications %}
+          <tr id="app-row-{{ app.pk }}">
+            <td>
+              <strong>{{ app.full_name }}</strong>
+            </td>
+            <td>
+              <span style="font-weight: 600; color: var(--color-primary);">{{ app.job.title }}</span><br>
+              <span style="font-size: 11px; color: var(--color-muted);">{{ app.job.department.name|default:"General" }}</span>
+            </td>
+            <td>
+              <a href="mailto:{{ app.email }}" style="color: var(--color-primary); text-decoration: none;">{{ app.email }}</a><br>
+              <span style="font-size: 12px; color: var(--color-muted);">{{ app.phone }}</span>
+            </td>
+            <td>{{ app.submitted_at|date:"M d, Y H:i" }}</td>
+            <td>
+              <select class="dash-select js-app-status-select" data-app-id="{{ app.pk }}" style="padding: 4px 8px; font-size: 12px; width: 130px;">
+                <option value="new" {% if app.status == 'new' %}selected{% endif %}>New</option>
+                <option value="reviewed" {% if app.status == 'reviewed' %}selected{% endif %}>Reviewed</option>
+                <option value="shortlisted" {% if app.status == 'shortlisted' %}selected{% endif %}>Shortlisted</option>
+                <option value="rejected" {% if app.status == 'rejected' %}selected{% endif %}>Rejected</option>
+              </select>
+            </td>
+            <td>
+              {% if app.resume %}
+                <a href="{{ app.resume.url }}" target="_blank" class="dash-btn dash-btn--secondary dash-btn--sm" title="Download CV">Download CV</a>
+              {% else %}
+                <span style="font-size: 12px; color: var(--color-muted);">No File</span>
+              {% endif %}
+            </td>
+            <td>
+              <a href="{% url 'dashboard:careers_application_detail' pk=app.pk %}" class="dash-btn dash-btn--secondary dash-btn--sm">View Profile</a>
+            </td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="7" style="text-align: center; color: var(--color-muted); padding: 40px;">No applications found.</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Pagination -->
+  {% if is_paginated %}
+    <div style="padding: 20px 24px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--color-border);">
+      <span style="font-size: 12px; color: var(--color-muted);">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+      <div style="display: flex; gap: 6px;">
+        {% if page_obj.has_previous %}
+          <a href="?page={{ page_obj.previous_page_number }}{% if search_query %}&q={{ search_query }}{% endif %}{% if selected_job %}&job={{ selected_job }}{% endif %}{% if selected_status %}&status={{ selected_status }}{% endif %}" class="dash-btn dash-btn--secondary dash-btn--sm">&larr; Prev</a>
+        {% endif %}
+        {% if page_obj.has_next %}
+          <a href="?page={{ page_obj.next_page_number }}{% if search_query %}&q={{ search_query }}{% endif %}{% if selected_job %}&job={{ selected_job }}{% endif %}{% if selected_status %}&status={{ selected_status }}{% endif %}" class="dash-btn dash-btn--secondary dash-btn--sm">Next &rarr;</a>
+        {% endif %}
+      </div>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll(".js-app-status-select").forEach(select => {
+      select.addEventListener("change", function() {
+        const appId = this.getAttribute("data-app-id");
+        const newStatus = this.value;
+        const csrftoken = getCookie('csrftoken');
+        const formData = new FormData();
+        formData.append('status', newStatus);
+
+        fetch(`/dashboard/careers/applications/${appId}/status/`, {
+          method: 'POST',
+          headers: {
+            'X-CSRFToken': csrftoken
+          },
+          body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            select.style.borderColor = "var(--color-primary)";
+            setTimeout(() => { select.style.borderColor = "var(--color-border)"; }, 1200);
+          }
+        })
+        .catch(err => alert("Failed to update status. Please try again."));
+      });
+    });
+  });
+</script>
+{% endblock %}

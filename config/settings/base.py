@@ -19,6 +19,7 @@ INSTALLED_APPS = [
     "apps.core",
     "apps.projects",
     "apps.news",
+    "apps.dashboard",
 ]
 
 MIDDLEWARE = [

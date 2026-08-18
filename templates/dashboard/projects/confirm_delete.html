@@ -1,0 +1,29 @@
+{% extends "dashboard/base.html" %}
+
+{% block title %}Delete Project Confirmation | Al Bahaa Dashboard{% endblock %}
+{% block page_title %}Delete Project Confirmation{% endblock %}
+
+{% block content %}
+<div class="dash-card" style="max-width: 600px; margin: 40px auto;">
+  <div class="dash-card__header">
+    <h2 class="dash-card__title">Permanent Deletion Warning</h2>
+  </div>
+  <div class="dash-card__body">
+    <p style="font-size: 15px; color: var(--color-text); margin-bottom: 20px;">
+      Are you sure you want to permanently delete landmark project:
+      <strong style="color: var(--color-primary); display: block; margin-top: 6px; font-size: 16px;">{{ object.title }}</strong>
+    </p>
+    <p style="font-size: 13px; color: var(--color-muted); margin-bottom: 28px;">
+      This action is irreversible. The project case study, cover image, and all associated gallery photos will be permanently removed.
+    </p>
+
+    <form method="post">
+      {% csrf_token %}
+      <div style="display: flex; gap: 12px;">
+        <button type="submit" class="dash-btn dash-btn--danger" style="padding: 10px 24px;">Yes, Permanently Delete</button>
+        <a href="{% url 'dashboard:projects_list' %}" class="dash-btn dash-btn--secondary">Cancel</a>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

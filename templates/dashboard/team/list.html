@@ -1,0 +1,112 @@
+{% extends "dashboard/base.html" %}
+
+{% block title %}Leadership &amp; Team | Al Bahaa Dashboard{% endblock %}
+{% block page_title %}Board of Directors &amp; Leadership{% endblock %}
+
+{% block content %}
+<div class="dash-grid-2">
+  <!-- Team List -->
+  <div class="dash-card">
+    <div class="dash-card__header">
+      <h2 class="dash-card__title">Executive Leadership ({{ members.count }})</h2>
+    </div>
+    <div class="dash-table-wrap">
+      <table class="dash-table">
+        <thead>
+          <tr>
+            <th style="width: 60px;">Photo</th>
+            <th>Name</th>
+            <th>Position</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for m in members %}
+            <tr>
+              <td>
+                <div style="width: 44px; height: 44px; border-radius: 50%; overflow: hidden; border: 1px solid var(--color-border); background: var(--color-primary);">
+                  {% if m.photo %}
+                    <img src="{{ m.photo.url }}" style="width: 100%; height: 100%; object-fit: cover;">
+                  {% endif %}
+                </div>
+              </td>
+              <td><strong>{{ m.name }}</strong></td>
+              <td>{{ m.position }}</td>
+              <td>
+                <form method="post" onsubmit="return confirm('Remove team member {{ m.name }}?');">
+                  {% csrf_token %}
+                  <input type="hidden" name="action" value="delete">
+                  <input type="hidden" name="member_id" value="{{ m.pk }}">
+                  <button type="submit" class="dash-btn dash-btn--danger dash-btn--sm">Delete</button>
+                </form>
+              </td>
+            </tr>
+          {% empty %}
+            <tr>
+              <td colspan="4" style="text-align: center; color: var(--color-muted); padding: 30px;">No leadership members added yet.</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Add Member Form -->
+  <div class="dash-card">
+    <div class="dash-card__header">
+      <h2 class="dash-card__title">+ Add Leadership Member</h2>
+    </div>
+    <div class="dash-card__body">
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="create">
+
+        <div class="dash-form-group">
+          <label class="dash-label">Full Name *</label>
+          {{ form.name }}
+        </div>
+
+        <div class="dash-grid-2">
+          <div class="dash-form-group">
+            <label class="dash-label">Executive Position *</label>
+            {{ form.position }}
+          </div>
+          <div class="dash-form-group">
+            <label class="dash-label">Classification</label>
+            {{ form.member_type }}
+          </div>
+        </div>
+
+        <div class="dash-form-group">
+          <label class="dash-label">Executive Portrait Photo</label>
+          {{ form.photo }}
+        </div>
+
+        <div class="dash-form-group">
+          <label class="dash-label">Vision Statement / Quote</label>
+          {{ form.quote }}
+        </div>
+
+        <div class="dash-form-group">
+          <label class="dash-label">Biographical Narrative</label>
+          {{ form.bio }}
+        </div>
+
+        <div class="dash-grid-2">
+          <div class="dash-form-group">
+            <label class="dash-label">Display Order</label>
+            {{ form.order }}
+          </div>
+          <div class="dash-form-group" style="margin-top: 28px;">
+            <label style="display: flex; align-items: center; gap: 8px;">
+              {{ form.is_active }} <strong>Show on About Page</strong>
+            </label>
+          </div>
+        </div>
+
+        <button type="submit" class="dash-btn dash-btn--primary">Save Leadership Profile</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
