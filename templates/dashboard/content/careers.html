@@ -12,177 +12,171 @@
 {% endblock %}
 
 {% block content %}
+<!-- Top Row: 1 and 2 side by side -->
 <div class="dash-grid-2">
-
-  <!-- Left Column: Hero Banner & Spontaneous App Banner -->
-  <div style="display: flex; flex-direction: column; gap: var(--space-6);">
-    
-    <!-- 1. Hero Banner Card -->
-    <div class="dash-card">
-      <div class="dash-card__header">
-        <h2 class="dash-card__title">1. Careers Page Hero Banner</h2>
-        <span class="dash-badge">Talent Portal Header</span>
-      </div>
-      <div class="dash-card__body">
-        <form method="post" enctype="multipart/form-data">
-          {% csrf_token %}
-          <input type="hidden" name="action" value="save_hero">
-
-          <div class="dash-form-group">
-            <label class="dash-label">Eyebrow Kicker</label>
-            {{ hero_form.eyebrow }}
-          </div>
-
-          <div class="dash-form-row">
-            <div class="dash-form-group">
-              <label class="dash-label">Title Line 1</label>
-              {{ hero_form.title_line1 }}
-            </div>
-            <div class="dash-form-group">
-              <label class="dash-label">Title Line 2</label>
-              {{ hero_form.title_line2 }}
-            </div>
-          </div>
-
-          <div class="dash-form-group">
-            <label class="dash-label">Banner Narrative</label>
-            {{ hero_form.description }}
-          </div>
-
-          <div class="dash-form-group">
-            <label class="dash-label">Banner Background Image</label>
-            {% if hero_obj.hero_image %}
-              <div style="margin-bottom: var(--space-3); display: flex; align-items: center; gap: var(--space-3);">
-                <img src="{{ hero_obj.hero_image.url }}" alt="Preview" style="width: 120px; height: 60px; object-fit: cover; border-radius: var(--radius-sm); border: 1px solid var(--color-border);">
-                <label class="dash-checkbox-label" style="font-size: var(--text-xs); color: var(--color-danger);">
-                  <input type="checkbox" name="hero-hero_image-clear" value="1"> Clear Image (Restore Default)
-                </label>
-              </div>
-            {% endif %}
-            {{ hero_form.hero_image }}
-          </div>
-
-          <div class="dash-form-actions">
-            <button type="submit" class="dash-btn dash-btn--primary">Save Hero Banner</button>
-          </div>
-        </form>
-      </div>
+  
+  <!-- 1. Hero Banner Card -->
+  <div class="dash-card">
+    <div class="dash-card__header">
+      <h2 class="dash-card__title">1. Careers Page Hero Banner</h2>
+      <span class="dash-badge">Talent Portal Header</span>
     </div>
+    <div class="dash-card__body">
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="save_hero">
 
-    <!-- 2. Spontaneous Application CTA Card -->
-    <div class="dash-card">
-      <div class="dash-card__header">
-        <h2 class="dash-card__title">2. Spontaneous Application CTA</h2>
-        <span class="dash-badge">Direct Resume Drop Banner</span>
-      </div>
-      <div class="dash-card__body">
-        <form method="post">
-          {% csrf_token %}
-          <input type="hidden" name="action" value="save_spontaneous">
-
-          <div class="dash-form-group">
-            <label class="dash-label">Eyebrow</label>
-            {{ settings_form.spontaneous_eyebrow }}
-          </div>
-
-          <div class="dash-form-group">
-            <label class="dash-label">Title Heading</label>
-            {{ settings_form.spontaneous_title }}
-          </div>
-
-          <div class="dash-form-group">
-            <label class="dash-label">Description</label>
-            {{ settings_form.spontaneous_description }}
-          </div>
-
-          <div class="dash-form-row">
-            <div class="dash-form-group">
-              <label class="dash-label">Button Text</label>
-              {{ settings_form.spontaneous_btn_text }}
-            </div>
-            <div class="dash-form-group">
-              <label class="dash-label">Contact Target Email</label>
-              {{ settings_form.spontaneous_email }}
-            </div>
-          </div>
-
-          <div class="dash-form-actions">
-            <button type="submit" class="dash-btn dash-btn--primary">Save Spontaneous Banner</button>
-          </div>
-        </form>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- Right Column: Culture & Work Values Pillars -->
-  <div>
-    <div class="dash-card">
-      <div class="dash-card__header">
-        <div>
-          <h2 class="dash-card__title">3. Culture &amp; Values Pillars</h2>
-          <p class="dash-card__subtitle">Work environment standards and employee value propositions.</p>
+        <div class="dash-form-group">
+          <label class="dash-label">Eyebrow Kicker</label>
+          {{ hero_form.eyebrow }}
         </div>
-        <button type="button" class="dash-btn dash-btn--secondary dash-btn--sm" onclick="openDashModal('pillarModal')">
-          + Add Culture Pillar
-        </button>
-      </div>
-      <div class="dash-card__body">
-        {% if pillars %}
-          <div class="dash-table-wrap">
-            <table class="dash-table">
-              <thead>
-                <tr>
-                  <th style="width: 60px;">No.</th>
-                  <th>Pillar Title</th>
-                  <th>Description</th>
-                  <th style="width: 80px;">Status</th>
-                  <th style="width: 120px; text-align: right;">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for p in pillars %}
-                  <tr data-href="?edit_pillar={{ p.id }}">
-                    <td><code>{{ p.number }}</code></td>
-                    <td><strong>{{ p.title }}</strong></td>
-                    <td>
-                      <div style="font-size: var(--text-xs); color: var(--color-text-muted);">
-                        {{ p.description|truncatewords:15 }}
-                      </div>
-                    </td>
-                    <td>
-                      {% if p.is_active %}<span class="dash-badge dash-badge--success">Active</span>{% else %}<span class="dash-badge">Hidden</span>{% endif %}
-                    </td>
-                    <td style="text-align: center;">
-                      <div style="display: inline-flex; gap: 6px; align-items: center;">
-                        <a href="?edit_pillar={{ p.id }}" class="dash-btn dash-btn--secondary dash-btn--sm dash-btn--icon-only" title="Edit Culture Pillar" aria-label="Edit Culture Pillar">
-                          <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-                        </a>
-                        <form method="post" style="display: inline; margin: 0;" onsubmit="return confirm('Remove culture pillar \'{{ p.title }}\'?');">
-                          {% csrf_token %}
-                          <input type="hidden" name="action" value="delete_pillar">
-                          <input type="hidden" name="pillar_id" value="{{ p.id }}">
-                          <button type="submit" class="dash-btn dash-btn--danger dash-btn--sm dash-btn--icon-only" title="Delete Culture Pillar" aria-label="Delete Culture Pillar">
-                            <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
-                          </button>
-                        </form>
-                      </div>
-                    </td>
-                  </tr>
-                {% endfor %}
-              </tbody>
-            </table>
+
+        <div class="dash-form-row">
+          <div class="dash-form-group">
+            <label class="dash-label">Title Line 1</label>
+            {{ hero_form.title_line1 }}
           </div>
-        {% else %}
-          <div class="dash-empty-state">
-            <p>No culture pillars created yet.</p>
-            <button type="button" class="dash-btn dash-btn--primary dash-btn--sm" onclick="openDashModal('pillarModal')">Add First Pillar</button>
+          <div class="dash-form-group">
+            <label class="dash-label">Title Line 2</label>
+            {{ hero_form.title_line2 }}
           </div>
-        {% endif %}
-      </div>
+        </div>
+
+        <div class="dash-form-group">
+          <label class="dash-label">Banner Narrative</label>
+          {{ hero_form.description }}
+        </div>
+
+        <div class="dash-form-group">
+          <label class="dash-label">Banner Background Image</label>
+          {% if hero_obj.hero_image %}
+            <div style="margin-bottom: var(--space-3); display: flex; align-items: center; gap: var(--space-3);">
+              <img src="{{ hero_obj.hero_image.url }}" alt="Preview" style="width: 120px; height: 60px; object-fit: cover; border-radius: var(--radius-sm); border: 1px solid var(--color-border);">
+              <label class="dash-checkbox-label" style="font-size: var(--text-xs); color: var(--color-danger);">
+                <input type="checkbox" name="hero-hero_image-clear" value="1"> Clear Image (Restore Default)
+              </label>
+            </div>
+          {% endif %}
+          {{ hero_form.hero_image }}
+        </div>
+
+        <div class="dash-form-actions">
+          <button type="submit" class="dash-btn dash-btn--primary">Save Hero Banner</button>
+        </div>
+      </form>
     </div>
   </div>
 
+  <!-- 2. Spontaneous Application CTA Card -->
+  <div class="dash-card">
+    <div class="dash-card__header">
+      <h2 class="dash-card__title">2. Spontaneous Application CTA</h2>
+      <span class="dash-badge">Direct Resume Drop Banner</span>
+    </div>
+    <div class="dash-card__body">
+      <form method="post">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="save_spontaneous">
+
+        <div class="dash-form-group">
+          <label class="dash-label">Eyebrow</label>
+          {{ settings_form.spontaneous_eyebrow }}
+        </div>
+
+        <div class="dash-form-group">
+          <label class="dash-label">Title Heading</label>
+          {{ settings_form.spontaneous_title }}
+        </div>
+
+        <div class="dash-form-group">
+          <label class="dash-label">Description</label>
+          {{ settings_form.spontaneous_description }}
+        </div>
+
+        <div class="dash-form-row">
+          <div class="dash-form-group">
+            <label class="dash-label">Button Text</label>
+            {{ settings_form.spontaneous_btn_text }}
+          </div>
+          <div class="dash-form-group">
+            <label class="dash-label">Contact Target Email</label>
+            {{ settings_form.spontaneous_email }}
+          </div>
+        </div>
+
+        <div class="dash-form-actions">
+          <button type="submit" class="dash-btn dash-btn--primary">Save Spontaneous Banner</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+</div>
+
+<!-- Bottom Row: 3 taking full width -->
+<div class="dash-card">
+  <div class="dash-card__header">
+    <div>
+      <h2 class="dash-card__title">3. Culture &amp; Values Pillars</h2>
+      <p class="dash-card__subtitle">Work environment standards and employee value propositions.</p>
+    </div>
+    <button type="button" class="dash-btn dash-btn--secondary dash-btn--sm" onclick="openDashModal('pillarModal')">
+      + Add Culture Pillar
+    </button>
+  </div>
+  <div class="dash-card__body">
+    {% if pillars %}
+      <div class="dash-table-wrap">
+        <table class="dash-table">
+          <thead>
+            <tr>
+              <th style="width: 60px;">No.</th>
+              <th>Pillar Title</th>
+              <th>Description</th>
+              <th style="width: 80px;">Status</th>
+              <th style="width: 120px; text-align: center;">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for p in pillars %}
+              <tr data-href="?edit_pillar={{ p.id }}">
+                <td><code>{{ p.number }}</code></td>
+                <td><strong>{{ p.title }}</strong></td>
+                <td>
+                  <div style="font-size: var(--text-xs); color: var(--color-text-muted);">
+                    {{ p.description|truncatewords:15 }}
+                  </div>
+                </td>
+                <td>
+                  {% if p.is_active %}<span class="dash-badge dash-badge--success">Active</span>{% else %}<span class="dash-badge">Hidden</span>{% endif %}
+                </td>
+                <td style="text-align: center;">
+                  <div style="display: inline-flex; gap: 6px; align-items: center;">
+                    <a href="?edit_pillar={{ p.id }}" class="dash-btn dash-btn--secondary dash-btn--sm dash-btn--icon-only" title="Edit Culture Pillar" aria-label="Edit Culture Pillar">
+                      <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                    </a>
+                    <form method="post" style="display: inline; margin: 0;" onsubmit="return confirm('Remove culture pillar \'{{ p.title }}\'?');">
+                      {% csrf_token %}
+                      <input type="hidden" name="action" value="delete_pillar">
+                      <input type="hidden" name="pillar_id" value="{{ p.id }}">
+                      <button type="submit" class="dash-btn dash-btn--danger dash-btn--sm dash-btn--icon-only" title="Delete Culture Pillar" aria-label="Delete Culture Pillar">
+                        <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
+                      </button>
+                    </form>
+                  </div>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <div class="dash-empty-state">
+        <p>No culture pillars created yet.</p>
+        <button type="button" class="dash-btn dash-btn--primary dash-btn--sm" onclick="openDashModal('pillarModal')">Add First Pillar</button>
+      </div>
+    {% endif %}
+  </div>
 </div>
 
 <!-- Modal: Culture Pillar -->
@@ -194,40 +188,45 @@
     </div>
     <form method="post">
       {% csrf_token %}
+      <input type="hidden" name="action" value="{% if editing_pillar %}update_pillar{% else %}create_pillar{% endif %}">
       {% if editing_pillar %}
-        <input type="hidden" name="action" value="update_pillar">
         <input type="hidden" name="pillar_id" value="{{ editing_pillar.id }}">
-      {% else %}
-        <input type="hidden" name="action" value="create_pillar">
       {% endif %}
+
       <div class="dash-modal__body">
         <div class="dash-form-row">
-          <div class="dash-form-group" style="flex: 0 0 100px;">
-            <label class="dash-label">Number</label>
+          <div class="dash-form-group">
+            <label class="dash-label">Pillar Index Number (e.g. 01) *</label>
             {{ pillar_form.number }}
           </div>
-          <div class="dash-form-group" style="flex: 1;">
-            <label class="dash-label">Pillar Title</label>
-            {{ pillar_form.title }}
-          </div>
-        </div>
-        <div class="dash-form-group">
-          <label class="dash-label">Narrative</label>
-          {{ pillar_form.description }}
-        </div>
-        <div class="dash-form-row">
           <div class="dash-form-group">
-            <label class="dash-label">Order</label>
+            <label class="dash-label">Display Order</label>
             {{ pillar_form.order }}
           </div>
-          <div class="dash-form-group" style="display: flex; align-items: center; margin-top: 24px;">
-            <label class="dash-checkbox-label">{{ pillar_form.is_active }} Active</label>
-          </div>
+        </div>
+
+        <div class="dash-form-group">
+          <label class="dash-label">Pillar Heading Title *</label>
+          {{ pillar_form.title }}
+        </div>
+
+        <div class="dash-form-group">
+          <label class="dash-label">Work Environment Narrative *</label>
+          {{ pillar_form.description }}
+        </div>
+
+        <div class="dash-form-group">
+          <label class="dash-checkbox-label">
+            {{ pillar_form.is_active }}
+            <span>Active on Careers Page</span>
+          </label>
         </div>
       </div>
       <div class="dash-modal__footer">
         <button type="button" class="dash-btn dash-btn--secondary" onclick="closeDashModal('pillarModal')">Cancel</button>
-        <button type="submit" class="dash-btn dash-btn--primary">Save Pillar</button>
+        <button type="submit" class="dash-btn dash-btn--primary">
+          {% if editing_pillar %}Update Pillar{% else %}Create Pillar{% endif %}
+        </button>
       </div>
     </form>
   </div>
