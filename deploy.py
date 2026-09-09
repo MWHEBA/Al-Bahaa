@@ -952,8 +952,7 @@ class DeploymentManager:
             'core/security/file_validators_temp.py',
             'core/security/__init__.py',
             'passenger_wsgi.py',
-            '.htaccess'
-        ]
+            '.htaccess'        ]
         
         if filename not in important_files and self.is_ignored(file_path):
             print(f"❌ الملف مستثنى: {filename}")

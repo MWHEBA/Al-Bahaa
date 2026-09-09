@@ -29,9 +29,27 @@
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
     <link rel="stylesheet" href="{% static 'css/layout.css' %}">
     <link rel="stylesheet" href="{% static 'css/components.css' %}">
+    <link rel="stylesheet" href="{% static 'css/intro-preloader.css' %}">
     {% block extra_css %}{% endblock %}
   </head>
   <body class="{% block body_class %}{% endblock %}">
+    {% if request.resolver_match.url_name == 'home' or not request.resolver_match %}
+    <!-- Cinematic Preloader Overlay (Zero-FOUC & Fast-start - Home Only) -->
+    <div id="site-preloader" aria-label="Loading site presentation">
+      <div class="intro-video-stage">
+        <video class="intro-video-player"
+               autoplay
+               muted
+               playsinline
+               preload="auto"
+               poster="{% static 'video/logo-intro-poster.webp' %}">
+          <source src="{% static 'video/logo-intro.mp4' %}" type="video/mp4">
+        </video>
+      </div>
+      <button type="button" class="intro-skip-btn" aria-label="Skip introduction">Skip Intro &rarr;</button>
+    </div>
+    {% endif %}
+
     {% if request.user.is_authenticated and request.user.is_staff %}
       <div class="executive-quick-bar" aria-label="Staff Quick Actions">
         <div>
@@ -52,6 +70,7 @@
       {% block content %}{% endblock %}
     </main>
     {% include "includes/footer.html" %}
+    <script src="{% static 'js/intro-controller.js' %}"></script>
     <script src="{% static 'js/alpine-components.js' %}" defer></script>
     <script src="{% static 'js/main.js' %}" defer></script>
     {% block extra_js %}{% endblock %}
