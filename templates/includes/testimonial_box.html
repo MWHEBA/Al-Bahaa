@@ -2,9 +2,9 @@
 <aside class="quote-box">
   <span class="quote-box__mark" aria-hidden="true">&rdquo;</span>
   {% if site_settings.footer_logo %}
-  <img class="quote-box__logo" src="{{ site_settings.footer_logo.url }}" alt="{{ site_settings.company_name|default:'Al Bahaa Contracting' }}">
+  <img class="quote-box__logo" src="{{ site_settings.footer_logo.url }}" alt="{{ site_settings.company_name|default:'Al Bahaa Construction' }}">
   {% else %}
-  <img class="quote-box__logo" src="{% static 'img/branding/AlBahaa logo - square.svg' %}" alt="{{ site_settings.company_name|default:'Al Bahaa Contracting' }}">
+  <img class="quote-box__logo" src="{% static 'img/branding/AlBahaa logo - square.svg' %}" alt="{{ site_settings.company_name|default:'Al Bahaa Construction' }}">
   {% endif %}
-  <p>{{ site_settings.footer_quote|default:'Established in 1986, AlBahaa delivers integrated contracting, finishing, and construction solutions across Egypt.' }}</p>
+  <p>{{ site_settings.footer_quote|default:'Partner with Al Bahaa Construction for reliable infrastructure, engineering excellence, and sustainable project delivery across Egypt.' }}</p>
 </aside>

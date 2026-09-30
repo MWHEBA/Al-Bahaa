@@ -4,12 +4,12 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{% block title %}{{ site_settings.company_name|default:"Al Bahaa Contracting (S.A.E)" }}{% endblock %}</title>
-    <meta name="description" content="{% block meta_description %}{{ site_settings.footer_quote|default:'Established in 1986, Al Bahaa delivers Grade A water networks, turnkey civil construction, and enduring architectural landmarks across Egypt.' }}{% endblock %}">
+    <title>{% block title %}{{ site_settings.company_name|default:"Al Bahaa Construction" }}{% endblock %}</title>
+    <meta name="description" content="{% block meta_description %}{{ site_settings.footer_quote|default:'For nearly four decades, Al Bahaa Construction has delivered critical infrastructure, water, wastewater, irrigation, residential, and electromechanical projects across Egypt.' }}{% endblock %}">
     
     <!-- OpenGraph Meta Tags -->
-    <meta property="og:title" content="{% block og_title %}{{ site_settings.company_name|default:'Al Bahaa Contracting (S.A.E)' }}{% endblock %}">
-    <meta property="og:description" content="{% block og_description %}{{ site_settings.footer_quote|default:'Established in 1986, Al Bahaa delivers Grade A water networks, turnkey civil construction, and enduring architectural landmarks across Egypt.' }}{% endblock %}">
+    <meta property="og:title" content="{% block og_title %}{{ site_settings.company_name|default:'Al Bahaa Construction' }}{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}{{ site_settings.footer_quote|default:'For nearly four decades, Al Bahaa Construction has delivered critical infrastructure, water, wastewater, irrigation, residential, and electromechanical projects across Egypt.' }}{% endblock %}">
     <meta property="og:type" content="{% block og_type %}website{% endblock %}">
     <meta property="og:url" content="{{ request.build_absolute_uri }}">
     <meta property="og:image" content="{% block og_image %}{% if site_settings.header_logo %}{{ request.scheme }}://{{ request.get_host }}{{ site_settings.header_logo.url }}{% endif %}{% endblock %}">

@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}{{ project.title }} | Case Study | {{ site_settings.company_name|default:"Al Bahaa Contracting" }}{% endblock %}
+{% block title %}{{ project.title }} | Case Study | {{ site_settings.company_name|default:"Al Bahaa Construction" }}{% endblock %}
 {% block meta_description %}{{ project.short_description|default:project.title|truncatewords:25 }}{% endblock %}
-{% block og_title %}{{ project.title }} | Al Bahaa Contracting{% endblock %}
+{% block og_title %}{{ project.title }} | {{ site_settings.company_name|default:"Al Bahaa Construction" }}{% endblock %}
 {% block og_description %}{{ project.short_description|default:project.title|truncatewords:25 }}{% endblock %}
 {% block og_image %}{% if project.cover_image %}{{ request.scheme }}://{{ request.get_host }}{{ project.cover_image.url }}{% endif %}{% endblock %}
 {% block body_class %}project-detail-page{% endblock %}
@@ -44,13 +44,13 @@
     <div class="project-metrics-grid">
       {% if project.built_up_area %}
         <div class="project-metric-item">
-          <span class="metric-label">Built-Up Area</span>
+          <span class="metric-label">Capacity / Metric</span>
           <span class="metric-value">{{ project.built_up_area }}</span>
         </div>
       {% endif %}
       <div class="project-metric-item">
         <span class="metric-label">Sector</span>
-        <span class="metric-value">{{ project.category.name|default:"Commercial" }}</span>
+        <span class="metric-value">{{ project.category.name|default:"Infrastructure" }}</span>
       </div>
       {% if project.location %}
         <div class="project-metric-item">

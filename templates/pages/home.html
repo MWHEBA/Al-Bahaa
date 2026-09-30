@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}{{ site_settings.company_name|default:"Al Bahaa Contracting (S.A.E)" }} | Architecture, Infrastructure &amp; Engineering Landmarks{% endblock %}
+{% block title %}{{ site_settings.company_name|default:"Al Bahaa Construction" }} | Engineering Excellence &amp; Infrastructure Leadership{% endblock %}
+{% block meta_description %}For nearly four decades, Al Bahaa Construction has delivered critical infrastructure, water, wastewater, irrigation, residential, and electromechanical projects across Egypt.{% endblock %}
 {% block body_class %}home-page{% endblock %}
 
 {% block extra_css %}
@@ -11,24 +12,24 @@
 {% block content %}
   <!-- Hero Section: Architectural Monograph Editorial Banner -->
   {% with hero=page_heroes.home %}
-  <section class="home-hero page-section page-section--wide" aria-label="{{ site_settings.company_name|default:'Al Bahaa Contracting' }}">
+  <section class="home-hero page-section page-section--wide" aria-label="{{ site_settings.company_name|default:'Al Bahaa Construction' }}">
     <div class="home-hero__media">
       {% if hero and hero.hero_image %}
-        <img class="home-hero__image" src="{{ hero.hero_image.url }}" alt="{{ site_settings.company_name|default:'Al Bahaa' }} Architectural Engineering Landmark" fetchpriority="high" decoding="async">
+        <img class="home-hero__image" src="{{ hero.hero_image.url }}" alt="{{ site_settings.company_name|default:'Al Bahaa Construction' }}" fetchpriority="high" decoding="async">
       {% else %}
-        <img class="home-hero__image" src="{% static 'img/home/Rectangle 3.webp' %}" alt="{{ site_settings.company_name|default:'Al Bahaa' }} Architectural Engineering Landmark" fetchpriority="high" decoding="async">
+        <img class="home-hero__image" src="{% static 'img/home/Rectangle 3.webp' %}" alt="{{ site_settings.company_name|default:'Al Bahaa Construction' }}" fetchpriority="high" decoding="async">
       {% endif %}
     </div>
     <div class="home-hero__card">
-      <span class="home-hero__eyebrow">{{ hero.eyebrow|default:site_settings.company_name|default:"AL BAHAA CONTRACTING (S.A.E)"|upper }}</span>
+      <span class="home-hero__eyebrow">{{ hero.eyebrow|default:"AL BAHAA CONSTRUCTION"|upper }}</span>
       <h1 class="home-hero__title">
         {% if hero and hero.title_html %}
           {{ hero.title_html|safe }}
         {% else %}
-          ENGINEERING EXCELLENCE &amp;<br>CIVIL INFRASTRUCTURE
+          ENGINEERING EXCELLENCE.<br>INFRASTRUCTURE LEADERSHIP.
         {% endif %}
       </h1>
-      <p class="home-hero__desc">{{ hero.description|default:"Established in 1986, Al Bahaa delivers Grade A water networks, turnkey civil construction, and enduring architectural landmarks across Egypt with disciplined execution." }}</p>
+      <p class="home-hero__desc">{{ hero.description|default:"For nearly four decades, Al Bahaa Construction has delivered critical infrastructure, water, wastewater, irrigation, residential, and electromechanical projects across Egypt." }}</p>
       <div class="home-hero__actions">
         <a class="button button--solid" href="{% url 'projects:list' %}">Explore Projects</a>
         <a class="button" href="{% url 'core:about' %}">About Al Bahaa</a>
@@ -45,8 +46,8 @@
         <h3 class="home-specialization__discipline">{{ specializations.0.discipline }}</h3>
         <p class="home-specialization__desc">{{ specializations.0.description }}</p>
       {% else %}
-        <h3 class="home-specialization__discipline">GRADE A INFRASTRUCTURE</h3>
-        <p class="home-specialization__desc">Specialized in municipal water transmission pipelines, sewage collector networks, pumping stations, and stormwater drainage systems engineered to exacting standards.</p>
+        <h3 class="home-specialization__discipline">WATER &amp; WASTEWATER INFRASTRUCTURE</h3>
+        <p class="home-specialization__desc">Comprehensive water treatment facilities, wastewater treatment plants, municipal distribution networks, sewer collector pipelines, water transmission mains, and pumping stations.</p>
       {% endif %}
       <div class="home-specialization__nav">
         <button type="button" class="button button--solid button--split-previous home-specialization__previous" aria-label="Previous Specialization">Previous</button>
@@ -68,36 +69,59 @@
           WE TURN BLUEPRINTS INTO<br>ENDURING REALITY.
         {% endif %}
       </h2>
-      <p>{{ home_content.blueprints_description|default:"With more than three decades of engineering leadership and active membership in the Egyptian Federation for Construction, Al Bahaa delivers turnkey civil, residential, and infrastructure landmarks on schedule, within budget, and to the highest QA/QC standards." }}</p>
-      <a class="button home-works__button" href="{{ home_content.blueprints_btn_url|default:'/about/' }}">{{ home_content.blueprints_btn_text|default:"View More" }}</a>
+      <p>{{ home_content.blueprints_description|default:"For nearly four decades, Al Bahaa Construction has delivered critical infrastructure, water, wastewater, irrigation, residential, and electromechanical projects across Egypt. From major national development initiatives to essential community infrastructure, we combine engineering expertise, operational excellence, and a commitment to quality." }}</p>
+      <a class="button home-works__button" href="{{ home_content.blueprints_btn_url|default:'/about/' }}">{{ home_content.blueprints_btn_text|default:"About Al Bahaa" }}</a>
+    </div>
+  </section>
+
+  <!-- Why Al Bahaa: One Partner. Complete Delivery -->
+  <section class="page-section page-section--wide home-why" aria-label="Why Choose Al Bahaa">
+    <div class="section-heading">
+      <p class="section-heading__eyebrow">WHY AL BAHAA.</p>
+      <div class="section-heading__row">
+        <h2>One Partner.<br>Complete Delivery.</h2>
+        <span class="section-heading__rule" aria-hidden="true"></span>
+      </div>
+      <p class="section-heading__sub">Our integrated structure enables us to deliver projects from civil construction through electromechanical installation and commissioning under a single management framework.</p>
+    </div>
+
+    <div class="home-why-grid">
+      <div class="home-why-card"><span>01</span><h3>40 Years Experience</h3><p>Founded in 1986 with an unbroken track record of infrastructure excellence.</p></div>
+      <div class="home-why-card"><span>02</span><h3>Grade A Classification</h3><p>Highest official Egyptian contractor classification in water &amp; wastewater networks.</p></div>
+      <div class="home-why-card"><span>03</span><h3>Nationwide Execution</h3><p>Active project sites across Upper Egypt, Delta, Canal, Sinai, and coastal zones.</p></div>
+      <div class="home-why-card"><span>04</span><h3>Infrastructure Mastery</h3><p>Proven execution of mega water lifting, deep intakes, and major pipelines.</p></div>
+      <div class="home-why-card"><span>05</span><h3>Civil &amp; MEP Integration</h3><p>Turnkey capabilities spanning structural, electrical, and mechanical disciplines.</p></div>
+      <div class="home-why-card"><span>06</span><h3>Public Sector Trust</h3><p>Enduring partnerships with Armed Forces authorities, NUCA, and NOPWASD.</p></div>
+      <div class="home-why-card"><span>07</span><h3>ISO Certified Systems</h3><p>Strict adherence to ISO 9001, ISO 14001, and ISO 45001 management standards.</p></div>
+      <div class="home-why-card"><span>08</span><h3>Award-Winning Standards</h3><p>Participant in global award-winning projects including ENR Best Project Award 2020.</p></div>
     </div>
   </section>
 
   <!-- Featured Projects Mosaic Section -->
   <section class="page-section page-section--wide home-projects" aria-label="Our Featured Projects">
-    {% include "includes/section_heading.html" with eyebrow="OUR PROJECTS." title="We like to build<br>things people use." %}
+    {% include "includes/section_heading.html" with eyebrow="FEATURED PROJECTS." title="Critical Infrastructure<br>Delivered Across Egypt." %}
 
     <div class="home-projects__mosaic">
       {% if featured_projects.0 and featured_projects.0.cover_image %}
         <img class="home-projects__drawing" src="{{ featured_projects.0.cover_image.url }}" alt="{{ featured_projects.0.title }}" loading="lazy" decoding="async">
       {% else %}
-        <img class="home-projects__drawing" src="{% static 'img/home/Rectangle 9.webp' %}" alt="Architectural Blueprint and Master Plan" loading="lazy" decoding="async">
+        <img class="home-projects__drawing" src="{% static 'img/home/Rectangle 9.webp' %}" alt="Al Mahsama Water Lift Station" loading="lazy" decoding="async">
       {% endif %}
 
       {% if featured_projects.1 and featured_projects.1.cover_image %}
         <img class="home-projects__tower-white" src="{{ featured_projects.1.cover_image.url }}" alt="{{ featured_projects.1.title }}" loading="lazy" decoding="async">
       {% else %}
-        <img class="home-projects__tower-white" src="{% static 'img/home/Rectangle 9 copy.webp' %}" alt="Prime Administrative Tower Development" loading="lazy" decoding="async">
+        <img class="home-projects__tower-white" src="{% static 'img/home/Rectangle 9 copy.webp' %}" alt="Mostaqbal Misr Water Pipeline" loading="lazy" decoding="async">
       {% endif %}
       
       <article class="home-projects__card">
         {% if featured_project %}
           <h3>{{ featured_project.title|upper }}</h3>
-          <p>{{ featured_project.short_description|default:featured_project.full_description|truncatewords:18 }}</p>
+          <p>{{ featured_project.short_description|default:featured_project.full_description|truncatewords:20 }}</p>
           <a class="button button--text button--arrow" href="{% url 'projects:detail' slug=featured_project.slug %}">View Project</a>
         {% else %}
-          <h3>CENTRAL BUSINESS HUB</h3>
-          <p>Turnkey commercial and administrative complex engineered with high-durability reinforced concrete and advanced MEP coordination.</p>
+          <h3>AL MAHSAMA WATER LIFT STATION</h3>
+          <p>Designed to pump approximately 1 million m³ of water per day to support agricultural development in Sinai.</p>
           <a class="button button--text button--arrow" href="{% url 'projects:list' %}">View Project</a>
         {% endif %}
       </article>
@@ -105,88 +129,97 @@
       {% if featured_projects.2 and featured_projects.2.cover_image %}
         <img class="home-projects__pipes" src="{{ featured_projects.2.cover_image.url }}" alt="{{ featured_projects.2.title }}" loading="lazy" decoding="async">
       {% else %}
-        <img class="home-projects__pipes" src="{% static 'img/home/Rectangle 9 copy 11.webp' %}" alt="Municipal Water and Sewage Infrastructure Networks" loading="lazy" decoding="async">
+        <img class="home-projects__pipes" src="{% static 'img/home/Rectangle 9 copy 11.webp' %}" alt="Al Minya Nile Intake Pumping Station" loading="lazy" decoding="async">
       {% endif %}
 
       {% if featured_projects.3 and featured_projects.3.cover_image %}
         <img class="home-projects__column" src="{{ featured_projects.3.cover_image.url }}" alt="{{ featured_projects.3.title }}" loading="lazy" decoding="async">
       {% else %}
-        <img class="home-projects__column" src="{% static 'img/home/Rectangle 9 copy 2.webp' %}" alt="Reinforced Concrete and Heavy Civil Works" loading="lazy" decoding="async">
+        <img class="home-projects__column" src="{% static 'img/home/Rectangle 9 copy 2.webp' %}" alt="Sadat City Water Treatment Plant" loading="lazy" decoding="async">
       {% endif %}
 
       {% if featured_projects.4 and featured_projects.4.cover_image %}
         <img class="home-projects__glass" src="{{ featured_projects.4.cover_image.url }}" alt="{{ featured_projects.4.title }}" loading="lazy" decoding="async">
       {% else %}
-        <img class="home-projects__glass" src="{% static 'img/home/Rectangle 9 copy 3.webp' %}" alt="Modern Architectural Glass Facade Construction" loading="lazy" decoding="async">
+        <img class="home-projects__glass" src="{% static 'img/home/Rectangle 9 copy 3.webp' %}" alt="Dar Misr National Housing Project" loading="lazy" decoding="async">
       {% endif %}
 
       {% if featured_projects.0 and featured_projects.0.cover_image %}
         <img class="home-projects__water" src="{{ featured_projects.0.cover_image.url }}" alt="{{ featured_projects.0.title }}" loading="lazy" decoding="async">
       {% else %}
-        <img class="home-projects__water" src="{% static 'img/home/Rectangle 9 copy 4.webp' %}" alt="Water Treatment and Pumping Station Engineering" loading="lazy" decoding="async">
+        <img class="home-projects__water" src="{% static 'img/home/Rectangle 9 copy 4.webp' %}" alt="Water Treatment Engineering" loading="lazy" decoding="async">
       {% endif %}
     </div>
 
     <div class="home-projects__footer">
-      <a class="button button--solid" href="{% url 'projects:list' %}">View All Projects</a>
+      <a class="button button--solid" href="{% url 'projects:list' %}">View All 13 Projects</a>
     </div>
   </section>
 
-  <!-- Testimonials & Client Trust Section -->
-  <section class="page-section page-section--wide home-testimonials" aria-label="Client Trust and Endorsements">
-    {% include "includes/section_heading.html" with eyebrow="OUR CLIENT." title="What others say<br>about our work." %}
+  <!-- Where We Operate (4 Regional Hubs) -->
+  <section class="page-section page-section--wide home-operate" aria-label="Where We Operate">
+    <div class="section-heading">
+      <p class="section-heading__eyebrow">WHERE WE OPERATE.</p>
+      <div class="section-heading__row">
+        <h2>Nationwide Operational Footprint.</h2>
+        <span class="section-heading__rule" aria-hidden="true"></span>
+      </div>
+      <p class="section-heading__sub">Our projects span major cities, strategic governorates, and emerging development zones throughout Egypt:</p>
+    </div>
 
-    <div class="home-testimonials__cards">
-      {% if testimonials %}
-        {% for t in testimonials %}
-          <article class="home-testimonial {% if t.is_accent or forloop.counter == 3 %}home-testimonial--accent{% endif %}">
-            <blockquote>"{{ t.quote }}"</blockquote>
-            <span class="home-testimonial__mark" aria-hidden="true">”</span>
-            <footer class="home-testimonial__footer">
-              <strong>{{ t.client_name }}</strong>
-              <span class="home-testimonial__role">{{ t.position|default:t.company }}</span>
-            </footer>
-          </article>
-        {% endfor %}
-      {% else %}
-        <article class="home-testimonial">
-          <blockquote>"Al Bahaa's execution on major municipal infrastructure works demonstrated impeccable technical rigor, Grade A compliance, and flawless coordination."</blockquote>
-          <span class="home-testimonial__mark" aria-hidden="true">”</span>
-          <footer class="home-testimonial__footer">
-            <strong>Consulting Engineers Group (CEG)</strong>
-            <span class="home-testimonial__role">Project Supervision</span>
-          </footer>
-        </article>
+    <div class="home-operate-grid">
+      <div class="home-operate-card">
+        <h3>Greater Cairo &amp; Delta</h3>
+        <ul>
+          <li>Cairo &amp; New Cairo</li>
+          <li>Giza &amp; 6th of October</li>
+          <li>Sadat City</li>
+        </ul>
+      </div>
 
-        <article class="home-testimonial">
-          <blockquote>"Their adherence to structural milestones, safety protocols, and quality control sets a benchmark for joint-stock contractors in Egypt."</blockquote>
-          <span class="home-testimonial__mark" aria-hidden="true">”</span>
-          <footer class="home-testimonial__footer">
-            <strong>Urban Communities Authority</strong>
-            <span class="home-testimonial__role">Infrastructure Division</span>
-          </footer>
-        </article>
+      <div class="home-operate-card">
+        <h3>Upper Egypt Governorates</h3>
+        <ul>
+          <li>Al Minya &amp; Beni Suef</li>
+          <li>Fayoum &amp; Assiut</li>
+          <li>Sohag &amp; Aswan</li>
+        </ul>
+      </div>
 
-        <article class="home-testimonial home-testimonial--accent">
-          <blockquote>"Turnkey project delivery executed with superior craftsmanship, delivered on schedule with outstanding attention to engineering QA/QC."</blockquote>
-          <span class="home-testimonial__mark" aria-hidden="true">”</span>
-          <footer class="home-testimonial__footer">
-            <strong>Prime Developments</strong>
-            <span class="home-testimonial__role">Executive Management</span>
-          </footer>
-        </article>
-      {% endif %}
+      <div class="home-operate-card">
+        <h3>Canal &amp; Sinai Region</h3>
+        <ul>
+          <li>Ismailia &amp; Port Said</li>
+          <li>Al Arish &amp; Central Sinai</li>
+        </ul>
+      </div>
+
+      <div class="home-operate-card">
+        <h3>Coast &amp; Agricultural Zones</h3>
+        <ul>
+          <li>New Alamein City</li>
+          <li>Agricultural Reclamation Areas</li>
+          <li>Decent Life (Hayah Karima) Communities</li>
+        </ul>
+      </div>
     </div>
   </section>
 
-  <!-- Client Logos Section (Contained to Content Max-Width) -->
+  <!-- Client Logos Section -->
   <section class="page-section page-section--wide home-clients" aria-label="Institutional Partners and Client Logos">
+    <div class="section-heading" style="margin-bottom: 24px;">
+      <p class="section-heading__eyebrow">OUR CLIENTS.</p>
+      <div class="section-heading__row">
+        <h2>Trusted by Egypt's leading government authorities.</h2>
+        <span class="section-heading__rule" aria-hidden="true"></span>
+      </div>
+    </div>
     {% include "includes/client_logos.html" %}
   </section>
 
   <!-- News & Engineering Insights Section -->
   <section class="page-section page-section--wide home-news" aria-label="Latest News and Corporate Updates">
-    {% include "includes/section_heading.html" with eyebrow="LATEST NEWS." title="Updated news." %}
+    {% include "includes/section_heading.html" with eyebrow="LATEST NEWS &amp; RECOGNITION." title="Corporate milestones<br>&amp; global achievements." %}
 
     <div class="home-news__grid">
       <!-- Main Featured Story (Left Column) -->
@@ -198,9 +231,9 @@
             </div>
             <div class="home-news__featured-body">
               <div class="home-news__meta">
-                <span class="home-news__category-tag">{{ p0.category.name|default:"INFRASTRUCTURE"|upper }}</span>
+                <span class="home-news__category-tag">{{ p0.category.name|default:"AWARDS"|upper }}</span>
                 <span>•</span>
-                <time datetime="{{ p0.published_at|date:'Y-m-d' }}">{{ p0.published_at|date:"M d, Y"|default:"OCT 2026"|upper }}</time>
+                <time datetime="{{ p0.published_at|date:'Y-m-d' }}">{{ p0.published_at|date:"M d, Y"|default:"2026"|upper }}</time>
               </div>
               <h3>{{ p0.title }}</h3>
               <p>{{ p0.excerpt|default:p0.content|truncatewords:24 }}</p>
@@ -208,22 +241,6 @@
             </div>
           </article>
         {% endwith %}
-      {% else %}
-        <article class="home-news__featured-card">
-          <div class="home-news__featured-image">
-            <img src="{% static 'img/home/Rectangle 15.webp' %}" alt="Advancing Municipal Infrastructure in Egypt" loading="lazy" decoding="async">
-          </div>
-          <div class="home-news__featured-body">
-            <div class="home-news__meta">
-              <span class="home-news__category-tag">INFRASTRUCTURE</span>
-              <span>•</span>
-              <time datetime="2026-10-15">OCT 15, 2026</time>
-            </div>
-            <h3>Advancing Egypt's Water &amp; Municipal Transmission Networks</h3>
-            <p>Al Bahaa continues to expand its Grade A infrastructure division, implementing modern trenchless piping and automated pumping station technologies for major national development initiatives across Egypt.</p>
-            <a class="button button--text button--arrow home-news__link" href="{% url 'news:list' %}">Read Full Report</a>
-          </div>
-        </article>
       {% endif %}
 
       <!-- Side Stacked Stories (Right Column) -->
@@ -236,9 +253,9 @@
               </div>
               <div class="home-news__secondary-body">
                 <div class="home-news__meta">
-                  <span class="home-news__category-tag">{{ post.category.name|default:"CIVIL WORKS"|upper }}</span>
+                  <span class="home-news__category-tag">{{ post.category.name|default:"PROJECTS"|upper }}</span>
                   <span>•</span>
-                  <time datetime="{{ post.published_at|date:'Y-m-d' }}">{{ post.published_at|date:"M d, Y"|default:"OCT 2026"|upper }}</time>
+                  <time datetime="{{ post.published_at|date:'Y-m-d' }}">{{ post.published_at|date:"M d, Y"|default:"2026"|upper }}</time>
                 </div>
                 <h3>{{ post.title }}</h3>
                 <p>{{ post.excerpt|default:post.content|truncatewords:14 }}</p>
@@ -249,33 +266,17 @@
         {% else %}
           <article class="home-news__secondary-card">
             <div class="home-news__secondary-image">
-              <img src="{% static 'img/home/Rectangle 9 copy 2.webp' %}" alt="Structural Engineering and QA/QC Milestones" loading="lazy" decoding="async">
+              <img src="{% static 'img/home/Rectangle 9 copy 2.webp' %}" alt="Mostaqbal Misr 2500mm Pipeline Delivery" loading="lazy" decoding="async">
             </div>
             <div class="home-news__secondary-body">
               <div class="home-news__meta">
-                <span class="home-news__category-tag">CIVIL WORKS</span>
+                <span class="home-news__category-tag">INFRASTRUCTURE</span>
                 <span>•</span>
-                <time datetime="2026-09-28">SEP 28, 2026</time>
+                <time datetime="2026-09-28">SEP 2026</time>
               </div>
-              <h3>Pioneering Quality Control &amp; Structural Milestones</h3>
-              <p>Achieving zero-defect concrete pours on high-capacity administrative structures using advanced QA/QC monitoring.</p>
-              <a class="button button--text button--arrow home-news__link" href="{% url 'news:list' %}">Read Article</a>
-            </div>
-          </article>
-
-          <article class="home-news__secondary-card">
-            <div class="home-news__secondary-image">
-              <img src="{% static 'img/home/Rectangle 9 copy 3.webp' %}" alt="Architectural Sustainability & Facade Engineering" loading="lazy" decoding="async">
-            </div>
-            <div class="home-news__secondary-body">
-              <div class="home-news__meta">
-                <span class="home-news__category-tag">SUSTAINABILITY</span>
-                <span>•</span>
-                <time datetime="2026-08-14">AUG 14, 2026</time>
-              </div>
-              <h3>Sustainable High-Performance Facade Engineering</h3>
-              <p>Integrating climate-resilient envelope technologies into urban developments across Egypt.</p>
-              <a class="button button--text button--arrow home-news__link" href="{% url 'news:list' %}">Read Article</a>
+              <h3>Mostaqbal Misr Ø 2,500 mm Pipeline Milestone Completion</h3>
+              <p>Successful hydrostatic pressure testing and pipeline installation across the New Delta agricultural corridor.</p>
+              <a class="button button--text button--arrow home-news__link" href="{% url 'projects:detail' slug='mostaqbal-misr-water-pipeline' %}">View Case Study</a>
             </div>
           </article>
         {% endif %}
@@ -283,7 +284,7 @@
     </div>
 
     <div class="home-news__footer">
-      <a class="button button--dark" href="{% url 'news:list' %}">ALL NEWS</a>
+      <a class="button button--dark" href="{% url 'news:list' %}">ALL NEWS &amp; RECOGNITION</a>
     </div>
   </section>
 {% endblock %}

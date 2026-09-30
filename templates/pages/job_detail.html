@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}{{ job.title }} | Careers | Al Bahaa Contracting{% endblock %}
+{% block title %}{{ job.title }} | Careers | {{ site_settings.company_name|default:"Al Bahaa Construction" }}{% endblock %}
 {% block body_class %}job-detail-page{% endblock %}
 
 {% block extra_css %}
@@ -22,7 +22,7 @@
     <div class="job-intro__title-wrap">
       <h1 class="job-intro__heading">{{ job.title }}</h1>
       <div class="job-intro__meta-strip">
-        <span class="job-meta-pill job-meta-pill--dept">{{ job.department.name|default:"General Contracting" }}</span>
+        <span class="job-meta-pill job-meta-pill--dept">{{ job.department.name|default:"Finance & Accounting" }}</span>
         <span class="job-meta-pill">{{ job.location }}</span>
         <span class="job-meta-pill">{{ job.job_type }}</span>
         <span class="job-meta-pill">{{ job.experience }}</span>
@@ -35,7 +35,7 @@
     <div class="job-metrics-grid">
       <div class="job-metric-item">
         <span class="metric-label">Department</span>
-        <span class="metric-value">{{ job.department.name|default:"Contracting" }}</span>
+        <span class="metric-value">{{ job.department.name|default:"Finance & Accounting" }}</span>
       </div>
       <div class="job-metric-item">
         <span class="metric-label">Location</span>
@@ -226,8 +226,8 @@
 
           <div class="apply-card-footer">
             <p>Prefer sending via email?</p>
-            <a href="mailto:careers@albahaacontracting.com?subject=Application:%20{{ job.title|urlencode }}" class="apply-email-link">
-              careers@albahaacontracting.com &rarr;
+            <a href="mailto:careers@albahaaconstruction.com?subject=Application:%20{{ job.title|urlencode }}" class="apply-email-link">
+              careers@albahaaconstruction.com &rarr;
             </a>
           </div>
         </div>

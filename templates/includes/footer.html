@@ -10,19 +10,20 @@
       <section class="footer-contact">
         <h2>Contact</h2>
         <p><a href="tel:{{ site_settings.phone_main|default:'+20223899255'|cut:' '|cut:'('|cut:')' }}">{{ site_settings.phone_main|default:"+20 (2) 2389 9255" }}</a></p>
-        <p class="footer-contact__email"><a href="mailto:{{ site_settings.email_general|default:'info@albahaacontracting.com' }}">{{ site_settings.email_general|default:"info@albahaacontracting.com" }}</a></p>
+        <p class="footer-contact__email"><a href="mailto:{{ site_settings.email_general|default:'info@albahaaconstruction.com' }}">{{ site_settings.email_general|default:"info@albahaaconstruction.com" }}</a></p>
       </section>
       <section class="footer-contact">
-        <h2>Latest Projects</h2>
+        <h2>Key Sectors</h2>
         {% if footer_categories %}
-          {% for cat in footer_categories|slice:":2" %}
+          {% for cat in footer_categories|slice:":3" %}
           <p><a href="{% url 'projects:list' %}?category={{ cat.slug }}">{{ cat.name }}</a></p>
           {% endfor %}
         {% else %}
-          <p>Commercial spaces</p>
-          <p>Administrative buildings</p>
+          <p><a href="{% url 'projects:list' %}?category=water-wastewater">Water &amp; Wastewater</a></p>
+          <p><a href="{% url 'projects:list' %}?category=infrastructure-networks">Infrastructure &amp; Networks</a></p>
+          <p><a href="{% url 'projects:list' %}?category=civil-industrial">Civil &amp; Industrial</a></p>
         {% endif %}
-        <p><a href="{% url 'projects:list' %}">View projects</a></p>
+        <p><a href="{% url 'projects:list' %}">All Projects &rarr;</a></p>
       </section>
     </div>
     <div class="site-footer__bottom">

@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}Company &amp; About Us | {{ site_settings.company_name|default:"Al Bahaa Contracting (S.A.E)" }}{% endblock %}
+{% block title %}About Us | {{ site_settings.company_name|default:"Al Bahaa Construction" }}{% endblock %}
+{% block meta_description %}Al Bahaa Construction is a premier Grade A Egyptian engineering and contracting company specializing in water, wastewater, irrigation, electromechanical, and residential infrastructure since 1986.{% endblock %}
 {% block body_class %}about-page{% endblock %}
 
 {% block extra_css %}
@@ -10,20 +11,20 @@
 
 {% block content %}
   {% with hero=page_heroes.about %}
-    {% include "includes/page_intro.html" with eyebrow=hero.eyebrow|default:"About Al Bahaa" title_html=hero.title_html|default:"We like to build<br>things people use." description=hero.description|default:"An Egyptian joint stock company with more than 30 years of engineering leadership, Grade A infrastructure classification, and turnkey project delivery." image_url=hero.image_url %}
+    {% include "includes/page_intro.html" with eyebrow=hero.eyebrow|default:"ABOUT AL BAHAA CONSTRUCTION" title_html=hero.title_html|default:"Building Egypt's Infrastructure<br>Since 1986" description=hero.description|default:"For nearly four decades, Al Bahaa Construction has delivered critical infrastructure, water, wastewater, irrigation, residential, and electromechanical projects across Egypt." image_url=hero.image_url %}
   {% endwith %}
 
-  <!-- Overview Section: Editorial Card overlapping Page Intro -->
-  <section class="page-section page-section--wide about-overview" aria-label="Who we are and what we do">
+  <!-- 1. Overview Section: Who We Are & Key Credentials -->
+  <section class="page-section page-section--wide about-overview" aria-label="Who We Are and Key Figures">
     <div class="about-who">
       <h2>{{ about_content.who_we_are_title|default:"WHO WE ARE"|linebreaksbr }}</h2>
       <span class="about-who__divider" aria-hidden="true"></span>
-      <p>{{ about_content.who_we_are_p1|default:"Albahaa Contracting is an Egyptian joint stock company (S.A.E) with more than 30 years of engineering and contracting experience. Established in 1986, Albahaa began its initial projects under the ownership of Engineer Mohamed Bahaa El Din Abdalla before formally transitioning into a joint stock company on December 14, 2000." }}</p>
-      <p>{{ about_content.who_we_are_p2|default:"As an active member of the Egyptian Federation for Construction and Building Contractors since 1994, Albahaa holds the prestigious Grade A classification in water and sewage infrastructure networks, delivering turnkey civil, residential, and infrastructure landmarks on schedule and within budget." }}</p>
+      <p>{{ about_content.who_we_are_p1|default:"Al Bahaa Construction is a leading Egyptian engineering and construction company specializing in infrastructure, water and wastewater systems, irrigation networks, electromechanical works, public utilities, and residential developments." }}</p>
+      <p>{{ about_content.who_we_are_p2|default:"Founded by Engineer Mohamed Bahaa El Din Abdalla, the company evolved from a successful contracting enterprise into a fully integrated joint stock company, delivering large-scale projects for government entities, infrastructure authorities, and national development programs. Today, Al Bahaa Construction is recognized as one of Egypt's trusted infrastructure contractors." }}</p>
     </div>
 
-    <!-- Corporate Credentials & Trust Stats -->
-    <div class="about-credentials" aria-label="Company Key Credentials">
+    <!-- Corporate Key Figures (Balanced 2x3 Grid) -->
+    <div class="about-credentials" aria-label="Key Figures and Credentials">
       {% if statistics %}
         {% for st in statistics %}
           <div class="about-credential">
@@ -33,101 +34,259 @@
         {% endfor %}
       {% else %}
         <div class="about-credential">
-          <span class="about-credential__value">30+</span>
-          <span class="about-credential__label">Years of Industry Experience (Est. 1986)</span>
+          <span class="about-credential__value">1986</span>
+          <span class="about-credential__label">Founded in Egypt</span>
+        </div>
+        <div class="about-credential">
+          <span class="about-credential__value">40 Years</span>
+          <span class="about-credential__label">Engineering &amp; Contracting Experience</span>
         </div>
         <div class="about-credential">
           <span class="about-credential__value">Grade A</span>
-          <span class="about-credential__label">Water &amp; Sewage Infrastructure Classification</span>
+          <span class="about-credential__label">Contractor in Water &amp; Wastewater Networks</span>
         </div>
         <div class="about-credential">
-          <span class="about-credential__value">1994</span>
-          <span class="about-credential__label">Active Member, Egyptian Federation of Contractors</span>
+          <span class="about-credential__value">1M m³/d</span>
+          <span class="about-credential__label">Water Lifting Capacity Executed</span>
         </div>
         <div class="about-credential">
-          <span class="about-credential__value">S.A.E</span>
-          <span class="about-credential__label">Egyptian Joint Stock Enterprise (Inc. 2000)</span>
+          <span class="about-credential__value">2,500 mm</span>
+          <span class="about-credential__label">Largest Pipeline Diameter Delivered</span>
+        </div>
+        <div class="about-credential">
+          <span class="about-credential__value">Nationwide</span>
+          <span class="about-credential__label">Operations Across Egypt</span>
         </div>
       {% endif %}
     </div>
-
-    <div class="about-what">
-      <h2>WHAT WE DO</h2>
-      <ul class="about-what__list">
-        {% if services %}
-          {% for s in services %}
-            <li>
-              <strong>{{ s.title }}</strong>
-              <span>{{ s.description }}</span>
-            </li>
-          {% endfor %}
-        {% else %}
-          <li>
-            <strong>Water &amp; Sewage Infrastructure (Grade A)</strong>
-            <span>Extensive municipal water transmission mains, sewage collector networks, pumping stations, and stormwater drainage systems engineered to exacting standards.</span>
-          </li>
-          <li>
-            <strong>Residential &amp; Commercial Developments</strong>
-            <span>Integrated residential communities, commercial hubs, and institutional headquarters delivered with disciplined execution and refined architectural finishes.</span>
-          </li>
-          <li>
-            <strong>Turnkey Civil &amp; General Contracting</strong>
-            <span>Heavy civil works, deep foundation earthworks, structural concrete, and logistical infrastructure built for enduring durability.</span>
-          </li>
-          <li>
-            <strong>Specialized MEP &amp; Value Engineering</strong>
-            <span>Advanced electro-mechanical installations, BIM coordination, stringent QA/QC protocols, and lifecycle cost optimization.</span>
-          </li>
-        {% endif %}
-      </ul>
-    </div>
   </section>
 
-  <!-- Engineering Pillars Section -->
-  <section class="page-section page-section--wide about-pillars" aria-label="Our Engineering Pillars">
-    <div class="section-heading about-pillars__title">
-      <p class="section-heading__eyebrow">OUR PILLARS.</p>
+  <!-- 2. Our Story Timeline Section -->
+  <section class="page-section page-section--wide about-story-section" aria-label="Our Story">
+    <div class="section-heading">
+      <p class="section-heading__eyebrow">OUR STORY.</p>
       <div class="section-heading__row">
-        <h2>Disciplined execution<br>at every scale.</h2>
+        <h2>A Journey of Growth &amp;<br>Enduring Achievement.</h2>
         <span class="section-heading__rule" aria-hidden="true"></span>
       </div>
     </div>
 
-    <div class="about-pillars__grid">
-      {% if pillars %}
-        {% for p in pillars %}
-          <article class="about-pillar">
-            <span class="about-pillar__num">{{ p.number }}</span>
-            <h3>{{ p.title }}</h3>
-            <p>{{ p.description }}</p>
-          </article>
-        {% endfor %}
-      {% else %}
-        <article class="about-pillar">
-          <span class="about-pillar__num">01</span>
-          <h3>Technical Rigor &amp; QA/QC</h3>
-          <p>Leveraging state-of-the-art BIM modeling, advanced construction methods, and comprehensive QA/QC processes for flawless structural integrity.</p>
-        </article>
-        <article class="about-pillar">
-          <span class="about-pillar__num">02</span>
-          <h3>Safety &amp; Zero-Harm Protocol</h3>
-          <p>Enforcing uncompromising occupational health and safety protocols across all active job sites, safeguarding our workforce and communities.</p>
-        </article>
-        <article class="about-pillar">
-          <span class="about-pillar__num">03</span>
-          <h3>Sustainable Value Delivery</h3>
-          <p>Integrating resource-efficient materials, lifecycle value engineering, and resilient construction practices built to endure for generations.</p>
-        </article>
-      {% endif %}
+    <div class="about-timeline-grid">
+      <div class="timeline-card">
+        <span class="timeline-card__year">1986</span>
+        <p class="timeline-card__desc">Founded by Engineer Mohamed Bahaa El Din Abdalla, initiating specialized infrastructure contracting across Egypt.</p>
+      </div>
+      <div class="timeline-card">
+        <span class="timeline-card__year">1994</span>
+        <p class="timeline-card__desc">Joined the Egyptian Federation of Construction and Building Contractors with Grade A infrastructure classification.</p>
+      </div>
+      <div class="timeline-card">
+        <span class="timeline-card__year">1996</span>
+        <p class="timeline-card__desc">Successfully delivered the company's first major public water transmission and sanitation landmarks.</p>
+      </div>
+      <div class="timeline-card">
+        <span class="timeline-card__year">2000</span>
+        <p class="timeline-card__desc">Formally converted into a Joint Stock Company under the corporate name Al Bahaa Contracting S.A.E.</p>
+      </div>
+      <div class="timeline-card timeline-card--highlight">
+        <span class="timeline-card__year">Today</span>
+        <p class="timeline-card__desc">Operating nationwide as Al Bahaa Construction, delivering mega infrastructure projects supporting Egypt's sustainable development agenda.</p>
+      </div>
     </div>
   </section>
 
-  <!-- Team / Leadership Section -->
+  <!-- 3. Vision, Mission & Values Section -->
+  <section class="page-section page-section--wide about-vvm-section" aria-label="Vision, Mission and Values">
+    <div class="about-vm-split">
+      <div class="about-vm-box">
+        <p class="section-heading__eyebrow">OUR VISION</p>
+        <h3>Regional Leadership &amp; Engineering Trust</h3>
+        <p>To establish Al Bahaa Construction as a recognized engineering and construction partner in Egypt and international markets through continuous development, technical excellence, and operational capability enhancement.</p>
+      </div>
+      <div class="about-vm-box">
+        <p class="section-heading__eyebrow">OUR MISSION</p>
+        <h3>Disciplined Execution &amp; Quality Delivery</h3>
+        <p>To deliver dependable engineering and construction solutions through practical expertise, disciplined planning, and responsible execution while ensuring quality, efficiency, safety, and timely project delivery.</p>
+      </div>
+    </div>
+
+    <!-- 7 Corporate Values Grid -->
+    <div class="about-values-block">
+      <div class="section-heading" style="margin-bottom: 24px;">
+        <p class="section-heading__eyebrow">OUR VALUES.</p>
+        <div class="section-heading__row">
+          <h2>Principles that guide every build.</h2>
+          <span class="section-heading__rule" aria-hidden="true"></span>
+        </div>
+      </div>
+      <div class="about-values-grid">
+        {% if pillars %}
+          {% for p in pillars %}
+            <article class="value-item-card">
+              <span class="value-item-card__num">{{ p.number }}</span>
+              <h4>{{ p.title }}</h4>
+              <p>{{ p.description }}</p>
+            </article>
+          {% endfor %}
+        {% else %}
+          <article class="value-item-card"><span class="value-item-card__num">01</span><h4>Excellence</h4><p>Upholding uncompromising engineering precision and QA/QC in every deliverable.</p></article>
+          <article class="value-item-card"><span class="value-item-card__num">02</span><h4>Integrity</h4><p>Operating with transparency, ethical accountability, and compliance.</p></article>
+          <article class="value-item-card"><span class="value-item-card__num">03</span><h4>Commitment</h4><p>Delivering on schedule, within scope, and aligned with client objectives.</p></article>
+          <article class="value-item-card"><span class="value-item-card__num">04</span><h4>Safety</h4><p>Enforcing stringent zero-harm health and environmental protocols.</p></article>
+          <article class="value-item-card"><span class="value-item-card__num">05</span><h4>Expertise</h4><p>Four decades of civil, hydraulic, and electromechanical mastery.</p></article>
+          <article class="value-item-card"><span class="value-item-card__num">06</span><h4>Partnership</h4><p>Cultivating enduring collaboration with public sector clients.</p></article>
+          <article class="value-item-card"><span class="value-item-card__num">07</span><h4>Efficiency</h4><p>Optimizing resources, planning, and lifecycle value engineering.</p></article>
+        {% endif %}
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Services & Capabilities Breakdown -->
+  <section class="page-section page-section--wide about-services-section" aria-label="Services and Capabilities">
+    <div class="section-heading">
+      <p class="section-heading__eyebrow">SERVICES &amp; CAPABILITIES.</p>
+      <div class="section-heading__row">
+        <h2>Comprehensive Infrastructure<br>Engineering Solutions.</h2>
+        <span class="section-heading__rule" aria-hidden="true"></span>
+      </div>
+    </div>
+
+    <div class="about-services-sectors-grid">
+      <article class="sector-service-card">
+        <h3>01. Water &amp; Wastewater</h3>
+        <p class="sector-service-card__lead">Grade A turnkey water and sanitation networks serving urban expansion and regional communities.</p>
+        <ul class="sector-service-list">
+          <li>Water Treatment Plants</li>
+          <li>Wastewater Treatment Plants</li>
+          <li>Water Distribution Networks</li>
+          <li>Sewer Networks</li>
+          <li>Water Transmission Pipelines</li>
+          <li>Pumping Stations</li>
+          <li>Booster Stations</li>
+          <li>Storage Reservoirs</li>
+        </ul>
+      </article>
+
+      <article class="sector-service-card">
+        <h3>02. Irrigation, Canals &amp; Drainage</h3>
+        <p class="sector-service-card__lead">Large-scale hydraulic conduits, reclamation feeders, and agricultural drainage schemes.</p>
+        <ul class="sector-service-list">
+          <li>Main Arterial Canals</li>
+          <li>Irrigation Infrastructure</li>
+          <li>Agricultural Development Systems</li>
+          <li>Drainage Networks</li>
+          <li>Hydraulic Control Structures</li>
+        </ul>
+      </article>
+
+      <article class="sector-service-card">
+        <h3>03. Electromechanical Works</h3>
+        <p class="sector-service-card__lead">Specialized plant installations, electrical substations, and automated telemetry integration.</p>
+        <ul class="sector-service-list">
+          <li>High-Head Pumping Equipment</li>
+          <li>Desalination Systems</li>
+          <li>Mechanical Plant Installations</li>
+          <li>Electrical Infrastructure &amp; Substations</li>
+          <li>Commissioning &amp; Operation Support</li>
+        </ul>
+      </article>
+
+      <article class="sector-service-card">
+        <h3>04. Residential &amp; Civil Construction</h3>
+        <p class="sector-service-card__lead">Turnkey civil developments, national housing landmarks, and industrial facilities.</p>
+        <ul class="sector-service-list">
+          <li>Turnkey Developments</li>
+          <li>Social Housing Initiatives</li>
+          <li>National Housing Projects</li>
+          <li>Villas &amp; Residential Communities</li>
+          <li>Administrative Headquarters</li>
+          <li>Industrial Facilities</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <!-- 5. Why Al Bahaa: One Partner. Complete Delivery -->
+  <section class="page-section page-section--wide about-why-section" aria-label="Why Choose Al Bahaa">
+    <div class="why-bahaa-banner">
+      <div class="why-bahaa-banner__header">
+        <p class="section-heading__eyebrow">WHY AL BAHAA</p>
+        <h2>One Partner. Complete Delivery.</h2>
+        <p class="why-bahaa-banner__lead">Our integrated structure enables us to deliver projects from civil construction through electromechanical installation and commissioning under a single management framework.</p>
+      </div>
+
+      <div class="why-bahaa-grid">
+        <div class="why-bahaa-item"><span>01</span><p>40 Years of Experience</p></div>
+        <div class="why-bahaa-item"><span>02</span><p>Grade A Classification</p></div>
+        <div class="why-bahaa-item"><span>03</span><p>Nationwide Project Execution</p></div>
+        <div class="why-bahaa-item"><span>04</span><p>Proven Infrastructure Expertise</p></div>
+        <div class="why-bahaa-item"><span>05</span><p>Integrated Civil &amp; MEP Capabilities</p></div>
+        <div class="why-bahaa-item"><span>06</span><p>Strong Public Sector Relationships</p></div>
+        <div class="why-bahaa-item"><span>07</span><p>ISO-Certified Management Systems</p></div>
+        <div class="why-bahaa-item"><span>08</span><p>Award-Winning Project Participation</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. Where We Operate (4 Regional Hubs Covering 14 Locations) -->
+  <section class="page-section page-section--wide about-operate-section" aria-label="Where We Operate">
+    <div class="section-heading">
+      <p class="section-heading__eyebrow">WHERE WE OPERATE.</p>
+      <div class="section-heading__row">
+        <h2>Nationwide Operational Coverage.</h2>
+        <span class="section-heading__rule" aria-hidden="true"></span>
+      </div>
+      <p class="section-heading__sub">Our projects span major cities, strategic governorates, and emerging development zones throughout Egypt:</p>
+    </div>
+
+    <div class="about-regions-grid">
+      <div class="region-card">
+        <h3>Greater Cairo &amp; Delta</h3>
+        <ul>
+          <li>Cairo</li>
+          <li>New Cairo</li>
+          <li>Giza</li>
+          <li>6th of October City</li>
+          <li>Sadat City</li>
+        </ul>
+      </div>
+
+      <div class="region-card">
+        <h3>Upper Egypt Governorates</h3>
+        <ul>
+          <li>Al Minya</li>
+          <li>Beni Suef</li>
+          <li>Fayoum</li>
+          <li>Assiut</li>
+        </ul>
+      </div>
+
+      <div class="region-card">
+        <h3>Canal &amp; Sinai Region</h3>
+        <ul>
+          <li>Ismailia</li>
+          <li>Port Said</li>
+          <li>Al Arish</li>
+        </ul>
+      </div>
+
+      <div class="region-card">
+        <h3>Coast &amp; Agricultural Zones</h3>
+        <ul>
+          <li>New Alamein City</li>
+          <li>Rural Development Communities</li>
+          <li>National Agricultural Reclamation Areas</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. Leadership Team (Founder + 5 Board Members) -->
   <section class="page-section page-section--wide about-team" aria-label="Our Leadership">
     <div class="section-heading about-team__title">
-      <p class="section-heading__eyebrow">OUR LEADERSHIP.</p>
+      <p class="section-heading__eyebrow">LEADERSHIP TEAM.</p>
       <div class="section-heading__row">
-        <h2>Steered by decades of<br>engineering leadership.</h2>
+        <h2>Steered by four decades of<br>engineering leadership.</h2>
         <span class="section-heading__rule" aria-hidden="true"></span>
       </div>
     </div>
@@ -137,27 +296,25 @@
       <article class="about-founder-card">
         <div class="about-founder-card__content">
           <p class="about-founder-card__eyebrow">FOUNDING HERITAGE</p>
-          <h3>{{ founder.name|default:"Eng. Mohamed Bahaa El Din Abdalla" }}</h3>
+          <h3>{{ founder.name|default:"Engineer Mohamed Bahaa Abdalla" }}</h3>
           <p class="about-founder-card__role">{{ founder.position|default:"Founder & Chairman" }}</p>
           <p class="about-founder-card__bio">
-            {{ founder.bio|default:"Beginning his career at Arab Contractors until 1978, he subsequently led regional operations as Regional Director in Medina at Aziz Company for Contracting and Industrial Investment. In 1986, he co-founded Albahaa Contracting, dedicating full executive leadership to establishing the company as one of Egypt's premier Grade A engineering and infrastructure enterprises." }}
+            {{ founder.bio|default:"Founded Al Bahaa in 1986 with a vision of engineering rigor and nation-building. Under his leadership, the enterprise grew from a specialized contracting firm into an integrated Grade A corporate contractor delivering major infrastructure projects across Egypt." }}
           </p>
+          {% if founder.quote %}
+            <blockquote>"{{ founder.quote }}"</blockquote>
+          {% endif %}
         </div>
       </article>
 
-      <!-- Executive Board Members Grid -->
-      <div class="about-executives-grid">
-        {% if board_members %}
-          {% for bm in board_members %}
-            <article class="about-exec-card">
+      <!-- Executive Board Members Tiered Layout (2 Senior Leaders + 3 Chief Officers) -->
+      <div class="about-executives-tiered">
+        <!-- Tier 1: Senior Executive Leadership (2 Members) -->
+        <div class="about-executives-grid about-executives-grid--primary">
+          {% for bm in board_members|slice:":2" %}
+            <article class="about-exec-card about-exec-card--primary">
               <div class="about-exec-card__image">
-                {% if bm.photo %}
-                  <img src="{{ bm.photo.url }}" alt="{{ bm.name }}" loading="lazy" decoding="async">
-                {% elif forloop.first %}
-                  <img src="{% static 'img/team/ahmed_bahaa.webp' %}" alt="{{ bm.name }}" loading="lazy" decoding="async">
-                {% else %}
-                  <img src="{% static 'img/team/mahmoud_bahaa.webp' %}" alt="{{ bm.name }}" loading="lazy" decoding="async">
-                {% endif %}
+                <img src="{{ bm.image_url }}" alt="{{ bm.name }}" loading="lazy" decoding="async">
               </div>
               <div class="about-exec-card__info">
                 <h3>{{ bm.name }}</h3>
@@ -168,118 +325,79 @@
               </div>
             </article>
           {% endfor %}
-        {% else %}
-          <article class="about-exec-card">
-            <div class="about-exec-card__image">
-              <img src="{% static 'img/team/ahmed_bahaa.webp' %}" alt="Engineer Ahmed Bahaa" loading="lazy" decoding="async">
-            </div>
-            <div class="about-exec-card__info">
-              <h3>Eng. Ahmed Bahaa</h3>
-              <p class="about-exec-card__role">CEO / Board Member</p>
-              <blockquote>"Executing infrastructure with uncompromising technical rigor, punctuality, and fiscal responsibility.”</blockquote>
-            </div>
-          </article>
+        </div>
 
-          <article class="about-exec-card">
-            <div class="about-exec-card__image">
-              <img src="{% static 'img/team/mahmoud_bahaa.webp' %}" alt="Mr Mahmoud Bahaa" loading="lazy" decoding="async">
-            </div>
-            <div class="about-exec-card__info">
-              <h3>Mr. Mahmoud Bahaa</h3>
-              <p class="about-exec-card__role">Vice Chairman / Board Member</p>
-              <blockquote>"Building enduring partnerships through operational precision and transparent corporate governance.”</blockquote>
-            </div>
-          </article>
-        {% endif %}
-      </div>
-
-      <!-- Additional General Team Members (if any) -->
-      {% if team_members %}
-        <div class="about-team__dynamic-grid" style="margin-top: 32px;">
-          {% for member in team_members %}
-            <article class="about-team__member-card">
-              <div class="about-team__member-photo">
-                <img src="{{ member.image_url }}" alt="{{ member.name }}">
+        <!-- Tier 2: Chief Officers (3 Members) -->
+        <div class="about-executives-grid about-executives-grid--secondary">
+          {% for bm in board_members|slice:"2:" %}
+            <article class="about-exec-card about-exec-card--secondary">
+              <div class="about-exec-card__image">
+                <img src="{{ bm.image_url }}" alt="{{ bm.name }}" loading="lazy" decoding="async">
               </div>
-              <div class="about-team__member-info">
-                <h3>{{ member.name }}</h3>
-                <p class="about-team__member-role">{{ member.position }}</p>
-                {% if member.quote %}
-                  <blockquote>"{{ member.quote }}"</blockquote>
+              <div class="about-exec-card__info">
+                <h3>{{ bm.name }}</h3>
+                <p class="about-exec-card__role">{{ bm.position }}</p>
+                {% if bm.quote %}
+                  <blockquote>"{{ bm.quote }}"</blockquote>
                 {% endif %}
               </div>
             </article>
           {% endfor %}
         </div>
-      {% endif %}
+      </div>
     </div>
   </section>
 
-  <!-- Testimonials Section -->
-  <section class="page-section page-section--wide about-testimonials" aria-label="Client Perspectives">
-    <div class="section-heading about-testimonials__title">
-      <p class="section-heading__eyebrow">OUR CLIENTS.</p>
+  <!-- 8. QHSE Standards & Global Recognition -->
+  <section class="page-section page-section--wide about-qhse-section" aria-label="Quality, Health, Safety & Environment">
+    <div class="section-heading">
+      <p class="section-heading__eyebrow">QUALITY, HEALTH, SAFETY &amp; ENVIRONMENT.</p>
       <div class="section-heading__row">
-        <h2>What industry leaders<br>say about our work.</h2>
+        <h2>Commitment to International Standards.</h2>
         <span class="section-heading__rule" aria-hidden="true"></span>
       </div>
     </div>
 
-    <div class="about-testimonials__cards">
-      {% if testimonials %}
-        {% for item in testimonials %}
-          <article class="about-testimonial {% if item.is_accent or forloop.counter == 3 %}about-testimonial--accent{% endif %}">
-            <blockquote>"{{ item.quote }}"</blockquote>
-            <span class="about-testimonial__quote-mark" aria-hidden="true">”</span>
-            <footer class="about-testimonial__author">
-              <cite>{{ item.client_name }}</cite>
-              <p>{{ item.position }}{% if item.company %} — {{ item.company }}{% endif %}</p>
-            </footer>
-          </article>
-        {% endfor %}
-      {% else %}
-        <article class="about-testimonial">
-          <blockquote>"Al Bahaa's engineering team demonstrated exceptional capability during the execution of our municipal infrastructure works. Their schedule adherence and quality benchmarks were exemplary.”</blockquote>
-          <span class="about-testimonial__quote-mark" aria-hidden="true">”</span>
-          <footer class="about-testimonial__author">
-            <cite>Infrastructure Development Authority</cite>
-            <p>Major Urban Projects — Cairo, Egypt</p>
-          </footer>
-        </article>
+    <div class="about-qhse-layout">
+      <!-- ISO Certifications Card -->
+      <div class="qhse-card">
+        <h3>Certified Management Systems</h3>
+        <p>Al Bahaa Construction follows internationally recognized management systems to ensure consistency, occupational safety, and operational excellence across all active sites.</p>
+        <div class="iso-badges-strip">
+          <span class="iso-badge">ISO 9001:2015 <small>Quality Management</small></span>
+          <span class="iso-badge">ISO 14001:2015 <small>Environmental Management</small></span>
+          <span class="iso-badge">ISO 45001:2018 <small>Occupational Health &amp; Safety</small></span>
+        </div>
+      </div>
 
-        <article class="about-testimonial">
-          <blockquote>"From deep foundational earthworks to complex water network installations, the attention to safety standards and engineering rigor set a benchmark for regional contractors.”</blockquote>
-          <span class="about-testimonial__quote-mark" aria-hidden="true">”</span>
-          <footer class="about-testimonial__author">
-            <cite>Civil Engineering Consultants Group</cite>
-            <p>Supervision &amp; Quality Committee</p>
-          </footer>
-        </article>
-
-        <article class="about-testimonial about-testimonial--accent">
-          <blockquote>"Working with Al Bahaa provided absolute peace of mind. Their proactive value engineering saved substantial costs while ensuring complete compliance with national Grade A standards.”</blockquote>
-          <span class="about-testimonial__quote-mark" aria-hidden="true">”</span>
-          <footer class="about-testimonial__author">
-            <cite>National Housing &amp; Utilities Partner</cite>
-            <p>Strategic Contracting Division</p>
-          </footer>
-        </article>
-      {% endif %}
+      <!-- ENR Award Global Recognition Card -->
+      <div class="qhse-card qhse-card--award">
+        <span class="award-kicker">GLOBAL RECOGNITION</span>
+        <h3>Engineering News Record (ENR) Best Project Award 2020</h3>
+        <p>Awarded through participation in the <strong>Al Mahsama Water Reclamation Project</strong>, recognizing excellence in engineering execution, complex hydraulic works, and sustainable infrastructure development.</p>
+      </div>
     </div>
   </section>
 
-    <!-- Client Logos Section (Unified Infinite Showcase) -->
-  <section class="page-section page-section--wide about-clients" aria-label="Institutional Partners and Client Logos">
+  <!-- 9. Institutional Client Showcase -->
+  <section class="page-section page-section--wide about-clients" aria-label="Our Trusted Clients">
+    <div class="section-heading" style="margin-bottom: 32px;">
+      <p class="section-heading__eyebrow">OUR CLIENTS.</p>
+      <div class="section-heading__row">
+        <h2>Trusted by Egypt's leading infrastructure authorities.</h2>
+        <span class="section-heading__rule" aria-hidden="true"></span>
+      </div>
+    </div>
     {% include "includes/client_logos.html" %}
   </section>
 
-  <!-- Bottom Call-To-Action -->
+  <!-- 10. Bottom Call-To-Action -->
   <section class="page-section page-section--wide about-cta" aria-label="Work With Us">
     <div class="about-cta__inner">
       <div class="about-cta__content">
         <p class="about-cta__eyebrow">{{ about_content.cta_eyebrow|default:"START A PROJECT" }}</p>
-        <h2>{{ about_content.cta_title|default:"Ready to build something iconic?" }}</h2>
-        <p class="about-cta__text">{{ about_content.cta_description|default:"Consult with our multidisciplinary engineering teams to bring technical precision and turnkey execution to your next landmark development." }}</p>
+        <h2>{{ about_content.cta_title|default:"Let's Build the Future Together" }}</h2>
+        <p class="about-cta__text">{{ about_content.cta_description|default:"Partner with Al Bahaa Construction for reliable infrastructure, engineering excellence, and sustainable project delivery across Egypt." }}</p>
       </div>
       <div class="about-cta__actions">
         <a href="{{ about_content.cta_primary_btn_url|default:'/contact/' }}" class="button button--solid">{{ about_content.cta_primary_btn_text|default:"Contact Our Team" }}</a>

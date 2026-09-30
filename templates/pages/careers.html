@@ -55,6 +55,7 @@
     {% include "includes/section_heading.html" with eyebrow="OPPORTUNITIES." title="Current Open Positions." %}
 
     <!-- Category Filter Navigation (Exact Match to Projects) -->
+    {% if departments_with_counts|length > 1 %}
     <nav class="projects-filter-nav" id="careers-filter-nav" aria-label="Filter jobs by department">
       <a
         href="{% url 'core:careers' %}"
@@ -71,6 +72,7 @@
         </a>
       {% endfor %}
     </nav>
+    {% endif %}
 
     <!-- Careers List with Staggered Reveal -->
     <div class="careers-list" id="jobs-container">

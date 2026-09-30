@@ -9,7 +9,7 @@ class ProjectListView(ListView):
     model = Project
     template_name = "pages/projects.html"
     context_object_name = "projects"
-    paginate_by = 6
+    paginate_by = 15
 
     def get_queryset(self):
         queryset = Project.objects.select_related("category").all()
@@ -48,11 +48,6 @@ class ProjectDetailView(DetailView):
 
     def get_object(self, queryset=None):
         slug = self.kwargs.get("slug")
-        # Legacy fallback if demo slug requested
-        if slug == "sed-ut-perspiciatis" and not Project.objects.filter(slug=slug).exists():
-            first_project = Project.objects.first()
-            if first_project:
-                return first_project
         return get_object_or_404(
             Project.objects.prefetch_related("images").select_related("category"),
             slug=slug

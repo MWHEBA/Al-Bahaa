@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}Contact Us | {{ site_settings.company_name|default:"Al Bahaa Contracting" }}{% endblock %}
+{% block title %}Contact Us | {{ site_settings.company_name|default:"Al Bahaa Construction" }}{% endblock %}
 {% block body_class %}contact-page{% endblock %}
 
 {% block extra_css %}
@@ -10,15 +10,15 @@
 
 {% block content %}
   {% with hero=page_heroes.contact %}
-    {% include "includes/page_intro.html" with eyebrow=hero.eyebrow|default:"Contact" title_html=hero.title_html|default:"Let us talk<br>about the next build." description=hero.description|default:"Reach our engineering, tendering, and pre-construction teams for project inquiries, partnerships, and procurement." image_url=hero.image_url %}
+    {% include "includes/page_intro.html" with eyebrow=hero.eyebrow|default:"CONTACT US" title_html=hero.title_html|default:"Let's Build The Future<br>Together." description=hero.description|default:"Partner with Al Bahaa Construction for reliable infrastructure, engineering excellence, and sustainable project delivery across Egypt." image_url=hero.image_url %}
   {% endwith %}
 
   <section class="page-content" aria-label="Contact information and inquiry form">
     <div class="contact-info">
       <section class="contact-info__block">
-        <h2>Address</h2>
+        <h2>Head Office Address</h2>
         <span class="contact-info__rule" aria-hidden="true"></span>
-        <p>{{ site_settings.address_line1|default:"Central Hub, Units 213-217" }},<br>{{ site_settings.address_line2|default:"First Settlement, New Cairo, Egypt" }}</p>
+        <p>{{ site_settings.address_line1|default:"Central Hub Business Complex, Third Floor | Units 213, 214, 215 & 217" }},<br>{{ site_settings.address_line2|default:"First Settlement, New Cairo, Adjacent to Kempinski Hotel, Egypt" }}</p>
       </section>
 
       <section class="contact-info__block">
@@ -34,8 +34,9 @@
         <h2>Email</h2>
         <span class="contact-info__rule" aria-hidden="true"></span>
         <p>
-          General: <a href="mailto:{{ site_settings.email_general|default:'info@albahaacontracting.com' }}" class="contact-info__link">{{ site_settings.email_general|default:"info@albahaacontracting.com" }}</a><br>
-          Tenders: <a href="mailto:{{ site_settings.email_tenders|default:'tenders@albahaacontracting.com' }}" class="contact-info__link">{{ site_settings.email_tenders|default:"tenders@albahaacontracting.com" }}</a>
+          General: <a href="mailto:{{ site_settings.email_general|default:'info@albahaaconstruction.com' }}" class="contact-info__link">{{ site_settings.email_general|default:"info@albahaaconstruction.com" }}</a><br>
+          Tenders: <a href="mailto:{{ site_settings.email_tenders|default:'tenders@albahaaconstruction.com' }}" class="contact-info__link">{{ site_settings.email_tenders|default:"tenders@albahaaconstruction.com" }}</a><br>
+          Careers: <a href="mailto:{{ site_settings.email_careers|default:'careers@albahaaconstruction.com' }}" class="contact-info__link">{{ site_settings.email_careers|default:"careers@albahaaconstruction.com" }}</a>
         </p>
       </section>
 

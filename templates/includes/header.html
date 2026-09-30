@@ -1,14 +1,14 @@
 {% load static %}
 <header class="site-header" id="main-header">
   <div class="site-header__inner">
-    <a class="site-header__brand" href="{% url 'core:home' %}" aria-label="{{ site_settings.company_name|default:'Al Bahaa Contracting' }} home">
+    <a class="site-header__brand" href="{% url 'core:home' %}" aria-label="{{ site_settings.company_name|default:'Al Bahaa Construction' }} home">
       <video class="site-header__logo-video" autoplay loop muted playsinline preload="auto">
         <source src="{% static 'video/logo-header.webm' %}" type="video/webm">
         <source src="{% static 'video/logo-intro.mp4' %}" type="video/mp4">
         {% if site_settings.header_logo %}
-        <img class="site-header__logo" src="{{ site_settings.header_logo.url }}" alt="{{ site_settings.company_name|default:'Al Bahaa Contracting' }}">
+        <img class="site-header__logo" src="{{ site_settings.header_logo.url }}" alt="{{ site_settings.company_name|default:'Al Bahaa Construction' }}">
         {% else %}
-        <img class="site-header__logo" src="{% static 'img/branding/AlBahaa logo.svg' %}" alt="{{ site_settings.company_name|default:'Al Bahaa Contracting' }}">
+        <img class="site-header__logo" src="{% static 'img/branding/AlBahaa logo.svg' %}" alt="{{ site_settings.company_name|default:'Al Bahaa Construction' }}">
         {% endif %}
       </video>
     </a>
