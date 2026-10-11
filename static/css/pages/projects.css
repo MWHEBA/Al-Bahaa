@@ -1,7 +1,12 @@
 /* Projects Page Styles */
 
+.projects-page .page-intro {
+  min-height: auto;
+  padding-bottom: var(--space-4);
+}
+
 .projects-container {
-  margin-top: var(--space-6);
+  margin-top: var(--space-4);
   margin-bottom: var(--space-6);
 }
 
