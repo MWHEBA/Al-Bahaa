@@ -354,18 +354,12 @@ class Testimonial(models.Model):
 
 class ClientLogo(models.Model):
     FALLBACK_LOGOS = [
-        "img/clients/Layer 1.webp",
-        "img/clients/Layer 2.webp",
-        "img/clients/Layer 3.webp",
-        "img/clients/Layer 4.webp",
-        "img/clients/Layer 5.webp",
-        "img/clients/Layer 6.webp",
-        "img/clients/l3.webp",
-        "img/clients/logo_partner-3.webp",
-        "img/clients/11.webp",
-        "img/clients/logo_partner-8.webp",
-        "img/clients/l4.webp",
-        "img/clients/Layer 1 copy.webp",
+        "img/clients/hcww.webp",
+        "img/clients/cairo_water.webp",
+        "img/clients/armed_forces_engineering.webp",
+        "img/clients/housing_ministry.webp",
+        "img/clients/agriculture_ministry.webp",
+        "img/clients/water_resources_ministry.webp",
     ]
 
     name = models.CharField(max_length=120)

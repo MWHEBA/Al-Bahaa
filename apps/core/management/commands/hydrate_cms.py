@@ -277,21 +277,15 @@ class Command(BaseCommand):
                 order=o,
             )
 
-        # 6. Client Logos (All 12) & Testimonials
-        self.stdout.write("  [6/9] Hydrating 12 Institutional Client Logos & Testimonials...")
+        # 6. Client Logos & Testimonials
+        self.stdout.write("  [6/9] Hydrating 6 Institutional Client Logos & Testimonials...")
         logos_data = [
-            ("New Urban Communities Authority (NUCA)", "img/clients/Layer 1.png", 1),
-            ("National Authority for Potable Water & Sanitary Drainage (NOPWASD)", "img/clients/Layer 2.png", 2),
-            ("Armed Forces Engineering Authority", "img/clients/Layer 3.png", 3),
-            ("Arab Contractors (Osman Ahmed Osman)", "img/clients/Layer 4.png", 4),
-            ("Arab Consulting Engineers (ACE - Moharram Bakhoum)", "img/clients/Layer 5.png", 5),
-            ("Dar Al-Handasah Consultants", "img/clients/Layer 6.png", 6),
-            ("Consulting Engineers Group (CEG)", "img/clients/l3.png", 7),
-            ("Prime Developments Egypt", "img/clients/logo_partner-3.png", 8),
-            ("Egyptian Federation for Construction Contractors", "img/clients/11.png", 9),
-            ("Corporate Architectural Development Partners", "img/clients/logo_partner-8.png", 10),
-            ("Civil Engineering Supervision Council", "img/clients/l4.png", 11),
-            ("National Housing & Utilities Authority", "img/clients/Layer 1 copy.png", 12),
+            ("Holding Company for Water and Wastewater (HCWW)", "img/clients/hcww.webp", 1),
+            ("Greater Cairo Drinking Water Company", "img/clients/cairo_water.webp", 2),
+            ("Armed Forces Engineering Authority", "img/clients/armed_forces_engineering.webp", 3),
+            ("Ministry of Housing, Utilities & Urban Communities", "img/clients/housing_ministry.webp", 4),
+            ("Ministry of Agriculture and Land Reclamation", "img/clients/agriculture_ministry.webp", 5),
+            ("Ministry of Water Resources and Irrigation", "img/clients/water_resources_ministry.webp", 6),
         ]
         ClientLogo.objects.all().delete()
         for name, img_path, o in logos_data:
