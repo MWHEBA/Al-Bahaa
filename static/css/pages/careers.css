@@ -315,21 +315,54 @@
   }
 }
 
-@media (max-width: 640px) {
-  .careers-filter-btn {
-    width: 100%;
-    text-align: left;
+@media (max-width: 768px) {
+  .projects-filter-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+  }
+
+  .projects-filter-btn {
+    width: auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 14px;
+    font-size: 0.875rem;
+    min-height: 38px;
+    border-radius: 2px;
+    white-space: nowrap;
+  }
+
+  .careers-openings__subtitle {
+    font-size: 1rem;
+    margin-bottom: 20px;
   }
 
   .job-card {
-    padding: var(--space-3);
+    padding: 20px 16px;
+    gap: 16px;
   }
 
   .job-card__title {
-    font-size: 1.3rem;
+    font-size: 1.25rem;
   }
 
   .job-card__apply-btn {
     width: 100%;
+    min-height: 48px;
+  }
+
+  .careers-spontaneous__action {
+    width: 100%;
+    margin-top: 16px;
+  }
+
+  .careers-spontaneous__action .button {
+    width: 100%;
+    min-height: 48px;
   }
 }
+

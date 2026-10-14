@@ -115,4 +115,20 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
   });
+
+  // Mobile Map Interaction Safety Guard
+  const mapWrapper = document.querySelector('.contact-map-wrapper');
+  const mapFrame = document.querySelector('.contact-map-frame');
+  if (mapWrapper && mapFrame) {
+    mapWrapper.addEventListener('click', () => {
+      mapFrame.classList.add('is-interactive');
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!mapWrapper.contains(e.target)) {
+        mapFrame.classList.remove('is-interactive');
+      }
+    });
+  }
 });
+

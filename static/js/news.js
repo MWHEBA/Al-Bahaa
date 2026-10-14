@@ -38,6 +38,9 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function scrollToFilterTop() {
+    // Disable forced auto-scroll on mobile
+    if (window.innerWidth <= 768) return;
+
     const filterNav = document.getElementById('news-filter-nav');
     if (!filterNav) return;
 
@@ -136,20 +139,4 @@ document.addEventListener('DOMContentLoaded', () => {
       loadNews(targetUrl, false);
     });
   }
-
-  // Global card click handling for .news-row and .news-related-card
-  document.addEventListener('click', (event) => {
-    // If clicking directly on a link or button, allow native navigation
-    if (event.target.closest('a, button')) {
-      return;
-    }
-
-    const card = event.target.closest('.news-row, .news-related-card');
-    if (card) {
-      const targetUrl = card.getAttribute('data-url');
-      if (targetUrl) {
-        window.location.href = targetUrl;
-      }
-    }
-  });
 });

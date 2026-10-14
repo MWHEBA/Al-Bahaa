@@ -58,13 +58,13 @@
 }
 
 .news-row {
+  position: relative;
   display: grid;
   grid-template-columns: 340px 1fr;
   align-items: stretch;
   background: var(--color-white);
   border: 1px solid var(--color-border);
   overflow: hidden;
-  cursor: pointer;
   transition: border-color 180ms ease, box-shadow 180ms ease;
 }
 
@@ -149,6 +149,13 @@
   transition: color 150ms ease;
 }
 
+.news-row__title-link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+}
+
 .news-row:hover .news-row__title-link {
   color: var(--color-primary-deep);
 }
@@ -164,6 +171,8 @@
 .news-row__button {
   margin-top: 20px;
   align-self: flex-start;
+  position: relative;
+  z-index: 3;
 }
 
 .news-container {
@@ -566,12 +575,12 @@
 }
 
 .news-related-card {
+  position: relative;
   background: var(--color-white);
   border: 1px solid var(--color-border);
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  cursor: pointer;
   transition: border-color 180ms ease, box-shadow 180ms ease;
 }
 
@@ -631,6 +640,13 @@
   transition: color 150ms ease;
 }
 
+.news-related-card__title-link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+}
+
 .news-related-card:hover .news-related-card__title-link {
   color: var(--color-primary-deep);
 }
@@ -641,6 +657,11 @@
   color: var(--color-muted);
   margin: 0 0 16px;
   flex-grow: 1;
+}
+
+.news-related-card__link {
+  position: relative;
+  z-index: 3;
 }
 
 /* --------------------------------------------------------------------------
@@ -674,6 +695,28 @@
 }
 
 @media (max-width: 768px) {
+  .news-filter-nav,
+  .projects-filter-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+  }
+
+  .news-filter-btn,
+  .projects-filter-btn {
+    width: auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 14px;
+    font-size: 0.875rem;
+    min-height: 38px;
+    border-radius: 2px;
+    white-space: nowrap;
+  }
+
   .news-row,
   .news-row--reverse {
     grid-template-columns: 1fr;
@@ -700,13 +743,29 @@
 
   .news-detail-content__footer {
     flex-direction: column;
+    gap: 12px;
   }
 
   .news-detail-content__footer .button {
     width: 100%;
+    min-width: 0;
   }
 
   .news-detail-media__wrapper {
     aspect-ratio: 16 / 10;
   }
+
+  /* Redundant sidebar lists hidden on mobile to stop scroll fatigue */
+  .news-sidebar-section:not(.news-sidebar-section--share) {
+    display: none;
+  }
+
+  .news-sidebar-cta {
+    display: none;
+  }
+
+  .news-detail-sidebar {
+    margin-top: 24px;
+  }
 }
+

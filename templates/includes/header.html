@@ -5,12 +5,12 @@
       <video class="site-header__logo-video" autoplay loop muted playsinline preload="auto">
         <source src="{% static 'video/logo-header.webm' %}" type="video/webm">
         <source src="{% static 'video/logo-intro.mp4' %}" type="video/mp4">
-        {% if site_settings.header_logo %}
-        <img class="site-header__logo" src="{{ site_settings.header_logo.url }}" alt="{{ site_settings.company_name|default:'Al Bahaa Construction' }}">
-        {% else %}
-        <img class="site-header__logo" src="{% static 'img/branding/AlBahaa logo.svg' %}" alt="{{ site_settings.company_name|default:'Al Bahaa Construction' }}">
-        {% endif %}
       </video>
+      {% if site_settings.header_logo %}
+      <img class="site-header__logo" src="{{ site_settings.header_logo.url }}" alt="{{ site_settings.company_name|default:'Al Bahaa Construction' }}">
+      {% else %}
+      <img class="site-header__logo" src="{% static 'img/branding/AlBahaa logo.svg' %}" alt="{{ site_settings.company_name|default:'Al Bahaa Construction' }}">
+      {% endif %}
     </a>
     <button class="site-header__menu-toggle" type="button" aria-controls="primary-navigation" aria-expanded="false">
       <span></span>
@@ -27,4 +27,6 @@
       <a href="{% url 'core:contact' %}" {% if request.resolver_match.url_name == 'contact' %}class="active"{% endif %}>Contact Us</a>
     </nav>
   </div>
+  <div class="site-header__backdrop" aria-hidden="true"></div>
 </header>
+

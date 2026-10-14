@@ -52,7 +52,12 @@
       return false;
     }
 
-    // 1. Only run on Home Page (الصفحة الرئيسية فقط)
+    // 1. Mobile devices (<= 768px): instant entrance & zero wait / bandwidth save
+    if (window.innerWidth <= 768) {
+      return true;
+    }
+
+    // 2. Only run on Home Page (الصفحة الرئيسية فقط)
     const isHomePage = window.location.pathname === '/' || document.body.classList.contains('home-page');
     if (!isHomePage) {
       return true;

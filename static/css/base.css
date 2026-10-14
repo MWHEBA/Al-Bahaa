@@ -34,6 +34,24 @@
   --color-muted: #5f6f7c;
   --color-border: #aebbc4;
 
+  /* Translucent Surface and State Tokens */
+  --color-white-translucent-07: rgb(255 255 255 / 7%);
+  --color-white-translucent-10: rgb(255 255 255 / 10%);
+  --color-white-translucent-12: rgb(255 255 255 / 12%);
+  --color-white-translucent-16: rgb(255 255 255 / 16%);
+  --color-white-translucent-18: rgb(255 255 255 / 18%);
+  --color-white-translucent-24: rgb(255 255 255 / 24%);
+  --color-white-translucent-32: rgb(255 255 255 / 32%);
+  --color-white-translucent-42: rgb(255 255 255 / 42%);
+  --color-white-translucent-50: rgb(255 255 255 / 50%);
+  --color-white-translucent-62: rgb(255 255 255 / 62%);
+  --color-white-translucent-72: rgb(255 255 255 / 72%);
+  --color-white-translucent-85: rgb(255 255 255 / 85%);
+  --color-white-translucent-86: rgb(255 255 255 / 86%);
+  --color-white-translucent-94: rgb(255 255 255 / 94%);
+  --color-shadow-black-18: rgb(0 0 0 / 18%);
+  --color-overlay-backdrop: rgb(2 26 45 / 45%);
+
   --font-body: "Inter", sans-serif;
   --font-heading: "Ridley Grotesk", sans-serif;
   --font-size-root: 13px;
@@ -75,6 +93,12 @@
 
   --font-size-h4: 1.154rem; /* 15px */
   --line-height-h4: 1.35;
+
+  /* Mobile Typography Scale Tokens */
+  --font-size-h1-mobile: clamp(1.85rem, 6.5vw, 2.4rem);
+  --font-size-h2-mobile: clamp(1.5rem, 5vw, 2rem);
+  --font-size-h3-mobile: 1.25rem;
+  --font-size-h4-mobile: 1.05rem;
 
   /* Global Section Rhythm */
   --space-section: clamp(80px, 9vw, 130px);
@@ -159,3 +183,37 @@ h1,
 h2 {
   text-transform: uppercase;
 }
+
+@media (max-width: 768px) {
+  :root {
+    --font-size-root: 15px;
+    --header-height: 76px;
+    --space-section: clamp(48px, 8vw, 72px);
+  }
+
+  /* Form Input Protection against iOS Safari auto-zoom */
+  input,
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+
+  /* Text overflow protection */
+  h1,
+  h2,
+  h3,
+  h4,
+  p,
+  a,
+  span {
+    overflow-wrap: break-word;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --container-mobile: calc(100% - 24px);
+    --header-height: 72px;
+  }
+}
+

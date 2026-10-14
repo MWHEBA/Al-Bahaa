@@ -40,6 +40,9 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function scrollToFilterTop() {
+    // Disable forced auto-scroll on mobile to keep user viewport stable
+    if (window.innerWidth <= 768) return;
+
     const sectionHeader = document.querySelector('.careers-openings__header') || careersContainer;
     if (!sectionHeader) return;
 

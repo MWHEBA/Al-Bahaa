@@ -41,6 +41,9 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function scrollToFilterTop() {
+    // Disable forced auto-scroll on mobile to prevent pulling screen from under user's finger
+    if (window.innerWidth <= 768) return;
+
     const filterNav = document.getElementById('projects-filter-nav');
     if (!filterNav) return;
 
@@ -129,19 +132,6 @@ document.addEventListener('DOMContentLoaded', () => {
         loadProjects(targetUrl, true);
       }
       return;
-    }
-
-    // Allow clicking anywhere on the project band to navigate
-    const projectCard = event.target.closest('.project-band');
-    if (projectCard) {
-      // If the click is on an interactive element (link or button), let default behavior work
-      if (event.target.closest('a, button')) {
-        return;
-      }
-      const link = projectCard.querySelector('.project-band__link, .project-band__title-link');
-      if (link && link.getAttribute('href')) {
-        window.location.href = link.getAttribute('href');
-      }
     }
   });
 

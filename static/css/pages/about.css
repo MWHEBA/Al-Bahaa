@@ -679,6 +679,11 @@
   .about-qhse-layout {
     grid-template-columns: 1fr;
   }
+  .about-executives-grid--secondary {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 700px;
+    margin-inline: auto;
+  }
   .about-cta__inner {
     flex-direction: column;
     align-items: flex-start;
@@ -686,35 +691,127 @@
 }
 
 @media (max-width: 768px) {
+  /* 1. Overview & Architectural Stack */
+  .about-overview {
+    margin-top: 0;
+  }
+
   .about-who {
     width: 100%;
-    margin-top: -80px;
+    margin: 24px auto 0 auto;
     padding: 28px 20px;
+    box-sizing: border-box;
   }
+
+  .about-who h2 {
+    font-size: var(--font-size-h2-mobile, clamp(1.5rem, 5vw, 2rem));
+  }
+
+  .about-who p {
+    font-size: 1rem;
+    line-height: 1.65;
+    margin-top: 16px;
+  }
+
   .about-credentials {
     grid-template-columns: 1fr;
+    padding: 0;
+    margin-top: 20px;
+    gap: 12px;
   }
+
+  .about-credential {
+    padding: 20px 18px;
+  }
+
+  /* 2. Rhythm and Section Margins Compression */
+  .about-story-section,
+  .about-vvm-section,
+  .why-bahaa-section,
+  .about-services-sectors,
+  .about-regions-section,
+  .about-executives,
+  .about-qhse,
+  .about-clients,
+  .about-cta {
+    margin-top: clamp(40px, 6vw, 56px);
+    padding: 0;
+  }
+
   .about-timeline-grid {
     grid-template-columns: 1fr;
+    gap: 12px;
   }
+
+  .timeline-card {
+    padding: 20px 16px;
+  }
+
+  .about-vm-box {
+    padding: 24px 20px;
+  }
+
   .about-values-grid {
     grid-template-columns: 1fr;
+    gap: 12px;
   }
+
   .value-item-card:last-child {
     grid-column: span 1;
   }
+
   .sector-service-list {
     grid-template-columns: 1fr;
+    gap: 12px;
   }
+
   .why-bahaa-grid {
     grid-template-columns: 1fr;
+    gap: 12px;
   }
+
   .about-regions-grid {
     grid-template-columns: 1fr;
+    gap: 12px;
   }
+
   .about-executives-grid--primary,
   .about-executives-grid--secondary {
     grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .about-exec-card--primary .about-exec-card__image,
+  .about-exec-card--secondary .about-exec-card__image {
+    max-height: none;
+    aspect-ratio: 16 / 10;
+  }
+
+  .qhse-card {
+    padding: 24px 20px;
+  }
+
+  /* 3. Bottom CTA Stacking */
+  .about-cta__inner {
+    padding: 28px 20px;
+    gap: 24px;
+  }
+
+  .about-cta__content h2 {
+    font-size: var(--font-size-h2-mobile, clamp(1.5rem, 5vw, 2rem));
+  }
+
+  .about-cta__actions {
+    flex-direction: column;
+    width: 100%;
+    gap: 12px;
+  }
+
+  .about-cta__actions .button {
+    width: 100%;
+    min-width: 0;
+    justify-content: center;
   }
 }
+
 

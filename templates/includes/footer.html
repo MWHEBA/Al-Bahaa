@@ -12,7 +12,7 @@
         <p><a href="tel:{{ site_settings.phone_main|default:'+20223899255'|cut:' '|cut:'('|cut:')' }}">{{ site_settings.phone_main|default:"+20 (2) 2389 9255" }}</a></p>
         <p class="footer-contact__email"><a href="mailto:{{ site_settings.email_general|default:'info@albahaaconstruction.com' }}">{{ site_settings.email_general|default:"info@albahaaconstruction.com" }}</a></p>
       </section>
-      <section class="footer-contact">
+      <section class="footer-contact footer-contact--sectors">
         <h2>Key Sectors</h2>
         {% if footer_categories %}
           {% for cat in footer_categories|slice:":3" %}
