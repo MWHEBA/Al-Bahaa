@@ -679,6 +679,7 @@
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
+  filter: brightness(0) invert(1);
 }
 
 .dash-upload-brand-preview svg {

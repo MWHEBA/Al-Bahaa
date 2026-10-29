@@ -137,29 +137,11 @@ body.intro-complete .home-hero__card {
   will-change: auto;
 }
 
-/* Header Brand Interactive Motion & Video Loop */
+/* Header Brand Hover Interaction */
 .site-header__brand {
   position: relative;
   display: inline-flex;
   align-items: center;
-}
-
-.site-header__logo-video {
-  height: 44px;
-  width: auto;
-  aspect-ratio: 752 / 240;
-  object-fit: contain;
-  background-color: transparent;
-  display: block;
-  pointer-events: auto;
-  cursor: pointer;
-  filter: brightness(0) invert(1);
-  transition: transform 260ms ease, opacity 260ms ease;
-  transform: translateZ(0);
-}
-
-.site-header__brand:hover .site-header__logo-video {
-  transform: scale(1.03);
 }
 
 .site-header__logo {
@@ -169,3 +151,4 @@ body.intro-complete .home-hero__card {
 .site-header__brand:hover .site-header__logo {
   transform: scale(1.025);
 }
+

@@ -10,16 +10,9 @@
 {% endblock %}
 
 {% block content %}
-  <!-- Hero Section: Architectural Monograph Editorial Banner -->
+  <!-- Hero Section: Architectural Monograph Split Viewport -->
   {% with hero=page_heroes.home %}
   <section class="home-hero page-section page-section--wide" aria-label="{{ site_settings.company_name|default:'Al Bahaa Construction' }}">
-    <div class="home-hero__media">
-      {% if hero and hero.hero_image %}
-        <img class="home-hero__image" src="{{ hero.hero_image.url }}" alt="{{ site_settings.company_name|default:'Al Bahaa Construction' }}" fetchpriority="high" decoding="async">
-      {% else %}
-        <img class="home-hero__image" src="{% static 'img/home/Rectangle 3.webp' %}" alt="{{ site_settings.company_name|default:'Al Bahaa Construction' }}" fetchpriority="high" decoding="async">
-      {% endif %}
-    </div>
     <div class="home-hero__card">
       <span class="home-hero__eyebrow">{{ hero.eyebrow|default:"AL BAHAA CONSTRUCTION"|upper }}</span>
       <h1 class="home-hero__title">
@@ -34,6 +27,17 @@
         <a class="button button--solid" href="{% url 'projects:list' %}">Explore Projects</a>
         <a class="button" href="{% url 'core:about' %}">About Al Bahaa</a>
       </div>
+    </div>
+    <div class="home-hero__media" aria-label="Al Bahaa Motion Showcase">
+      <video class="home-hero__video" autoplay loop muted playsinline preload="auto" poster="{% static 'video/hero-bgroup-poster.webp' %}">
+        <source src="{% static 'video/hero-bgroup.webm' %}" type="video/webm">
+        <source src="{% static 'video/hero-bgroup.mp4' %}" type="video/mp4">
+        {% if hero and hero.hero_image %}
+          <img class="home-hero__image" src="{{ hero.hero_image.url }}" alt="{{ site_settings.company_name|default:'Al Bahaa Construction' }}" loading="lazy">
+        {% else %}
+          <img class="home-hero__image" src="{% static 'img/home/Rectangle 3.webp' %}" alt="{{ site_settings.company_name|default:'Al Bahaa Construction' }}" loading="lazy">
+        {% endif %}
+      </video>
     </div>
   </section>
   {% endwith %}

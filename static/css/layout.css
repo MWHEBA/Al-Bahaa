@@ -38,16 +38,18 @@
   align-items: center;
 }
 
-.site-header__logo-video {
-  display: block;
-}
-
 .site-header__logo {
-  display: none;
+  display: block;
   width: 180px;
   height: auto;
   filter: brightness(0) invert(1);
 }
+
+.site-header--light .site-header__logo,
+.site-header.is-light .site-header__logo {
+  filter: none;
+}
+
 
 .site-header__nav {
   display: flex;
@@ -415,11 +417,7 @@
 }
 
 @media (max-width: 768px) {
-  .site-header__logo-video {
-    display: none !important;
-  }
   .site-header__logo {
-    display: block !important;
     width: 145px;
     height: auto;
   }
